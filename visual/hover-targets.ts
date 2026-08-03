@@ -52,7 +52,9 @@ export const hoverTargets: HoverTarget[] = [
     label: 'works: 作品カード',
     scrollId: 'works',
     designSelector: '#works [style*="16 / 9"]',
-    reactSelector: '#works .hatch',
+    // FeaturedSlider にも同じ .hatch（斜線プレースホルダー）クラスを使っているため、
+    // カードにしか付かない .group で絞り込む
+    reactSelector: '#works .group.hatch',
   },
   {
     key: 'works-view-more',
