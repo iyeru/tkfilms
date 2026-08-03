@@ -1,54 +1,106 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { cn } from '@/lib/cn';
 
-/**
- * 起動時のローダー。書体の読み込みを待って畳むが、
- * 読み込みが遅くても 1.6 秒で必ず消える。
- */
+/** ローダーを最低限見せておく時間。デザインを見せたいので長めに取っている */
+const HOLD_MS = 3000;
+/** 書体や回線が遅くても、ここまでには必ず畳む */
+const MAX_MS = 6000;
+/** 畳むときのフェード。下の duration-500 と揃えること */
+const FADE_MS = 600;
+/** 書体が hold より遅れて来たとき、見出しを見せてから畳むまでの余韻 */
+const TAIL_MS = 800;
+/** 動きを減らす設定の人を待たせない場合の時間 */
+const CALM_HOLD_MS = 600;
+
 export function Loader() {
-  const [fadingOut, setFadingOut] = useState(false);
-  const [removed, setRemoved] = useState(false);
+  const [phase, setPhase] = useState<'in' | 'out' | 'gone'>('in');
+  const [fontReady, setFontReady] = useState(false);
+  const [barFull, setBarFull] = useState(false);
+
+  const calm = useMemo(
+    () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false,
+    [],
+  );
+  const hold = calm ? CALM_HOLD_MS : HOLD_MS;
 
   useEffect(() => {
     let done = false;
     const timers: number[] = [];
+    const at = (ms: number, fn: () => void) => timers.push(window.setTimeout(fn, ms));
 
     const hide = () => {
       if (done) return;
       done = true;
-      setFadingOut(true);
-      timers.push(window.setTimeout(() => setRemoved(true), 600));
+      setPhase('out');
+      at(FADE_MS, () => setPhase('gone'));
     };
 
-    const fontsReady = document.fonts ? document.fonts.ready : Promise.resolve();
-    void fontsReady.then(() => {
-      if (!done) timers.push(window.setTimeout(hide, 400));
-    });
-    timers.push(window.setTimeout(hide, 1600));
+    // 最低 hold ミリ秒は見せる。書体がそれより遅れて来たら、
+    // 見出しが出てから TAIL_MS だけ残してから畳む
+    const start = Date.now();
+    let fontSettledAt: number | null = null;
+    const settle = () => {
+      if (fontSettledAt === null) return;
+      const until = Math.max(hold, fontSettledAt - start + TAIL_MS);
+      at(Math.max(0, until - (Date.now() - start)), hide);
+    };
+
+    // バーは 0% で描いてから 100% へ動かす（transition を効かせるため1フレーム置く）
+    at(50, () => setBarFull(true));
+    at(hold, settle);
+    at(MAX_MS, hide);
+
+    // Six Caps は極端に細長い書体で、フォールバックだと文字幅が倍近くになりリングからはみ出す。
+    // 読み込めたことを確認できるまで見出しは出さない（読み込めなければ出さないまま畳む）
+    const loading = document.fonts?.load('56px "Six Caps"') ?? Promise.resolve([]);
+    void loading
+      .then((faces) => setFontReady(faces.length > 0))
+      .catch(() => undefined)
+      .finally(() => {
+        fontSettledAt = Date.now();
+        settle();
+      });
 
     return () => {
       done = true;
       timers.forEach(clearTimeout);
     };
-  }, []);
+  }, [hold]);
 
-  if (removed) return null;
+  if (phase === 'gone') return null;
 
   return (
     <div
       aria-hidden
       className={cn(
-        'fixed inset-0 z-120 flex items-center justify-center bg-[#1D1D1D]',
+        'fixed inset-0 z-120 flex flex-col items-center justify-center gap-10 bg-[#1D1D1D]',
         'transition-opacity duration-500 ease-brand',
-        fadingOut && 'pointer-events-none opacity-0',
+        phase === 'out' && 'pointer-events-none opacity-0',
       )}
     >
       <div className="relative flex aspect-square w-[min(320px,70vw)] items-center justify-center rounded-full border border-white/12">
         <div className="absolute inset-[30px] rounded-full border border-white/8" />
         <div className="absolute inset-[30px] animate-ring rounded-full border border-transparent border-t-accent" />
-        <span className="font-display text-[clamp(40px,12vw,56px)] leading-none tracking-[6px]">
+        <span
+          className={cn(
+            'font-display text-[clamp(40px,12vw,56px)] leading-none tracking-[6px] whitespace-nowrap',
+            'transition-opacity duration-500 ease-brand',
+            fontReady ? 'opacity-100' : 'opacity-0',
+          )}
+        >
           Loading
         </span>
+      </div>
+
+      {/* 待ち時間が意図的なものだと分かるように、hold と同じ長さで満ちる線を出す */}
+      <div className="h-px w-[min(180px,44vw)] bg-white/12">
+        <div
+          style={{ transitionDuration: `${hold}ms` }}
+          className={cn(
+            'h-full origin-left bg-accent transition-transform ease-linear',
+            barFull ? 'scale-x-100' : 'scale-x-0',
+          )}
+        />
       </div>
     </div>
   );
