@@ -26,6 +26,8 @@
   ::selection { background: #FFF100; color: #0C0C0C; }
   @keyframes spin { to { transform: rotate(360deg); } }
   @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+  /* 背景動画は再生が始まるまで黒板を出す。下に敷いたサムネイルを見せてから差し替える */
+  @keyframes videoIn { to { opacity: 1; } }
 </style>
 </helmet>
 
@@ -77,11 +79,12 @@
 
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
   <div>
-    <section id="home" data-sec="home" data-screen-label="Hero" style="position:relative; height:100vh; min-height:620px; display:flex; align-items:center; justify-content:center; overflow:hidden; background:#0C0C0C">
-      <div style="position:absolute; inset:0; background-image:repeating-linear-gradient(45deg,#1b1b1b 0 14px,#131313 14px 28px)"></div>
-      <div style="position:absolute; inset:0; background-image:radial-gradient(rgba(0,0,0,.85) 1px, transparent 1px); background-size:4px 4px; opacity:.55"></div>
-      <div style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(12,12,12,.25) 0%, rgba(12,12,12,.9) 100%)"></div>
-      <div style="position:absolute; left:clamp(20px,4vw,50px); bottom:38px; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.2em; color:rgba(255,255,255,.28); text-transform:uppercase">[ showreel.mp4 — muted / loop / object-fit: cover ]</div>
+    <section id="home" data-sec="home" data-screen-label="Hero" style="position:relative; height:100vh; min-height:620px; display:flex; align-items:center; justify-content:center; overflow:hidden; background-color:#0C0C0C; background-image:url(https://i.ytimg.com/vi/V-qTEo9IHTA/maxres2.jpg); background-size:cover; background-position:center">
+      <div style="position:absolute; inset:0; overflow:hidden; pointer-events:none">
+        <iframe src="https://www.youtube-nocookie.com/embed/V-qTEo9IHTA?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=V-qTEo9IHTA&amp;controls=0&amp;modestbranding=1&amp;rel=0&amp;playsinline=1&amp;disablekb=1&amp;fs=0&amp;iv_load_policy=3&amp;start=12" title="Showreel" allow="autoplay; encrypted-media" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(1.4); width:max(100vw,177.78vh); height:max(56.25vw,100vh); min-width:1102px; min-height:620px; border:0; opacity:0; animation:videoIn 1.6s ease 4s forwards"></iframe>
+      </div>
+      <div style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(12,12,12,.45) 0%, rgba(12,12,12,.92) 100%)"></div>
+      <div style="position:absolute; left:clamp(20px,4vw,50px); bottom:38px; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.2em; color:rgba(255,255,255,.28); text-transform:uppercase">[ 仮素材 — 本番は showreel.mp4 に差し替え ]</div>
       <div style="position:relative; text-align:center; padding:0 24px">
         <p style="font-family:Roboto,sans-serif; font-weight:100; font-size:clamp(18px,3vw,26px); letter-spacing:.18em; color:rgba(255,255,255,.9); margin:0 0 18px">Filmmaker &amp; Cinematographer</p>
         <h1 style="font-family:Roboto,sans-serif; font-weight:400; font-size:clamp(32px,6vw,45px); letter-spacing:.24em; color:#fff; margin:0; text-transform:uppercase">Studio Kairo</h1>
@@ -99,7 +102,9 @@
         </div>
         <div data-anim="fade" style="opacity:0; transition:opacity .8s ease; width:40px; height:5px; background:var(--accent,#FFF100); margin:30px auto"></div>
         <p data-anim="fade" style="opacity:0; transition:opacity .8s ease; text-align:center; font-family:Karla,sans-serif; font-size:16px; line-height:1.88; color:rgba(255,255,255,.7); max-width:620px; margin:0 auto 56px">2025年 / ブランドフィルム「THE LONG LIGHT」— 撮影・編集・カラーグレーディングまで一貫制作</p>
-        <div data-anim="fade" style="opacity:0; transition:opacity .9s ease; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:12px; letter-spacing:.16em; color:rgba(255,255,255,.35); text-transform:uppercase">[ main film — 16:9 embed ]</div>
+        <div data-anim="fade" style="opacity:0; transition:opacity .9s ease; position:relative; aspect-ratio:16/9; background:#000000; border:1px solid rgba(255,255,255,.08); overflow:hidden">
+          <iframe src="https://www.youtube-nocookie.com/embed/JfmmA2cU2-k?rel=0&amp;modestbranding=1&amp;playsinline=1" title="THE LONG LIGHT" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style="position:absolute; inset:0; width:100%; height:100%; border:0"></iframe>
+        </div>
         <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:28px; margin-top:28px">
           <div data-anim="fade" style="opacity:0; transition:opacity .8s ease; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.14em; color:rgba(255,255,255,.3)">[ still 01 ]</div>
           <div data-anim="fade" style="opacity:0; transition:opacity .8s ease; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.14em; color:rgba(255,255,255,.3)">[ still 02 ]</div>
@@ -131,8 +136,9 @@
         </div>
         <div data-anim="fade" style="opacity:0; transition:opacity .8s ease; width:40px; height:5px; background:var(--accent,#FFF100); margin:30px auto"></div>
 
-        <div style="position:relative; aspect-ratio:21/9; min-height:320px; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; overflow:hidden">
-          <div style="position:absolute; inset:0; background:rgba(12,12,12,.45)"></div>
+        <div style="position:relative; aspect-ratio:21/9; min-height:320px; background-color:#0C0C0C; background-image:url(https://i.ytimg.com/vi/AwGjc8Yz8fc/maxres2.jpg); background-size:cover; background-position:center; border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; overflow:hidden">
+          <iframe src="https://www.youtube-nocookie.com/embed/AwGjc8Yz8fc?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=AwGjc8Yz8fc&amp;controls=0&amp;modestbranding=1&amp;rel=0&amp;playsinline=1&amp;disablekb=1&amp;fs=0&amp;iv_load_policy=3" title="The Long Light" allow="autoplay; encrypted-media" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:100%; min-width:570px; aspect-ratio:16/9; border:0; pointer-events:none; opacity:0; animation:videoIn 1.6s ease 4s forwards"></iframe>
+          <div style="position:absolute; inset:0; background:rgba(12,12,12,.5)"></div>
           <div style="position:relative; text-align:center; padding:0 70px">
             <p style="font-family:Karla,sans-serif; font-weight:700; font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--accent,#FFF100); margin:0 0 14px">Brand Film</p>
             <h3 style="font-family:'Six Caps',sans-serif; font-size:clamp(48px,7vw,80px); line-height:1; letter-spacing:2px; text-transform:uppercase; color:#fff; margin:0">The Long Light</h3>
@@ -149,60 +155,18 @@
         </div>
 
         <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:28px; margin-top:42px">
-          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease, transform .45s cubic-bezier(.13,1.07,.64,.97), box-shadow .45s ease, border-color .45s ease; position:relative; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); cursor:pointer; will-change:transform" style-hover="transform:translateY(-14px) scale(1.02); box-shadow:0 26px 50px -14px rgba(0,0,0,.85); border-color:rgba(255,255,255,.22); z-index:2">
-            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid #fff; border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-            <div style="position:absolute; left:0; right:0; bottom:0; padding:16px 18px; font-family:Karla,sans-serif; font-size:13px; letter-spacing:.1em; color:rgba(255,255,255,.6)">Aoyama Coffee Works</div>
-            <div style="position:absolute; inset:0; background:rgba(10,10,10,.9); opacity:0; transition:opacity .3s ease" style-hover="opacity:1">
-              <div style="position:absolute; left:20px; top:14px; font-family:'Six Caps',sans-serif; font-size:38px; line-height:1.1; letter-spacing:1px; text-transform:uppercase; color:#fff">Aoyama Coffee Works</div>
-              <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid var(--accent,#FFF100); border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-              <div style="position:absolute; left:20px; bottom:14px; font-family:ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.16em; color:rgba(255,255,255,.4)">preview autoplay / muted</div>
+          <sc-for list="{{ works }}" as="w" hint-placeholder-count="6">
+            <div data-anim="fade" onMouseEnter="{{ w.enter }}" onMouseLeave="{{ w.leave }}" style="opacity:0; transition:opacity .8s ease, transform .45s cubic-bezier(.13,1.07,.64,.97), box-shadow .45s ease, border-color .45s ease; position:relative; aspect-ratio:16/9; background-color:#121212; background-image:url({{ w.thumb }}); background-size:cover; background-position:center; border:1px solid rgba(255,255,255,.08); cursor:pointer; overflow:hidden; will-change:transform" style-hover="transform:translateY(-14px) scale(1.02); box-shadow:0 26px 50px -14px rgba(0,0,0,.85); border-color:rgba(255,255,255,.22); z-index:2">
+              <sc-if value="{{ w.playing }}" hint-placeholder-val="{{ false }}">
+                <iframe src="{{ w.embed }}" title="{{ w.title }}" allow="autoplay; encrypted-media" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; transform:scale(1.45)"></iframe>
+              </sc-if>
+              <sc-if value="{{ w.idle }}" hint-placeholder-val="{{ true }}">
+                <div style="position:absolute; inset:0; background:rgba(12,12,12,.4)"></div>
+                <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid #fff; border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
+              </sc-if>
+              <div style="position:absolute; left:0; right:0; bottom:0; padding:16px 18px; background-image:linear-gradient(to top, rgba(10,10,10,.85), rgba(10,10,10,0)); font-family:Karla,sans-serif; font-size:13px; letter-spacing:.1em; color:rgba(255,255,255,.85)">{{ w.title }}</div>
             </div>
-          </div>
-          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease, transform .45s cubic-bezier(.13,1.07,.64,.97), box-shadow .45s ease, border-color .45s ease; position:relative; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); cursor:pointer; will-change:transform" style-hover="transform:translateY(-14px) scale(1.02); box-shadow:0 26px 50px -14px rgba(0,0,0,.85); border-color:rgba(255,255,255,.22); z-index:2">
-            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid #fff; border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-            <div style="position:absolute; left:0; right:0; bottom:0; padding:16px 18px; font-family:Karla,sans-serif; font-size:13px; letter-spacing:.1em; color:rgba(255,255,255,.6)">Setouchi Ferry</div>
-            <div style="position:absolute; inset:0; background:rgba(10,10,10,.9); opacity:0; transition:opacity .3s ease" style-hover="opacity:1">
-              <div style="position:absolute; left:20px; top:14px; font-family:'Six Caps',sans-serif; font-size:38px; line-height:1.1; letter-spacing:1px; text-transform:uppercase; color:#fff">Setouchi Ferry</div>
-              <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid var(--accent,#FFF100); border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-              <div style="position:absolute; left:20px; bottom:14px; font-family:ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.16em; color:rgba(255,255,255,.4)">preview autoplay / muted</div>
-            </div>
-          </div>
-          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease, transform .45s cubic-bezier(.13,1.07,.64,.97), box-shadow .45s ease, border-color .45s ease; position:relative; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); cursor:pointer; will-change:transform" style-hover="transform:translateY(-14px) scale(1.02); box-shadow:0 26px 50px -14px rgba(0,0,0,.85); border-color:rgba(255,255,255,.22); z-index:2">
-            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid #fff; border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-            <div style="position:absolute; left:0; right:0; bottom:0; padding:16px 18px; font-family:Karla,sans-serif; font-size:13px; letter-spacing:.1em; color:rgba(255,255,255,.6)">Kiso Woodwork</div>
-            <div style="position:absolute; inset:0; background:rgba(10,10,10,.9); opacity:0; transition:opacity .3s ease" style-hover="opacity:1">
-              <div style="position:absolute; left:20px; top:14px; font-family:'Six Caps',sans-serif; font-size:38px; line-height:1.1; letter-spacing:1px; text-transform:uppercase; color:#fff">Kiso Woodwork</div>
-              <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid var(--accent,#FFF100); border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-              <div style="position:absolute; left:20px; bottom:14px; font-family:ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.16em; color:rgba(255,255,255,.4)">preview autoplay / muted</div>
-            </div>
-          </div>
-          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease, transform .45s cubic-bezier(.13,1.07,.64,.97), box-shadow .45s ease, border-color .45s ease; position:relative; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); cursor:pointer; will-change:transform" style-hover="transform:translateY(-14px) scale(1.02); box-shadow:0 26px 50px -14px rgba(0,0,0,.85); border-color:rgba(255,255,255,.22); z-index:2">
-            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid #fff; border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-            <div style="position:absolute; left:0; right:0; bottom:0; padding:16px 18px; font-family:Karla,sans-serif; font-size:13px; letter-spacing:.1em; color:rgba(255,255,255,.6)">Nightwalk / MV</div>
-            <div style="position:absolute; inset:0; background:rgba(10,10,10,.9); opacity:0; transition:opacity .3s ease" style-hover="opacity:1">
-              <div style="position:absolute; left:20px; top:14px; font-family:'Six Caps',sans-serif; font-size:38px; line-height:1.1; letter-spacing:1px; text-transform:uppercase; color:#fff">Nightwalk / MV</div>
-              <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid var(--accent,#FFF100); border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-              <div style="position:absolute; left:20px; bottom:14px; font-family:ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.16em; color:rgba(255,255,255,.4)">preview autoplay / muted</div>
-            </div>
-          </div>
-          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease, transform .45s cubic-bezier(.13,1.07,.64,.97), box-shadow .45s ease, border-color .45s ease; position:relative; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); cursor:pointer; will-change:transform" style-hover="transform:translateY(-14px) scale(1.02); box-shadow:0 26px 50px -14px rgba(0,0,0,.85); border-color:rgba(255,255,255,.22); z-index:2">
-            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid #fff; border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-            <div style="position:absolute; left:0; right:0; bottom:0; padding:16px 18px; font-family:Karla,sans-serif; font-size:13px; letter-spacing:.1em; color:rgba(255,255,255,.6)">Wedding / M &amp; S</div>
-            <div style="position:absolute; inset:0; background:rgba(10,10,10,.9); opacity:0; transition:opacity .3s ease" style-hover="opacity:1">
-              <div style="position:absolute; left:20px; top:14px; font-family:'Six Caps',sans-serif; font-size:38px; line-height:1.1; letter-spacing:1px; text-transform:uppercase; color:#fff">Wedding / M &amp; S</div>
-              <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid var(--accent,#FFF100); border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-              <div style="position:absolute; left:20px; bottom:14px; font-family:ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.16em; color:rgba(255,255,255,.4)">preview autoplay / muted</div>
-            </div>
-          </div>
-          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease, transform .45s cubic-bezier(.13,1.07,.64,.97), box-shadow .45s ease, border-color .45s ease; position:relative; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); cursor:pointer; will-change:transform" style-hover="transform:translateY(-14px) scale(1.02); box-shadow:0 26px 50px -14px rgba(0,0,0,.85); border-color:rgba(255,255,255,.22); z-index:2">
-            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid #fff; border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-            <div style="position:absolute; left:0; right:0; bottom:0; padding:16px 18px; font-family:Karla,sans-serif; font-size:13px; letter-spacing:.1em; color:rgba(255,255,255,.6)">Sanriku Divers</div>
-            <div style="position:absolute; inset:0; background:rgba(10,10,10,.9); opacity:0; transition:opacity .3s ease" style-hover="opacity:1">
-              <div style="position:absolute; left:20px; top:14px; font-family:'Six Caps',sans-serif; font-size:38px; line-height:1.1; letter-spacing:1px; text-transform:uppercase; color:#fff">Sanriku Divers</div>
-              <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid var(--accent,#FFF100); border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-              <div style="position:absolute; left:20px; bottom:14px; font-family:ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.16em; color:rgba(255,255,255,.4)">preview autoplay / muted</div>
-            </div>
-          </div>
+          </sc-for>
         </div>
         <div style="display:flex; justify-content:center; margin-top:48px">
           <a href="#works" style="font-family:Karla,sans-serif; font-weight:700; font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:#0C0C0C; border:2px solid var(--accent,#FFF100); padding:13px 33px; background-image:linear-gradient(to top, #0C0C0C 50%, var(--accent,#FFF100) 50%); background-size:100% 200%; background-position:0 0; transition:background-position .3s ease, color .3s ease" style-hover="background-position:0 100%; color:var(--accent,#FFF100)">View more</a>
@@ -290,7 +254,9 @@
 
     <section style="padding:0 24px 110px; background:#0C0C0C">
       <div style="max-width:1140px; margin:0 auto; display:flex; flex-wrap:wrap; gap:56px; align-items:center">
-        <div style="flex:1 1 460px; min-width:300px; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.14em; color:rgba(255,255,255,.3)">[ sample film ]</div>
+        <div style="flex:1 1 460px; min-width:300px; position:relative; aspect-ratio:16/9; background:#000000; border:1px solid rgba(255,255,255,.08); overflow:hidden">
+          <iframe src="https://www.youtube-nocookie.com/embed/4HW_ymYfC2I?rel=0&amp;modestbranding=1&amp;playsinline=1" title="Sample film" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style="position:absolute; inset:0; width:100%; height:100%; border:0"></iframe>
+        </div>
         <div style="flex:1 1 340px; min-width:300px">
           <h3 style="font-family:'Six Caps',sans-serif; font-size:40px; line-height:1; letter-spacing:1px; text-transform:uppercase; color:#fff; margin:0">Spec</h3>
           <div style="width:40px; height:5px; background:var(--accent,#FFF100); margin:24px 0 28px"></div>
@@ -415,7 +381,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#FFF100&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#FFF100&quot;,&quot;#FF4A1C&quot;,&quot;#8AF0C8&quot;,&quot;#FFFFFF&quot;],&quot;section&quot;:&quot;Theme&quot;},&quot;showLoader&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;pushMenu&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;sideDots&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
 class Component extends DCLogic {
-  state = { page: 'home', menu: false, loading: true, fading: false, y: 0, w: 1440, active: 'home', hoverDot: null, tab: 0, sent: false };
+  state = { page: 'home', menu: false, loading: true, fading: false, y: 0, w: 1440, active: 'home', hoverDot: null, hoverWork: null, tab: 0, sent: false };
 
   componentDidMount() {
     this.applyAccent();
@@ -508,6 +474,18 @@ class Component extends DCLogic {
       { id: 'profile', label: 'Profile' }, { id: 'about', label: 'About' }, { id: 'price', label: 'Price' },
       { id: 'contact', label: 'Contact' }
     ];
+    // 仮素材。本番は高本の実作品に差し替える
+    const workItems = [
+      { id: 'DhVz3xsAis0', title: 'Aoyama Coffee Works' },
+      { id: '0hpkWLJzYQs', title: 'Setouchi Ferry' },
+      { id: 'tSmyaP5QfeM', title: 'Kiso Woodwork' },
+      { id: 'FfBE5_gqTSY', title: 'Nightwalk / MV' },
+      { id: 'UyBsm2wU8ag', title: 'Wedding / M & S' },
+      { id: '4hs_GGss_Nc', title: 'Sanriku Divers' }
+    ];
+    const previewSrc = (id) => 'https://www.youtube-nocookie.com/embed/' + id +
+      '?autoplay=1&mute=1&loop=1&playlist=' + id +
+      '&controls=0&modestbranding=1&rel=0&playsinline=1&disablekb=1&fs=0&iv_load_policy=3';
     const tabLabels = ['Drone', 'Audio', 'Grading', 'Vertical'];
     const tabBodies = [
       'ドローン空撮（国交省許可取得済み・機体2種）。1フライトあたり ¥40,000〜。天候による予備日の設定を含みます。',
@@ -538,6 +516,15 @@ class Component extends DCLogic {
         color: s.tab === i ? '#0D0D0D' : 'rgba(0,0,0,.42)',
         line: s.tab === i ? (this.props.accent || '#FFF100') : 'transparent',
         click: () => this.setState({ tab: i })
+      })),
+      works: workItems.map((w, i) => ({
+        title: w.title,
+        thumb: 'https://i.ytimg.com/vi/' + w.id + '/maxres2.jpg',
+        embed: previewSrc(w.id),
+        playing: s.hoverWork === i,
+        idle: s.hoverWork !== i,
+        enter: () => this.setState({ hoverWork: i }),
+        leave: () => this.setState({ hoverWork: null })
       })),
       dots: secs.map((x) => ({
         href: '#' + x.id,
