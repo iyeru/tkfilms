@@ -15,7 +15,6 @@ const CALM_HOLD_MS = 600;
 export function Loader() {
   const [phase, setPhase] = useState<'in' | 'out' | 'gone'>('in');
   const [fontReady, setFontReady] = useState(false);
-  const [barFull, setBarFull] = useState(false);
 
   const calm = useMemo(
     () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false,
@@ -45,8 +44,6 @@ export function Loader() {
       at(Math.max(0, until - (Date.now() - start)), hide);
     };
 
-    // バーは 0% で描いてから 100% へ動かす（transition を効かせるため1フレーム置く）
-    at(50, () => setBarFull(true));
     at(hold, settle);
     at(MAX_MS, hide);
 
@@ -73,34 +70,29 @@ export function Loader() {
     <div
       aria-hidden
       className={cn(
-        'fixed inset-0 z-120 flex flex-col items-center justify-center gap-10 bg-[#1D1D1D]',
+        'fixed inset-0 z-120 flex items-center justify-center overflow-hidden bg-[#1D1D1D]',
         'transition-opacity duration-500 ease-brand',
         phase === 'out' && 'pointer-events-none opacity-0',
       )}
     >
-      <div className="relative flex aspect-square w-[min(320px,70vw)] items-center justify-center rounded-full border border-white/12">
-        <div className="absolute inset-[30px] rounded-full border border-white/8" />
-        <div className="absolute inset-[30px] animate-ring rounded-full border border-transparent border-t-accent" />
+      {/* ファインダーの十字線。画面いっぱいに引き、リングの中心と重ねる */}
+      <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-white/7" />
+      <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-white/7" />
+
+      <div className="relative flex aspect-square w-[min(380px,70vw)] items-center justify-center rounded-full border border-white/12">
+        {/* 間隔を % で置き、画面が狭くなっても二重丸の比率を保つ。
+            % はパディングボックス基準なので、380px のとき内円が 309px になる値 */}
+        <div className="absolute inset-[9.1%] rounded-full border border-white/8" />
+        <div className="absolute inset-[9.1%] animate-ring rounded-full border border-transparent border-t-accent" />
         <span
           className={cn(
-            'font-display text-[clamp(40px,12vw,56px)] leading-none tracking-[6px] whitespace-nowrap',
+            'relative font-display text-[clamp(40px,12vw,56px)] leading-none tracking-[6px] whitespace-nowrap',
             'transition-opacity duration-500 ease-brand',
             fontReady ? 'opacity-100' : 'opacity-0',
           )}
         >
           Loading
         </span>
-      </div>
-
-      {/* 待ち時間が意図的なものだと分かるように、hold と同じ長さで満ちる線を出す */}
-      <div className="h-px w-[min(180px,44vw)] bg-white/12">
-        <div
-          style={{ transitionDuration: `${hold}ms` }}
-          className={cn(
-            'h-full origin-left bg-accent transition-transform ease-linear',
-            barFull ? 'scale-x-100' : 'scale-x-0',
-          )}
-        />
       </div>
     </div>
   );
