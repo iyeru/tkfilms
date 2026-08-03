@@ -49,7 +49,7 @@ export function Header({ brandName, nav, menuOpen, onToggleMenu, onNavigate, onH
               e.preventDefault();
               onNavigate(item.id);
             }}
-            className="text-sm font-bold tracking-[1px] text-white uppercase transition-colors duration-300 hover:text-warm"
+            className="text-[14px] leading-[normal] font-bold tracking-[1px] text-white uppercase transition-colors duration-300 hover:text-warm"
           >
             {item.label}
           </a>

@@ -25,8 +25,11 @@ async function injectFreezeStyles(page: Page) {
       /* works の「THE LONG LIGHT」バナー（5点ドットのカルーセル）も、design原本の
          プレビュー機能が実写真を自動で差し込んでおり、キャプチャの度に写真が変わる。
          背景だけプレースホルダーの斜線に固定する（矢印ボタンのホバーには要素自体が
-         見えている必要があるため、visibility:hidden で丸ごと隠すことはしない） */
-      [style*="21 / 9"] { background-image: repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px) !important; }
+         見えている必要があるため、visibility:hidden で丸ごと隠すことはしない）。
+         design は比率をインラインの aspect-ratio で、react は Tailwind のクラスで
+         表しているため、同じ枠を指すのに2つのセレクタが要る */
+      [style*="21 / 9"],
+      [class*="aspect-21/9"] { background-image: repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px) !important; }
     `,
   });
 }

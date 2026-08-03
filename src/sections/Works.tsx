@@ -24,7 +24,7 @@ export function Works({ works }: { works: WorksContent }) {
       <div className="mt-12 flex justify-center">
         <a
           href="#works"
-          className="border-2 border-warm bg-[linear-gradient(to_top,var(--color-bg)_50%,var(--color-warm)_50%)] bg-[length:100%_200%] bg-[position:0_0] px-[33px] py-[13px] text-[13px] font-bold tracking-[0.14em] text-bg uppercase transition-[background-position,color] duration-300 hover:bg-[position:0_100%] hover:text-warm"
+          className="border-2 border-warm bg-[linear-gradient(to_top,var(--color-bg)_50%,var(--color-warm)_50%)] bg-[length:100%_200%] bg-[position:0_0] px-[33px] py-[13px] text-[13px] leading-[normal] font-bold tracking-[0.14em] text-bg uppercase transition-[background-position,color] duration-300 hover:bg-[position:0_100%] hover:text-warm"
         >
           {works.moreLabel}
         </a>
@@ -54,7 +54,7 @@ function Feature({ feature }: { feature: WorksContent['feature'] }) {
       <div aria-hidden className="absolute inset-0 bg-[rgb(12_12_12/0.5)]" />
 
       <div className="relative px-[clamp(22px,8vw,70px)] text-center">
-        <p className="mb-3.5 text-xs font-bold tracking-[0.24em] text-cool uppercase">
+        <p className="mb-3.5 text-[12px] leading-[normal] font-bold tracking-[0.24em] text-cool uppercase">
           {feature.category}
         </p>
         <h3 className="font-display text-[clamp(34px,7vw,80px)] leading-none tracking-[2px] uppercase">
@@ -83,7 +83,7 @@ function SlideButton({ side }: { side: 'prev' | 'next' }) {
       type="button"
       aria-label={side === 'prev' ? '前の作品' : '次の作品'}
       className={cn(
-        'absolute top-1/2 h-[clamp(40px,11vw,52px)] w-[clamp(40px,11vw,52px)] -translate-y-1/2 rounded-full border border-white/40 bg-black/25 text-base text-white',
+        'absolute top-1/2 h-[clamp(40px,11vw,52px)] w-[clamp(40px,11vw,52px)] -translate-y-1/2 rounded-full border border-white/40 bg-black/25 text-[16px] leading-[normal] text-white',
         'transition-[background-color,color,border-color,transform] duration-350 ease-brand hover:scale-112 hover:border-warm hover:bg-warm hover:text-bg',
         side === 'prev' ? 'left-[clamp(10px,3vw,22px)]' : 'right-[clamp(10px,3vw,22px)]',
       )}

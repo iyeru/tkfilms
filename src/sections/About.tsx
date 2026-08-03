@@ -20,11 +20,14 @@ export function About({ about }: { about: AboutContent }) {
           ))}
         </div>
 
-        <dl className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-x-7 gap-y-5">
+        {/* 行間は原本と同じく親に持たせる。ラベルは倍率を継いだうえで字だけ小さくする */}
+        <dl className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-x-7 gap-y-5 text-sm leading-[1.7] text-white/70">
           {about.meta.map((entry) => (
             <div key={entry.label}>
-              <dt className="mb-1.5 text-xs font-bold tracking-[0.1em] uppercase">{entry.label}</dt>
-              <dd className="m-0 text-sm leading-[1.7] text-white/70">{entry.value}</dd>
+              <dt className="mb-1.5 text-[12px] leading-[1.7] font-bold tracking-[0.1em] text-white uppercase">
+                {entry.label}
+              </dt>
+              <dd className="m-0">{entry.value}</dd>
             </div>
           ))}
         </dl>

@@ -50,7 +50,7 @@ export function BackToTop({ visible }: { visible: boolean }) {
       aria-label="ページ先頭へ戻る"
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       className={cn(
-        'fixed right-[50px] bottom-[125px] z-98 h-[50px] w-[50px] border-0 text-base text-white',
+        'fixed right-[50px] bottom-[125px] z-98 h-[50px] w-[50px] border-0 text-[16px] leading-[normal] text-white',
         'bg-[linear-gradient(to_top,var(--color-warm)_50%,#333_50%)] bg-[length:100%_200%] bg-[position:0_0]',
         'transition-[opacity,background-position,color] duration-300 hover:bg-[position:0_100%] hover:text-bg',
         visible ? 'opacity-100' : 'pointer-events-none opacity-0',

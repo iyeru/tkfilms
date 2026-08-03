@@ -39,7 +39,7 @@ export function PricePage({ price, onBack }: { price: PricePageContent; onBack: 
           <div className="mt-14 grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-7">
             {price.plans.map((plan) => (
               <div key={plan.tag} className="border border-white/12 p-9">
-                <p className="mb-2.5 text-xs font-bold tracking-[0.24em] text-cool uppercase">
+                <p className="mb-2.5 text-[12px] leading-[normal] font-bold tracking-[0.24em] text-cool uppercase">
                   {plan.tag}
                 </p>
                 <h3 className="mb-1.5 font-display text-[40px] leading-none tracking-[1px] uppercase">
@@ -96,7 +96,7 @@ export function PricePage({ price, onBack }: { price: PricePageContent; onBack: 
                 type="button"
                 onClick={() => setTab(i)}
                 className={cn(
-                  'border-b-[3px] pb-3.5 text-sm font-bold tracking-[0.14em] uppercase transition-colors duration-300',
+                  'border-b-[3px] pb-3.5 text-[14px] leading-[normal] font-bold tracking-[0.14em] uppercase transition-colors duration-300',
                   i === tab
                     ? 'border-warm text-[#17181B]'
                     : 'border-transparent text-[rgb(23_24_27/0.45)]',
@@ -143,7 +143,7 @@ export function PricePage({ price, onBack }: { price: PricePageContent; onBack: 
                 e.preventDefault();
                 onBack();
               }}
-              className="inline-block border-2 border-warm bg-[linear-gradient(to_top,var(--color-warm)_50%,transparent_50%)] bg-[length:100%_200%] bg-[position:0_0] px-[35px] py-[18px] text-base font-bold tracking-[0.08em] text-white uppercase transition-[background-position,color] duration-300 hover:bg-[position:0_100%] hover:text-bg"
+              className="inline-block border-2 border-warm bg-[linear-gradient(to_top,var(--color-warm)_50%,transparent_50%)] bg-[length:100%_200%] bg-[position:0_0] px-[35px] py-[18px] text-[16px] leading-[normal] font-bold tracking-[0.08em] text-white uppercase transition-[background-position,color] duration-300 hover:bg-[position:0_100%] hover:text-bg"
             >
               {price.backLabel}
             </a>
