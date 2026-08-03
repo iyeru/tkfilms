@@ -14,18 +14,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
-<link href="https://fonts.googleapis.com/css2?family=Six+Caps&family=Karla:wght@400;700&family=Roboto:wght@100;400&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Six+Caps&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet" />
 <style>
+  /* 色温度から取ったパレット。撮影者が毎カット設定している実際の値に対応させる。
+     暖(3200K)は「押せるもの」だけ、寒(5600K)は「仕様」だけに使い、意味の分担を守る */
+  :root {
+    --base: #0B0B0C;      /* 素材の黒 */
+    --stock: #15161A;     /* 交互セクション。フィルムベース寄りに青を残す */
+    --warm: #E9A94B;      /* 3200K タングステン: CTA・リンク・フォーカス */
+    --cool: #93B4C9;      /* 5600K デイライト: 比率タグ・スペック・工程番号・金額 */
+    --paper: #E9E5DC;     /* 明色セクションの地。純白は使わない */
+    --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
   *, *::before, *::after { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { margin: 0; background: #0C0C0C; color: #fff; font-family: Karla, "Noto Sans JP", sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-  a { color: #FFF100; text-decoration: none; }
+  body { margin: 0; background: var(--base); color: #fff; font-family: "Zen Kaku Gothic New", sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: var(--warm); text-decoration: none; }
   a:hover { color: #ffffff; }
-  input, textarea { font-family: Karla, "Noto Sans JP", sans-serif; }
+  input, textarea { font-family: "Zen Kaku Gothic New", sans-serif; }
   input::placeholder, textarea::placeholder { color: rgba(255,255,255,.5); }
-  ::selection { background: #FFF100; color: #0C0C0C; }
+  ::selection { background: var(--warm); color: var(--base); }
+  /* 比率タグ。作品を実寸の画角で見せるための添え字なので、寒色（仕様）側に置く */
+  .ratio { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--cool); }
   @keyframes spin { to { transform: rotate(360deg); } }
   @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+  /* 背景動画は再生が始まるまで黒板を出す。下に敷いたサムネイルを見せてから差し替える */
+  @keyframes videoIn { to { opacity: 1; } }
+  /* シネスコ素材を本来より狭い枠（コンタクトシートの 16:9・Instagram の 1:1）へ入れるときだけ使う。
+     帯の分だけ拡大して枠外へ逃がす。Works は 2.39:1 のまま出すので対象外 */
+  [data-scope] { background-size: auto 132% !important; background-repeat: no-repeat; }
 </style>
 </helmet>
 
@@ -37,7 +54,7 @@
     <div style="position:absolute; top:0; bottom:0; left:50%; width:1px; background:rgba(255,255,255,.07)"></div>
     <div style="position:relative; width:min(380px,80vw); aspect-ratio:1; border:1px solid rgba(255,255,255,.12); border-radius:50%; display:flex; align-items:center; justify-content:center">
       <div style="position:absolute; inset:34px; border:1px solid rgba(255,255,255,.08); border-radius:50%"></div>
-      <div style="position:absolute; inset:34px; border:1px solid transparent; border-top-color:var(--accent,#FFF100); border-radius:50%; animation:spin 1.1s linear infinite"></div>
+      <div style="position:absolute; inset:34px; border:1px solid transparent; border-top-color:rgba(255,255,255,.45); border-radius:50%; animation:spin 1.1s linear infinite"></div>
       <span style="font-family:'Six Caps',sans-serif; font-size:56px; letter-spacing:6px; color:#fff; line-height:1">LOADING</span>
     </div>
   </div>
@@ -51,11 +68,11 @@
     <div style="flex:1"></div>
     <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
       <nav style="position:relative; display:flex; align-items:center; gap:30px">
-        <a href="#works" onClick="{{ navWorks }}" style="font-family:Karla,sans-serif; font-weight:700; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff" style-hover="color:var(--accent,#FFF100)">Works</a>
-        <a href="#profile" onClick="{{ navProfile }}" style="font-family:Karla,sans-serif; font-weight:700; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff" style-hover="color:var(--accent,#FFF100)">Profile</a>
-        <a href="#about" onClick="{{ navAbout }}" style="font-family:Karla,sans-serif; font-weight:700; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff" style-hover="color:var(--accent,#FFF100)">About</a>
-        <a href="#price" onClick="{{ openPrice }}" style="font-family:Karla,sans-serif; font-weight:700; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff" style-hover="color:var(--accent,#FFF100)">Price</a>
-        <a href="#contact" onClick="{{ navContact }}" style="font-family:Karla,sans-serif; font-weight:700; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff" style-hover="color:var(--accent,#FFF100)">Contact</a>
+        <a href="#works" onClick="{{ navWorks }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff" style-hover="color:var(--warm)">Works</a>
+        <a href="#profile" onClick="{{ navProfile }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff" style-hover="color:var(--warm)">Profile</a>
+        <a href="#about" onClick="{{ navAbout }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff" style-hover="color:var(--warm)">About</a>
+        <a href="#price" onClick="{{ openPrice }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff" style-hover="color:var(--warm)">Price</a>
+        <a href="#contact" onClick="{{ navContact }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff" style-hover="color:var(--warm)">Contact</a>
       </nav>
     </sc-if>
     <button onClick="{{ toggleMenu }}" aria-label="Menu" style="position:relative; display:{{ burgerDisplay }}; flex-direction:column; justify-content:space-between; width:50px; height:12px; padding:0; border:0; background:transparent; cursor:pointer">
@@ -69,7 +86,7 @@
     <div style="position:fixed; right:44px; top:50%; transform:translateY(-50%); z-index:99996; display:flex; flex-direction:column; gap:14px">
       <sc-for list="{{ dots }}" as="d" hint-placeholder-count="6">
         <a href="{{ d.href }}" onClick="{{ d.click }}" onMouseEnter="{{ d.enter }}" onMouseLeave="{{ d.leave }}" style="position:relative; display:block; width:12px; height:12px; border-radius:50%; border:2px solid #fff; background:{{ d.bg }}">
-          <span style="position:absolute; right:22px; top:50%; transform:translateY(-50%); white-space:nowrap; font-family:Karla,sans-serif; font-weight:700; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#fff; opacity:{{ d.tip }}; transition:opacity .3s">{{ d.label }}</span>
+          <span style="position:absolute; right:22px; top:50%; transform:translateY(-50%); white-space:nowrap; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#fff; opacity:{{ d.tip }}; transition:opacity .3s">{{ d.label }}</span>
         </a>
       </sc-for>
     </div>
@@ -77,42 +94,44 @@
 
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
   <div>
-    <section id="home" data-sec="home" data-screen-label="Hero" style="position:relative; height:100vh; min-height:620px; display:flex; align-items:center; justify-content:center; overflow:hidden; background:#0C0C0C">
-      <div style="position:absolute; inset:0; background-image:repeating-linear-gradient(45deg,#1b1b1b 0 14px,#131313 14px 28px)"></div>
-      <div style="position:absolute; inset:0; background-image:radial-gradient(rgba(0,0,0,.85) 1px, transparent 1px); background-size:4px 4px; opacity:.55"></div>
-      <div style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(12,12,12,.25) 0%, rgba(12,12,12,.9) 100%)"></div>
-      <div style="position:absolute; left:clamp(20px,4vw,50px); bottom:38px; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.2em; color:rgba(255,255,255,.28); text-transform:uppercase">[ showreel.mp4 — muted / loop / object-fit: cover ]</div>
+    <section id="home" data-sec="home" data-screen-label="Hero" style="position:relative; height:100vh; min-height:620px; display:flex; align-items:center; justify-content:center; overflow:hidden; background-color:#0B0B0C; background-image:url(https://i.ytimg.com/vi/V-qTEo9IHTA/maxres2.jpg); background-size:cover; background-position:center">
+      <div style="position:absolute; inset:0; overflow:hidden; pointer-events:none">
+        <iframe src="https://www.youtube-nocookie.com/embed/V-qTEo9IHTA?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=V-qTEo9IHTA&amp;controls=0&amp;modestbranding=1&amp;rel=0&amp;playsinline=1&amp;disablekb=1&amp;fs=0&amp;iv_load_policy=3&amp;start=12" title="Showreel" allow="autoplay; encrypted-media" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(1.4); width:max(100vw,177.78vh); height:max(56.25vw,100vh); min-width:1102px; min-height:620px; border:0; opacity:0; animation:videoIn 1.6s ease 4s forwards"></iframe>
+      </div>
+      <div style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(12,12,12,.45) 0%, rgba(12,12,12,.92) 100%)"></div>
+      <div style="position:absolute; left:clamp(20px,4vw,50px); bottom:38px; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.2em; color:rgba(255,255,255,.28); text-transform:uppercase">[ 仮素材 — 本番は showreel.mp4 に差し替え ]</div>
       <div style="position:relative; text-align:center; padding:0 24px">
-        <p style="font-family:Roboto,sans-serif; font-weight:100; font-size:clamp(18px,3vw,26px); letter-spacing:.18em; color:rgba(255,255,255,.9); margin:0 0 18px">Filmmaker &amp; Cinematographer</p>
-        <h1 style="font-family:Roboto,sans-serif; font-weight:400; font-size:clamp(32px,6vw,45px); letter-spacing:.24em; color:#fff; margin:0; text-transform:uppercase">Studio Kairo</h1>
-        <div style="width:40px; height:5px; background:var(--accent,#FFF100); margin:34px auto 0"></div>
+        <p style="font-family:var(--mono); font-size:clamp(11px,1.4vw,13px); letter-spacing:.34em; color:var(--cool); margin:0 0 22px; text-transform:uppercase">Filmmaker &amp; Cinematographer</p>
+        <h1 style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:500; font-size:clamp(34px,6vw,48px); letter-spacing:.26em; color:#fff; margin:0; text-transform:uppercase">Studio Kairo</h1>
+        <p style="font-family:var(--mono); font-size:11px; letter-spacing:.28em; color:var(--cool); margin:30px 0 0">TOKYO &mdash; SINCE 2016</p>
       </div>
       <div style="position:absolute; bottom:38px; left:50%; transform:translateX(-50%); animation:bob 2.4s ease-in-out infinite">
-        <span style="font-family:Karla,sans-serif; font-size:22px; color:rgba(255,255,255,.6)">⌄</span>
+        <span style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:22px; color:rgba(255,255,255,.6)">⌄</span>
       </div>
     </section>
 
-    <section id="featured" data-sec="featured" data-screen-label="Featured Work" style="min-height:100vh; padding:110px 24px; display:flex; align-items:center; background:#131313">
+    <section id="featured" data-sec="featured" data-screen-label="Featured Work" style="min-height:100vh; padding:110px 24px; display:flex; align-items:center; background:#15161A">
       <div style="width:100%; max-width:1140px; margin:0 auto">
         <div data-anim="up" style="opacity:0; transform:translateY(30px); transition:opacity .8s cubic-bezier(.13,1.07,.64,.97), transform .8s cubic-bezier(.13,1.07,.64,.97); text-align:center">
           <h2 style="font-family:'Six Caps',sans-serif; font-size:clamp(64px,9vw,96px); line-height:1; letter-spacing:1px; text-transform:uppercase; color:#fff; margin:0">Featured Work</h2>
         </div>
-        <div data-anim="fade" style="opacity:0; transition:opacity .8s ease; width:40px; height:5px; background:var(--accent,#FFF100); margin:30px auto"></div>
-        <p data-anim="fade" style="opacity:0; transition:opacity .8s ease; text-align:center; font-family:Karla,sans-serif; font-size:16px; line-height:1.88; color:rgba(255,255,255,.7); max-width:620px; margin:0 auto 56px">2025年 / ブランドフィルム「THE LONG LIGHT」— 撮影・編集・カラーグレーディングまで一貫制作</p>
-        <div data-anim="fade" style="opacity:0; transition:opacity .9s ease; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:12px; letter-spacing:.16em; color:rgba(255,255,255,.35); text-transform:uppercase">[ main film — 16:9 embed ]</div>
+        <p data-anim="fade" style="opacity:0; transition:opacity .8s ease; text-align:center; font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; line-height:1.88; color:rgba(255,255,255,.7); max-width:620px; margin:0 auto 56px">2025年 / ブランドフィルム「THE LONG LIGHT」— 撮影・編集・カラーグレーディングまで一貫制作</p>
+        <div data-anim="fade" style="opacity:0; transition:opacity .9s ease; position:relative; aspect-ratio:16/9; background:#000000; border:1px solid rgba(255,255,255,.08); overflow:hidden">
+          <iframe src="https://www.youtube-nocookie.com/embed/JfmmA2cU2-k?rel=0&amp;modestbranding=1&amp;playsinline=1" title="THE LONG LIGHT" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style="position:absolute; inset:0; width:100%; height:100%; border:0"></iframe>
+        </div>
         <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:28px; margin-top:28px">
-          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.14em; color:rgba(255,255,255,.3)">[ still 01 ]</div>
-          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.14em; color:rgba(255,255,255,.3)">[ still 02 ]</div>
-          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.14em; color:rgba(255,255,255,.3)">[ still 03 ]</div>
+          <div data-anim="fade" data-scope="1" style="opacity:0; transition:opacity .8s ease; aspect-ratio:16/9; background-color:#131418; background-image:url(https://i.ytimg.com/vi/AwGjc8Yz8fc/maxres1.jpg); background-size:cover; background-position:center; border:1px solid rgba(255,255,255,.08)"></div>
+          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease; aspect-ratio:16/9; background-color:#131418; background-image:url(https://i.ytimg.com/vi/DhVz3xsAis0/maxres1.jpg); background-size:cover; background-position:center; border:1px solid rgba(255,255,255,.08)"></div>
+          <div data-anim="fade" data-scope="1" style="opacity:0; transition:opacity .8s ease; aspect-ratio:16/9; background-color:#131418; background-image:url(https://i.ytimg.com/vi/AwGjc8Yz8fc/maxres3.jpg); background-size:cover; background-position:center; border:1px solid rgba(255,255,255,.08)"></div>
         </div>
         <div style="display:flex; flex-wrap:wrap; gap:56px; margin-top:64px">
           <div style="flex:1 1 380px; min-width:280px">
-            <h3 style="font-family:Karla,sans-serif; font-weight:700; font-size:16px; letter-spacing:.16em; text-transform:uppercase; color:#fff; margin:0 0 18px">Message</h3>
-            <p style="font-family:Karla,sans-serif; font-size:16px; line-height:1.88; color:rgba(255,255,255,.7); margin:0">A film is a record of light that will never happen twice. We shoot the quiet minutes between the ones everybody remembers — the breath before the door opens, the hand that hesitates. That is where a brand actually lives.</p>
+            <h3 style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:16px; letter-spacing:.16em; text-transform:uppercase; color:#fff; margin:0 0 18px">Message</h3>
+            <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; line-height:1.88; color:rgba(255,255,255,.7); margin:0">A film is a record of light that will never happen twice. We shoot the quiet minutes between the ones everybody remembers — the breath before the door opens, the hand that hesitates. That is where a brand actually lives.</p>
           </div>
           <div style="flex:1 1 260px; min-width:240px">
-            <h3 style="font-family:Karla,sans-serif; font-weight:700; font-size:16px; letter-spacing:.16em; text-transform:uppercase; color:#fff; margin:0 0 18px">Credit</h3>
-            <div style="display:grid; grid-template-columns:auto 1fr; gap:10px 20px; font-family:Karla,sans-serif; font-size:15px; line-height:1.6">
+            <h3 style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:16px; letter-spacing:.16em; text-transform:uppercase; color:#fff; margin:0 0 18px">Credit</h3>
+            <div style="display:grid; grid-template-columns:auto 1fr; gap:10px 20px; font-family:'Zen Kaku Gothic New',sans-serif; font-size:15px; line-height:1.6">
               <span style="color:rgba(255,255,255,.4); letter-spacing:.08em">Director</span><span style="color:rgba(255,255,255,.85)">Rei Kanzaki</span>
               <span style="color:rgba(255,255,255,.4); letter-spacing:.08em">DoP</span><span style="color:rgba(255,255,255,.85)">Studio Kairo</span>
               <span style="color:rgba(255,255,255,.4); letter-spacing:.08em">Edit</span><span style="color:rgba(255,255,255,.85)">Studio Kairo</span>
@@ -124,23 +143,25 @@
       </div>
     </section>
 
-    <section id="works" data-sec="works" data-screen-label="Works" style="min-height:100vh; padding:110px 24px; display:flex; align-items:center; background:#0C0C0C">
+    <section id="works" data-sec="works" data-screen-label="Works" style="min-height:100vh; padding:110px 24px; display:flex; align-items:center; background:#0B0B0C">
       <div style="width:100%; max-width:1140px; margin:0 auto">
         <div data-anim="up" style="opacity:0; transform:translateY(30px); transition:opacity .8s cubic-bezier(.13,1.07,.64,.97), transform .8s cubic-bezier(.13,1.07,.64,.97); text-align:center">
-          <h2 style="font-family:'Six Caps',sans-serif; font-size:clamp(64px,9vw,96px); line-height:1; letter-spacing:2px; text-transform:uppercase; color:#fff; margin:0; transform:scaleX(.86); transform-origin:center">Works</h2>
+          <h2 style="font-family:'Six Caps',sans-serif; font-size:clamp(64px,9vw,96px); line-height:1; letter-spacing:2px; text-transform:uppercase; color:#fff; margin:0">Works</h2>
         </div>
-        <div data-anim="fade" style="opacity:0; transition:opacity .8s ease; width:40px; height:5px; background:var(--accent,#FFF100); margin:30px auto"></div>
 
-        <div style="position:relative; aspect-ratio:21/9; min-height:320px; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; overflow:hidden">
-          <div style="position:absolute; inset:0; background:rgba(12,12,12,.45)"></div>
-          <div style="position:relative; text-align:center; padding:0 70px">
-            <p style="font-family:Karla,sans-serif; font-weight:700; font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--accent,#FFF100); margin:0 0 14px">Brand Film</p>
-            <h3 style="font-family:'Six Caps',sans-serif; font-size:clamp(48px,7vw,80px); line-height:1; letter-spacing:2px; text-transform:uppercase; color:#fff; margin:0">The Long Light</h3>
+        <!-- aspect-ratio と min-height を併用すると、高さから幅が逆算されて枠が画面幅を超える。
+             狭い画面では比率そのものを変えて、幅の下限を作らない -->
+        <div style="position:relative; aspect-ratio:{{ slideRatio }}; background-color:#0B0B0C; background-image:url(https://i.ytimg.com/vi/AwGjc8Yz8fc/maxres2.jpg); background-size:cover; background-position:center; border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; overflow:hidden">
+          <iframe src="https://www.youtube-nocookie.com/embed/AwGjc8Yz8fc?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=AwGjc8Yz8fc&amp;controls=0&amp;modestbranding=1&amp;rel=0&amp;playsinline=1&amp;disablekb=1&amp;fs=0&amp;iv_load_policy=3" title="The Long Light" allow="autoplay; encrypted-media" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:100%; min-width:570px; aspect-ratio:16/9; border:0; pointer-events:none; opacity:0; animation:videoIn 1.6s ease 4s forwards"></iframe>
+          <div style="position:absolute; inset:0; background:rgba(12,12,12,.5)"></div>
+          <div style="position:relative; text-align:center; padding:0 clamp(22px,8vw,70px)">
+            <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--cool); margin:0 0 14px">Brand Film</p>
+            <h3 style="font-family:'Six Caps',sans-serif; font-size:clamp(34px,7vw,80px); line-height:1; letter-spacing:2px; text-transform:uppercase; color:#fff; margin:0">The Long Light</h3>
           </div>
-          <button aria-label="Previous" style="position:absolute; left:22px; top:50%; transform:translateY(-50%); width:52px; height:52px; border-radius:50%; border:1px solid rgba(255,255,255,.4); background:rgba(0,0,0,.25); color:#fff; font-size:16px; cursor:pointer; transition:background .35s ease, color .35s ease, border-color .35s ease, transform .35s cubic-bezier(.13,1.07,.64,.97)" style-hover="background:var(--accent,#FFF100); color:#0C0C0C; border-color:var(--accent,#FFF100); transform:translateY(-50%) scale(1.12)">‹</button>
-          <button aria-label="Next" style="position:absolute; right:22px; top:50%; transform:translateY(-50%); width:52px; height:52px; border-radius:50%; border:1px solid rgba(255,255,255,.4); background:rgba(0,0,0,.25); color:#fff; font-size:16px; cursor:pointer; transition:background .35s ease, color .35s ease, border-color .35s ease, transform .35s cubic-bezier(.13,1.07,.64,.97)" style-hover="background:var(--accent,#FFF100); color:#0C0C0C; border-color:var(--accent,#FFF100); transform:translateY(-50%) scale(1.12)">›</button>
+          <button aria-label="Previous" style="position:absolute; left:clamp(10px,3vw,22px); top:50%; transform:translateY(-50%); width:clamp(40px,11vw,52px); height:clamp(40px,11vw,52px); border-radius:50%; border:1px solid rgba(255,255,255,.4); background:rgba(0,0,0,.25); color:#fff; font-size:16px; cursor:pointer; transition:background .35s ease, color .35s ease, border-color .35s ease, transform .35s cubic-bezier(.13,1.07,.64,.97)" style-hover="background:var(--warm); color:#0B0B0C; border-color:var(--warm); transform:translateY(-50%) scale(1.12)">‹</button>
+          <button aria-label="Next" style="position:absolute; right:clamp(10px,3vw,22px); top:50%; transform:translateY(-50%); width:clamp(40px,11vw,52px); height:clamp(40px,11vw,52px); border-radius:50%; border:1px solid rgba(255,255,255,.4); background:rgba(0,0,0,.25); color:#fff; font-size:16px; cursor:pointer; transition:background .35s ease, color .35s ease, border-color .35s ease, transform .35s cubic-bezier(.13,1.07,.64,.97)" style-hover="background:var(--warm); color:#0B0B0C; border-color:var(--warm); transform:translateY(-50%) scale(1.12)">›</button>
           <div style="position:absolute; left:50%; bottom:22px; transform:translateX(-50%); display:flex; gap:10px">
-            <span style="width:9px; height:9px; border-radius:50%; background:var(--accent,#FFF100)"></span>
+            <span style="width:9px; height:9px; border-radius:50%; background:var(--cool)"></span>
             <span style="width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.35)"></span>
             <span style="width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.35)"></span>
             <span style="width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.35)"></span>
@@ -148,109 +169,68 @@
           </div>
         </div>
 
-        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:28px; margin-top:42px">
-          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease, transform .45s cubic-bezier(.13,1.07,.64,.97), box-shadow .45s ease, border-color .45s ease; position:relative; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); cursor:pointer; will-change:transform" style-hover="transform:translateY(-14px) scale(1.02); box-shadow:0 26px 50px -14px rgba(0,0,0,.85); border-color:rgba(255,255,255,.22); z-index:2">
-            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid #fff; border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-            <div style="position:absolute; left:0; right:0; bottom:0; padding:16px 18px; font-family:Karla,sans-serif; font-size:13px; letter-spacing:.1em; color:rgba(255,255,255,.6)">Aoyama Coffee Works</div>
-            <div style="position:absolute; inset:0; background:rgba(10,10,10,.9); opacity:0; transition:opacity .3s ease" style-hover="opacity:1">
-              <div style="position:absolute; left:20px; top:14px; font-family:'Six Caps',sans-serif; font-size:38px; line-height:1.1; letter-spacing:1px; text-transform:uppercase; color:#fff">Aoyama Coffee Works</div>
-              <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid var(--accent,#FFF100); border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-              <div style="position:absolute; left:20px; bottom:14px; font-family:ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.16em; color:rgba(255,255,255,.4)">preview autoplay / muted</div>
+        <!-- 作品を一律 16:9 に切り揃えず、撮られた画角のまま並べる。
+             シネスコ(2.39:1)の作品は2カラム分を占め、帯の分だけ横に長い枠になる。
+             不揃いは内容が決めたもので、比率そのものがこの人の仕事の情報になる -->
+        <div style="display:grid; grid-template-columns:repeat({{ workCols }},1fr); gap:28px; margin-top:42px">
+          <sc-for list="{{ works }}" as="w" hint-placeholder-count="6">
+            <div data-anim="fade" onMouseEnter="{{ w.enter }}" onMouseLeave="{{ w.leave }}" style="opacity:0; transition:opacity .8s ease, transform .45s cubic-bezier(.13,1.07,.64,.97), box-shadow .45s ease, border-color .45s ease; position:relative; grid-column:{{ w.span }}; aspect-ratio:{{ w.ratio }}; background-color:#131418; background-image:url({{ w.thumb }}); background-size:cover; background-position:center; border:1px solid rgba(255,255,255,.08); cursor:pointer; overflow:hidden; will-change:transform" style-hover="transform:translateY(-14px) scale(1.02); box-shadow:0 26px 50px -14px rgba(0,0,0,.85); border-color:rgba(255,255,255,.22); z-index:2">
+              <sc-if value="{{ w.playing }}" hint-placeholder-val="{{ false }}">
+                <iframe src="{{ w.embed }}" title="{{ w.title }}" allow="autoplay; encrypted-media" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; transform:scale(1.45)"></iframe>
+              </sc-if>
+              <sc-if value="{{ w.idle }}" hint-placeholder-val="{{ true }}">
+                <div style="position:absolute; inset:0; background:rgba(12,12,12,.4)"></div>
+                <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid #fff; border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
+              </sc-if>
+              <div style="position:absolute; left:0; right:0; bottom:0; padding:16px 18px; background-image:linear-gradient(to top, rgba(10,10,10,.85), rgba(10,10,10,0)); display:flex; align-items:baseline; justify-content:space-between; gap:14px">
+                <span style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:13px; letter-spacing:.1em; color:rgba(255,255,255,.85)">{{ w.title }}</span>
+                <span class="ratio">{{ w.label }}</span>
+              </div>
             </div>
-          </div>
-          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease, transform .45s cubic-bezier(.13,1.07,.64,.97), box-shadow .45s ease, border-color .45s ease; position:relative; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); cursor:pointer; will-change:transform" style-hover="transform:translateY(-14px) scale(1.02); box-shadow:0 26px 50px -14px rgba(0,0,0,.85); border-color:rgba(255,255,255,.22); z-index:2">
-            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid #fff; border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-            <div style="position:absolute; left:0; right:0; bottom:0; padding:16px 18px; font-family:Karla,sans-serif; font-size:13px; letter-spacing:.1em; color:rgba(255,255,255,.6)">Setouchi Ferry</div>
-            <div style="position:absolute; inset:0; background:rgba(10,10,10,.9); opacity:0; transition:opacity .3s ease" style-hover="opacity:1">
-              <div style="position:absolute; left:20px; top:14px; font-family:'Six Caps',sans-serif; font-size:38px; line-height:1.1; letter-spacing:1px; text-transform:uppercase; color:#fff">Setouchi Ferry</div>
-              <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid var(--accent,#FFF100); border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-              <div style="position:absolute; left:20px; bottom:14px; font-family:ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.16em; color:rgba(255,255,255,.4)">preview autoplay / muted</div>
-            </div>
-          </div>
-          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease, transform .45s cubic-bezier(.13,1.07,.64,.97), box-shadow .45s ease, border-color .45s ease; position:relative; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); cursor:pointer; will-change:transform" style-hover="transform:translateY(-14px) scale(1.02); box-shadow:0 26px 50px -14px rgba(0,0,0,.85); border-color:rgba(255,255,255,.22); z-index:2">
-            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid #fff; border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-            <div style="position:absolute; left:0; right:0; bottom:0; padding:16px 18px; font-family:Karla,sans-serif; font-size:13px; letter-spacing:.1em; color:rgba(255,255,255,.6)">Kiso Woodwork</div>
-            <div style="position:absolute; inset:0; background:rgba(10,10,10,.9); opacity:0; transition:opacity .3s ease" style-hover="opacity:1">
-              <div style="position:absolute; left:20px; top:14px; font-family:'Six Caps',sans-serif; font-size:38px; line-height:1.1; letter-spacing:1px; text-transform:uppercase; color:#fff">Kiso Woodwork</div>
-              <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid var(--accent,#FFF100); border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-              <div style="position:absolute; left:20px; bottom:14px; font-family:ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.16em; color:rgba(255,255,255,.4)">preview autoplay / muted</div>
-            </div>
-          </div>
-          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease, transform .45s cubic-bezier(.13,1.07,.64,.97), box-shadow .45s ease, border-color .45s ease; position:relative; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); cursor:pointer; will-change:transform" style-hover="transform:translateY(-14px) scale(1.02); box-shadow:0 26px 50px -14px rgba(0,0,0,.85); border-color:rgba(255,255,255,.22); z-index:2">
-            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid #fff; border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-            <div style="position:absolute; left:0; right:0; bottom:0; padding:16px 18px; font-family:Karla,sans-serif; font-size:13px; letter-spacing:.1em; color:rgba(255,255,255,.6)">Nightwalk / MV</div>
-            <div style="position:absolute; inset:0; background:rgba(10,10,10,.9); opacity:0; transition:opacity .3s ease" style-hover="opacity:1">
-              <div style="position:absolute; left:20px; top:14px; font-family:'Six Caps',sans-serif; font-size:38px; line-height:1.1; letter-spacing:1px; text-transform:uppercase; color:#fff">Nightwalk / MV</div>
-              <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid var(--accent,#FFF100); border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-              <div style="position:absolute; left:20px; bottom:14px; font-family:ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.16em; color:rgba(255,255,255,.4)">preview autoplay / muted</div>
-            </div>
-          </div>
-          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease, transform .45s cubic-bezier(.13,1.07,.64,.97), box-shadow .45s ease, border-color .45s ease; position:relative; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); cursor:pointer; will-change:transform" style-hover="transform:translateY(-14px) scale(1.02); box-shadow:0 26px 50px -14px rgba(0,0,0,.85); border-color:rgba(255,255,255,.22); z-index:2">
-            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid #fff; border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-            <div style="position:absolute; left:0; right:0; bottom:0; padding:16px 18px; font-family:Karla,sans-serif; font-size:13px; letter-spacing:.1em; color:rgba(255,255,255,.6)">Wedding / M &amp; S</div>
-            <div style="position:absolute; inset:0; background:rgba(10,10,10,.9); opacity:0; transition:opacity .3s ease" style-hover="opacity:1">
-              <div style="position:absolute; left:20px; top:14px; font-family:'Six Caps',sans-serif; font-size:38px; line-height:1.1; letter-spacing:1px; text-transform:uppercase; color:#fff">Wedding / M &amp; S</div>
-              <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid var(--accent,#FFF100); border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-              <div style="position:absolute; left:20px; bottom:14px; font-family:ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.16em; color:rgba(255,255,255,.4)">preview autoplay / muted</div>
-            </div>
-          </div>
-          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease, transform .45s cubic-bezier(.13,1.07,.64,.97), box-shadow .45s ease, border-color .45s ease; position:relative; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); cursor:pointer; will-change:transform" style-hover="transform:translateY(-14px) scale(1.02); box-shadow:0 26px 50px -14px rgba(0,0,0,.85); border-color:rgba(255,255,255,.22); z-index:2">
-            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid #fff; border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-            <div style="position:absolute; left:0; right:0; bottom:0; padding:16px 18px; font-family:Karla,sans-serif; font-size:13px; letter-spacing:.1em; color:rgba(255,255,255,.6)">Sanriku Divers</div>
-            <div style="position:absolute; inset:0; background:rgba(10,10,10,.9); opacity:0; transition:opacity .3s ease" style-hover="opacity:1">
-              <div style="position:absolute; left:20px; top:14px; font-family:'Six Caps',sans-serif; font-size:38px; line-height:1.1; letter-spacing:1px; text-transform:uppercase; color:#fff">Sanriku Divers</div>
-              <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center"><span style="display:block; width:0; height:0; border-left:18px solid var(--accent,#FFF100); border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px"></span></div>
-              <div style="position:absolute; left:20px; bottom:14px; font-family:ui-monospace,Menlo,monospace; font-size:10px; letter-spacing:.16em; color:rgba(255,255,255,.4)">preview autoplay / muted</div>
-            </div>
-          </div>
+          </sc-for>
         </div>
         <div style="display:flex; justify-content:center; margin-top:48px">
-          <a href="#works" style="font-family:Karla,sans-serif; font-weight:700; font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:#0C0C0C; border:2px solid var(--accent,#FFF100); padding:13px 33px; background-image:linear-gradient(to top, #0C0C0C 50%, var(--accent,#FFF100) 50%); background-size:100% 200%; background-position:0 0; transition:background-position .3s ease, color .3s ease" style-hover="background-position:0 100%; color:var(--accent,#FFF100)">View more</a>
+          <a href="#works" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:#0B0B0C; border:2px solid var(--warm); padding:13px 33px; background-image:linear-gradient(to top, #0B0B0C 50%, var(--warm) 50%); background-size:100% 200%; background-position:0 0; transition:background-position .3s ease, color .3s ease" style-hover="background-position:0 100%; color:var(--warm)">View more</a>
         </div>
       </div>
     </section>
 
-    <section id="profile" data-sec="profile" data-screen-label="Profile" style="position:relative; min-height:100vh; display:flex; align-items:center; background:#131313; padding:110px 0">
+    <section id="profile" data-sec="profile" data-screen-label="Profile" style="position:relative; min-height:100vh; display:flex; align-items:center; background:#15161A; padding:110px 0">
       <div style="width:100%">
         <div style="max-width:1140px; margin:0 auto 60px; padding:0 24px; text-align:center">
           <div data-anim="up" style="opacity:0; transform:translateY(30px); transition:opacity .8s cubic-bezier(.13,1.07,.64,.97), transform .8s cubic-bezier(.13,1.07,.64,.97)">
             <h2 style="font-family:'Six Caps',sans-serif; font-size:clamp(64px,9vw,96px); line-height:1; letter-spacing:1px; text-transform:uppercase; color:#fff; margin:0">Profile</h2>
           </div>
-          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease; width:40px; height:5px; background:var(--accent,#FFF100); margin:30px auto"></div>
         </div>
-        <div style="position:relative; width:100%; height:min(62vh,520px); background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); display:flex; align-items:center; justify-content:center">
-          <span style="font-family:ui-monospace,Menlo,monospace; font-size:12px; letter-spacing:.16em; color:rgba(255,255,255,.3); text-transform:uppercase">[ behind the scenes — full bleed slider ]</span>
-          <button aria-label="Previous" style="position:absolute; left:clamp(16px,4vw,60px); top:50%; transform:translateY(-50%); width:70px; height:70px; border-radius:50%; border:1px solid rgba(255,255,255,.45); background:transparent; color:#fff; font-size:20px; cursor:pointer; transition:background .35s ease, color .35s ease, border-color .35s ease, transform .35s cubic-bezier(.13,1.07,.64,.97)" style-hover="background:var(--accent,#FFF100); color:#0C0C0C; border-color:var(--accent,#FFF100); transform:translateY(-50%) scale(1.12)">‹</button>
-          <button aria-label="Next" style="position:absolute; right:clamp(16px,4vw,60px); top:50%; transform:translateY(-50%); width:70px; height:70px; border-radius:50%; border:1px solid rgba(255,255,255,.45); background:transparent; color:#fff; font-size:20px; cursor:pointer; transition:background .35s ease, color .35s ease, border-color .35s ease, transform .35s cubic-bezier(.13,1.07,.64,.97)" style-hover="background:var(--accent,#FFF100); color:#0C0C0C; border-color:var(--accent,#FFF100); transform:translateY(-50%) scale(1.12)">›</button>
+        <div style="position:relative; width:100%; height:min(62vh,520px); background-color:#131418; background-image:url({{ slideShot }}); background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center">
+          <div style="position:absolute; inset:0; background:rgba(12,12,12,.25)"></div>
+          <button aria-label="Previous" onClick="{{ slidePrev }}" style="position:absolute; left:clamp(16px,4vw,60px); top:50%; transform:translateY(-50%); width:70px; height:70px; border-radius:50%; border:1px solid rgba(255,255,255,.45); background:transparent; color:#fff; font-size:20px; cursor:pointer; transition:background .35s ease, color .35s ease, border-color .35s ease, transform .35s cubic-bezier(.13,1.07,.64,.97)" style-hover="background:var(--warm); color:#0B0B0C; border-color:var(--warm); transform:translateY(-50%) scale(1.12)">‹</button>
+          <button aria-label="Next" onClick="{{ slideNext }}" style="position:absolute; right:clamp(16px,4vw,60px); top:50%; transform:translateY(-50%); width:70px; height:70px; border-radius:50%; border:1px solid rgba(255,255,255,.45); background:transparent; color:#fff; font-size:20px; cursor:pointer; transition:background .35s ease, color .35s ease, border-color .35s ease, transform .35s cubic-bezier(.13,1.07,.64,.97)" style-hover="background:var(--warm); color:#0B0B0C; border-color:var(--warm); transform:translateY(-50%) scale(1.12)">›</button>
         </div>
       </div>
     </section>
 
-    <section id="about" data-sec="about" data-screen-label="About" style="min-height:100vh; display:flex; flex-wrap:wrap; align-items:stretch; background:#0C0C0C">
-      <div style="flex:1 1 520px; min-width:min(100%,420px); background:#0C0C0C; padding:clamp(40px,6vw,64px); display:flex; flex-direction:column; justify-content:center">
+    <section id="about" data-sec="about" data-screen-label="About" style="min-height:100vh; display:flex; flex-wrap:wrap; align-items:stretch; background:#0B0B0C">
+      <div style="flex:1 1 520px; min-width:min(100%,420px); background:#0B0B0C; padding:clamp(40px,6vw,64px); display:flex; flex-direction:column; justify-content:center">
         <h2 style="font-family:'Six Caps',sans-serif; font-size:clamp(56px,7vw,96px); line-height:1; letter-spacing:1px; text-transform:uppercase; color:#fff; margin:0">About</h2>
-        <div style="width:40px; height:5px; background:var(--accent,#FFF100); margin:30px 0"></div>
-        <p style="font-family:Karla,'Noto Sans JP',sans-serif; font-size:16px; line-height:1.88; color:rgba(255,255,255,.7); margin:0 0 24px; text-wrap:pretty">神谷 玲 / Rei Kanzaki。東京を拠点に、ブランドフィルム・ドキュメンタリー・ミュージックビデオを手がける映像作家です。企画から撮影、編集、カラーグレーディングまでを少人数のチームで一貫して担当し、被写体との距離が近い現場づくりを大切にしています。</p>
-        <p style="font-family:Karla,sans-serif; font-size:16px; line-height:1.88; color:rgba(255,255,255,.7); margin:0 0 32px; text-wrap:pretty">Tokyo-based filmmaker working across brand films, documentary and music video. Ten years of shooting, cutting and grading — a small crew, a quiet set, and one long take more than anyone asked for.</p>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:20px 28px; font-family:Karla,sans-serif; font-size:14px; line-height:1.7; color:rgba(255,255,255,.7)">
+        <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; line-height:1.88; color:rgba(255,255,255,.7); margin:0 0 24px; text-wrap:pretty">神谷 玲 / Rei Kanzaki。東京を拠点に、ブランドフィルム・ドキュメンタリー・ミュージックビデオを手がける映像作家です。企画から撮影、編集、カラーグレーディングまでを少人数のチームで一貫して担当し、被写体との距離が近い現場づくりを大切にしています。</p>
+        <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; line-height:1.88; color:rgba(255,255,255,.7); margin:0 0 32px; text-wrap:pretty">Tokyo-based filmmaker working across brand films, documentary and music video. Ten years of shooting, cutting and grading — a small crew, a quiet set, and one long take more than anyone asked for.</p>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:20px 28px; font-family:'Zen Kaku Gothic New',sans-serif; font-size:14px; line-height:1.7; color:rgba(255,255,255,.7)">
           <div><span style="display:block; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#fff; font-size:12px; margin-bottom:6px">Base</span>Tokyo, Japan</div>
           <div><span style="display:block; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#fff; font-size:12px; margin-bottom:6px">Since</span>2016</div>
           <div><span style="display:block; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#fff; font-size:12px; margin-bottom:6px">Field</span>Brand / Doc / MV</div>
         </div>
       </div>
-      <div style="flex:1 1 420px; min-width:min(100%,360px); min-height:60vh; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); display:flex; align-items:center; justify-content:center">
-        <span style="font-family:ui-monospace,Menlo,monospace; font-size:12px; letter-spacing:.16em; color:rgba(255,255,255,.3); text-transform:uppercase">[ portrait — 4:5 ]</span>
-      </div>
+      <div style="flex:1 1 420px; min-width:min(100%,360px); min-height:60vh; background-color:#131418; background-image:url(https://i.ytimg.com/vi/tSmyaP5QfeM/maxres1.jpg); background-size:cover; background-position:center"></div>
     </section>
 
-    <section id="price" data-sec="price" data-screen-label="Price CTA" style="min-height:70vh; padding:110px 24px; display:flex; align-items:center; justify-content:center; text-align:center; background:#131313">
+    <section id="price" data-sec="price" data-screen-label="Price CTA" style="min-height:70vh; padding:110px 24px; display:flex; align-items:center; justify-content:center; text-align:center; background:#15161A">
       <div style="max-width:720px">
         <div data-anim="up" style="opacity:0; transform:translateY(30px); transition:opacity .8s cubic-bezier(.13,1.07,.64,.97), transform .8s cubic-bezier(.13,1.07,.64,.97)">
           <h2 style="font-family:'Six Caps',sans-serif; font-size:clamp(64px,9vw,96px); line-height:1; letter-spacing:1px; text-transform:uppercase; color:#fff; margin:0">Price</h2>
         </div>
-        <div data-anim="fade" style="opacity:0; transition:opacity .8s ease; width:40px; height:5px; background:var(--accent,#FFF100); margin:30px auto"></div>
-        <p style="font-family:Karla,'Noto Sans JP',sans-serif; font-size:16px; line-height:1.88; color:rgba(255,255,255,.7); margin:0 0 40px">撮影内容・尺・納期に応じたプラン一覧と、機材・オプションの詳細はこちらから。</p>
-        <a href="#price" onClick="{{ openPrice }}" style="display:inline-block; border:2px solid var(--accent,#FFF100); padding:18px 35px; font-family:Karla,sans-serif; font-weight:700; font-size:16px; letter-spacing:.08em; text-transform:uppercase; color:#fff; background-image:linear-gradient(to top, var(--accent,#FFF100) 50%, rgba(0,0,0,0) 50%); background-size:100% 200%; background-position:0 0; transition:background-position .3s ease, color .3s ease" style-hover="background-position:0 100%; color:#0C0C0C">View price</a>
+        <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; line-height:1.88; color:rgba(255,255,255,.7); margin:0 0 40px">撮影内容・尺・納期に応じたプラン一覧と、機材・オプションの詳細はこちらから。</p>
+        <a href="#price" onClick="{{ openPrice }}" style="display:inline-block; border:2px solid var(--warm); padding:18px 35px; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:16px; letter-spacing:.08em; text-transform:uppercase; color:#fff; background-image:linear-gradient(to top, var(--warm) 50%, rgba(0,0,0,0) 50%); background-size:100% 200%; background-position:0 0; transition:background-position .3s ease, color .3s ease" style-hover="background-position:0 100%; color:#0B0B0C">View price</a>
       </div>
     </section>
   </div>
@@ -258,43 +238,45 @@
 
   <sc-if value="{{ isPrice }}" hint-placeholder-val="{{ false }}">
   <div>
-    <section data-screen-label="Price header" style="padding:190px 24px 90px; text-align:center; background:#131313">
+    <section data-screen-label="Price header" style="padding:190px 24px 90px; text-align:center; background:#15161A">
       <h1 style="font-family:'Six Caps',sans-serif; font-size:clamp(64px,10vw,110px); line-height:1; letter-spacing:2px; text-transform:uppercase; color:#fff; margin:0">Price</h1>
-      <p style="font-family:Karla,'Noto Sans JP',sans-serif; font-size:16px; line-height:1.88; color:rgba(255,255,255,.65); margin:18px 0 0">料金と撮影プランのご案内 — Plans, gear and options.</p>
+      <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; line-height:1.88; color:rgba(255,255,255,.65); margin:18px 0 0">料金と撮影プランのご案内 — Plans, gear and options.</p>
     </section>
-    <div style="position:relative; width:100%; height:min(60vh,480px); background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); display:flex; align-items:center; justify-content:center">
-      <span style="font-family:ui-monospace,Menlo,monospace; font-size:12px; letter-spacing:.16em; color:rgba(255,255,255,.3); text-transform:uppercase">[ full-bleed key visual ]</span>
+    <!-- このページに埋めているサンプル映像と同じ作品のカット。枠が 3:1 と横長なので
+         cover だけでシネスコの黒帯は枠外に落ちる（data-scope は不要） -->
+    <div style="position:relative; width:100%; height:min(60vh,480px); background-color:#131418; background-image:url(https://i.ytimg.com/vi/4HW_ymYfC2I/maxres3.jpg); background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center">
+      <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(12,12,12,.15), rgba(12,12,12,.6))"></div>
       <span style="position:absolute; bottom:26px; left:50%; transform:translateX(-50%); font-size:22px; color:rgba(255,255,255,.6); animation:bob 2.4s ease-in-out infinite">⌄</span>
     </div>
 
-    <section style="padding:110px 24px; background:#0C0C0C">
+    <section style="padding:110px 24px; background:#0B0B0C">
       <div style="max-width:1140px; margin:0 auto">
         <h2 style="font-family:'Six Caps',sans-serif; font-size:clamp(56px,8vw,88px); line-height:1; letter-spacing:1px; text-transform:uppercase; color:#fff; margin:0; text-align:center">Plans</h2>
-        <div style="width:40px; height:5px; background:var(--accent,#FFF100); margin:30px auto 56px"></div>
         <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:28px">
           <div style="border:1px solid rgba(255,255,255,.12); padding:36px">
-            <p style="font-family:Karla,sans-serif; font-weight:700; font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--accent,#FFF100); margin:0 0 10px">Plan A</p>
+            <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--cool); margin:0 0 10px">Plan A</p>
             <h3 style="font-family:'Six Caps',sans-serif; font-size:40px; line-height:1; letter-spacing:1px; text-transform:uppercase; color:#fff; margin:0 0 6px">Short Film</h3>
-            <p style="font-family:Karla,sans-serif; font-size:15px; line-height:1.8; color:rgba(255,255,255,.6); margin:0 0 22px">30–60秒 / 撮影半日 / 1カメ</p>
-            <p style="font-family:Roboto,sans-serif; font-weight:100; font-size:40px; color:#fff; margin:0">¥180,000<span style="font-family:Karla,sans-serif; font-size:13px; color:rgba(255,255,255,.5)">〜 / tax ex.</span></p>
+            <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:15px; line-height:1.8; color:rgba(255,255,255,.6); margin:0 0 22px">30–60秒 / 撮影半日 / 1カメ</p>
+            <p style="font-family:var(--mono); font-weight:400; font-size:38px; letter-spacing:-.01em; color:#fff; margin:0">¥180,000<span style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:13px; letter-spacing:0; color:var(--cool)">〜 / tax ex.</span></p>
           </div>
           <div style="border:1px solid rgba(255,255,255,.12); padding:36px">
-            <p style="font-family:Karla,sans-serif; font-weight:700; font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--accent,#FFF100); margin:0 0 10px">Plan B</p>
+            <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--cool); margin:0 0 10px">Plan B</p>
             <h3 style="font-family:'Six Caps',sans-serif; font-size:40px; line-height:1; letter-spacing:1px; text-transform:uppercase; color:#fff; margin:0 0 6px">Brand Film</h3>
-            <p style="font-family:Karla,sans-serif; font-size:15px; line-height:1.8; color:rgba(255,255,255,.6); margin:0 0 22px">2–3分 / 撮影1日 / 2カメ + 音声</p>
-            <p style="font-family:Roboto,sans-serif; font-weight:100; font-size:40px; color:#fff; margin:0">¥420,000<span style="font-family:Karla,sans-serif; font-size:13px; color:rgba(255,255,255,.5)">〜 / tax ex.</span></p>
+            <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:15px; line-height:1.8; color:rgba(255,255,255,.6); margin:0 0 22px">2–3分 / 撮影1日 / 2カメ + 音声</p>
+            <p style="font-family:var(--mono); font-weight:400; font-size:38px; letter-spacing:-.01em; color:#fff; margin:0">¥420,000<span style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:13px; letter-spacing:0; color:var(--cool)">〜 / tax ex.</span></p>
           </div>
         </div>
       </div>
     </section>
 
-    <section style="padding:0 24px 110px; background:#0C0C0C">
+    <section style="padding:0 24px 110px; background:#0B0B0C">
       <div style="max-width:1140px; margin:0 auto; display:flex; flex-wrap:wrap; gap:56px; align-items:center">
-        <div style="flex:1 1 460px; min-width:300px; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.14em; color:rgba(255,255,255,.3)">[ sample film ]</div>
+        <div style="flex:1 1 460px; min-width:300px; position:relative; aspect-ratio:16/9; background:#000000; border:1px solid rgba(255,255,255,.08); overflow:hidden">
+          <iframe src="https://www.youtube-nocookie.com/embed/4HW_ymYfC2I?rel=0&amp;modestbranding=1&amp;playsinline=1" title="Sample film" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style="position:absolute; inset:0; width:100%; height:100%; border:0"></iframe>
+        </div>
         <div style="flex:1 1 340px; min-width:300px">
           <h3 style="font-family:'Six Caps',sans-serif; font-size:40px; line-height:1; letter-spacing:1px; text-transform:uppercase; color:#fff; margin:0">Spec</h3>
-          <div style="width:40px; height:5px; background:var(--accent,#FFF100); margin:24px 0 28px"></div>
-          <div style="display:grid; grid-template-columns:auto 1fr; gap:12px 22px; font-family:Karla,sans-serif; font-size:15px; line-height:1.7">
+          <div style="display:grid; grid-template-columns:auto 1fr; gap:12px 22px; font-family:'Zen Kaku Gothic New',sans-serif; font-size:15px; line-height:1.7">
             <span style="color:rgba(255,255,255,.4); letter-spacing:.08em">Camera</span><span style="color:rgba(255,255,255,.85)">Full-frame cinema, 4K 10bit</span>
             <span style="color:rgba(255,255,255,.4); letter-spacing:.08em">Format</span><span style="color:rgba(255,255,255,.85)">16:9 / 2.39:1 / 9:16 vertical</span>
             <span style="color:rgba(255,255,255,.4); letter-spacing:.08em">Delivery</span><span style="color:rgba(255,255,255,.85)">撮影日より 2〜3週間</span>
@@ -304,118 +286,124 @@
       </div>
     </section>
 
-    <section style="padding:110px 24px; background:#FFFFFF">
+    <section style="padding:110px 24px; background:var(--paper)">
       <div style="max-width:1140px; margin:0 auto">
-        <h2 style="font-family:'Six Caps',sans-serif; font-size:clamp(56px,8vw,88px); line-height:1; letter-spacing:1px; text-transform:uppercase; color:#0D0D0D; margin:0; text-align:center">Options</h2>
-        <div style="width:40px; height:5px; background:var(--accent,#FFF100); margin:30px auto 48px"></div>
+        <h2 style="font-family:'Six Caps',sans-serif; font-size:clamp(56px,8vw,88px); line-height:1; letter-spacing:1px; text-transform:uppercase; color:#17181B; margin:0; text-align:center">Options</h2>
         <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:36px; border-bottom:1px solid rgba(0,0,0,.1)">
           <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
-            <button onClick="{{ t.click }}" style="background:transparent; border:0; padding:0 0 14px; cursor:pointer; font-family:Karla,sans-serif; font-weight:700; font-size:14px; letter-spacing:.14em; text-transform:uppercase; color:{{ t.color }}; border-bottom:3px solid {{ t.line }}; transition:color .3s ease">{{ t.label }}</button>
+            <button onClick="{{ t.click }}" style="background:transparent; border:0; padding:0 0 14px; cursor:pointer; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:14px; letter-spacing:.14em; text-transform:uppercase; color:{{ t.color }}; border-bottom:3px solid {{ t.line }}; transition:color .3s ease">{{ t.label }}</button>
           </sc-for>
         </div>
-        <p style="font-family:Karla,'Noto Sans JP',sans-serif; font-size:16px; line-height:1.88; color:#444444; max-width:720px; margin:40px auto 0; text-align:center">{{ tabBody }}</p>
+        <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; line-height:1.88; color:#3D4047; max-width:720px; margin:40px auto 0; text-align:center">{{ tabBody }}</p>
       </div>
     </section>
 
-    <section style="padding:110px 24px; background:#0C0C0C">
+    <section style="padding:110px 24px; background:#0B0B0C">
       <div style="max-width:1140px; margin:0 auto">
         <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:44px; text-align:center">
           <div>
-            <div style="font-family:'Six Caps',sans-serif; font-size:56px; line-height:1; color:var(--accent,#FFF100)">01</div>
-            <h3 style="font-family:Karla,sans-serif; font-weight:700; font-size:15px; letter-spacing:.14em; text-transform:uppercase; color:#fff; margin:14px 0 12px">Hearing</h3>
-            <p style="font-family:Karla,'Noto Sans JP',sans-serif; font-size:15px; line-height:1.85; color:rgba(255,255,255,.62); margin:0">目的と視聴環境をうかがい、尺と構成の方向性を決めます。</p>
+            <div style="font-family:'Six Caps',sans-serif; font-size:56px; line-height:1; color:var(--cool)">01</div>
+            <h3 style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:15px; letter-spacing:.14em; text-transform:uppercase; color:#fff; margin:14px 0 12px">Hearing</h3>
+            <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:15px; line-height:1.85; color:rgba(255,255,255,.62); margin:0">目的と視聴環境をうかがい、尺と構成の方向性を決めます。</p>
           </div>
           <div>
-            <div style="font-family:'Six Caps',sans-serif; font-size:56px; line-height:1; color:var(--accent,#FFF100)">02</div>
-            <h3 style="font-family:Karla,sans-serif; font-weight:700; font-size:15px; letter-spacing:.14em; text-transform:uppercase; color:#fff; margin:14px 0 12px">Shooting</h3>
-            <p style="font-family:Karla,'Noto Sans JP',sans-serif; font-size:15px; line-height:1.85; color:rgba(255,255,255,.62); margin:0">少人数のチームで、現場の空気を壊さずに撮影します。</p>
+            <div style="font-family:'Six Caps',sans-serif; font-size:56px; line-height:1; color:var(--cool)">02</div>
+            <h3 style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:15px; letter-spacing:.14em; text-transform:uppercase; color:#fff; margin:14px 0 12px">Shooting</h3>
+            <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:15px; line-height:1.85; color:rgba(255,255,255,.62); margin:0">少人数のチームで、現場の空気を壊さずに撮影します。</p>
           </div>
           <div>
-            <div style="font-family:'Six Caps',sans-serif; font-size:56px; line-height:1; color:var(--accent,#FFF100)">03</div>
-            <h3 style="font-family:Karla,sans-serif; font-weight:700; font-size:15px; letter-spacing:.14em; text-transform:uppercase; color:#fff; margin:14px 0 12px">Delivery</h3>
-            <p style="font-family:Karla,'Noto Sans JP',sans-serif; font-size:15px; line-height:1.85; color:rgba(255,255,255,.62); margin:0">編集・グレーディングを経て、各媒体向けの書き出しで納品。</p>
+            <div style="font-family:'Six Caps',sans-serif; font-size:56px; line-height:1; color:var(--cool)">03</div>
+            <h3 style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:15px; letter-spacing:.14em; text-transform:uppercase; color:#fff; margin:14px 0 12px">Delivery</h3>
+            <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:15px; line-height:1.85; color:rgba(255,255,255,.62); margin:0">編集・グレーディングを経て、各媒体向けの書き出しで納品。</p>
           </div>
         </div>
         <ul style="list-style:none; padding:0; margin:72px auto 0; max-width:720px; display:grid; gap:16px">
-          <li style="display:flex; gap:14px; align-items:flex-start; font-family:Karla,'Noto Sans JP',sans-serif; font-size:16px; line-height:1.8; color:rgba(255,255,255,.78)"><span style="color:var(--accent,#FFF100); font-weight:700">✓</span>企画構成・絵コンテの作成を含みます</li>
-          <li style="display:flex; gap:14px; align-items:flex-start; font-family:Karla,'Noto Sans JP',sans-serif; font-size:16px; line-height:1.8; color:rgba(255,255,255,.78)"><span style="color:var(--accent,#FFF100); font-weight:700">✓</span>ドローン撮影・追加カメラはオプション対応</li>
-          <li style="display:flex; gap:14px; align-items:flex-start; font-family:Karla,'Noto Sans JP',sans-serif; font-size:16px; line-height:1.8; color:rgba(255,255,255,.78)"><span style="color:var(--accent,#FFF100); font-weight:700">✓</span>SNS向け縦型リサイズは1本まで無償</li>
-          <li style="display:flex; gap:14px; align-items:flex-start; font-family:Karla,'Noto Sans JP',sans-serif; font-size:16px; line-height:1.8; color:rgba(255,255,255,.78)"><span style="color:var(--accent,#FFF100); font-weight:700">✓</span>交通費・宿泊費は都内近郊を除き実費</li>
+          <li style="display:flex; gap:14px; align-items:flex-start; font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; line-height:1.8; color:rgba(255,255,255,.78)"><span style="color:var(--cool); font-weight:700">✓</span>企画構成・絵コンテの作成を含みます</li>
+          <li style="display:flex; gap:14px; align-items:flex-start; font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; line-height:1.8; color:rgba(255,255,255,.78)"><span style="color:var(--cool); font-weight:700">✓</span>ドローン撮影・追加カメラはオプション対応</li>
+          <li style="display:flex; gap:14px; align-items:flex-start; font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; line-height:1.8; color:rgba(255,255,255,.78)"><span style="color:var(--cool); font-weight:700">✓</span>SNS向け縦型リサイズは1本まで無償</li>
+          <li style="display:flex; gap:14px; align-items:flex-start; font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; line-height:1.8; color:rgba(255,255,255,.78)"><span style="color:var(--cool); font-weight:700">✓</span>交通費・宿泊費は都内近郊を除き実費</li>
         </ul>
         <div style="display:flex; justify-content:center; margin-top:56px">
-          <a href="#home" onClick="{{ goHome }}" style="display:inline-block; border:2px solid var(--accent,#FFF100); padding:18px 35px; font-family:Karla,sans-serif; font-weight:700; font-size:16px; letter-spacing:.08em; text-transform:uppercase; color:#fff; background-image:linear-gradient(to top, var(--accent,#FFF100) 50%, rgba(0,0,0,0) 50%); background-size:100% 200%; background-position:0 0; transition:background-position .3s ease, color .3s ease" style-hover="background-position:0 100%; color:#0C0C0C">Back to top page</a>
+          <a href="#home" onClick="{{ goHome }}" style="display:inline-block; border:2px solid var(--warm); padding:18px 35px; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:16px; letter-spacing:.08em; text-transform:uppercase; color:#fff; background-image:linear-gradient(to top, var(--warm) 50%, rgba(0,0,0,0) 50%); background-size:100% 200%; background-position:0 0; transition:background-position .3s ease, color .3s ease" style-hover="background-position:0 100%; color:#0B0B0C">Back to top page</a>
         </div>
       </div>
     </section>
   </div>
   </sc-if>
 
-  <section id="contact" data-sec="contact" data-screen-label="Contact" style="min-height:100vh; padding:110px 24px; display:flex; align-items:center; background:#131313">
+  <section id="contact" data-sec="contact" data-screen-label="Contact" style="min-height:100vh; padding:110px 24px; display:flex; align-items:center; background:#15161A">
     <div style="width:100%; max-width:760px; margin:0 auto">
       <div data-anim="up" style="opacity:0; transform:translateY(30px); transition:opacity .8s cubic-bezier(.13,1.07,.64,.97), transform .8s cubic-bezier(.13,1.07,.64,.97); text-align:center">
         <h2 style="font-family:'Six Caps',sans-serif; font-size:clamp(64px,9vw,96px); line-height:1; letter-spacing:1px; text-transform:uppercase; color:#fff; margin:0">Contact</h2>
       </div>
-      <div data-anim="fade" style="opacity:0; transition:opacity .8s ease; width:40px; height:5px; background:var(--accent,#FFF100); margin:30px auto"></div>
-      <p style="text-align:center; font-family:Karla,'Noto Sans JP',sans-serif; font-size:16px; line-height:1.88; color:rgba(255,255,255,.68); margin:0 0 48px">撮影のご相談・お見積りはこちらから。2営業日以内にご返信します。</p>
+      <p style="text-align:center; font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; line-height:1.88; color:rgba(255,255,255,.68); margin:0 0 48px">撮影のご相談・お見積りはこちらから。2営業日以内にご返信します。</p>
       <form onSubmit="{{ submit }}" style="display:grid; gap:20px">
         <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px">
-          <input type="text" placeholder="Your Name" style="height:56px; padding:12px; background:transparent; border:1px solid rgba(255,255,255,.44); color:#fff; font-size:15px; outline:none" style-focus="border-color:var(--accent,#FFF100)" />
-          <input type="email" placeholder="Your Email" style="height:56px; padding:12px; background:transparent; border:1px solid rgba(255,255,255,.44); color:#fff; font-size:15px; outline:none" style-focus="border-color:var(--accent,#FFF100)" />
+          <input type="text" placeholder="Your Name" style="height:56px; padding:12px; background:transparent; border:1px solid rgba(255,255,255,.44); color:#fff; font-size:15px; outline:none" style-focus="border-color:var(--warm)" />
+          <input type="email" placeholder="Your Email" style="height:56px; padding:12px; background:transparent; border:1px solid rgba(255,255,255,.44); color:#fff; font-size:15px; outline:none" style-focus="border-color:var(--warm)" />
         </div>
-        <input type="text" placeholder="Subject" style="height:56px; padding:12px; background:transparent; border:1px solid rgba(255,255,255,.44); color:#fff; font-size:15px; outline:none" style-focus="border-color:var(--accent,#FFF100)" />
-        <textarea placeholder="Message" style="height:150px; padding:12px; background:transparent; border:1px solid rgba(255,255,255,.44); color:#fff; font-size:15px; outline:none; resize:vertical" style-focus="border-color:var(--accent,#FFF100)"></textarea>
-        <button type="submit" style="width:100%; padding:13px 33px; border:2px solid var(--accent,#FFF100); color:#0C0C0C; font-family:Karla,sans-serif; font-weight:700; font-size:13px; letter-spacing:.16em; text-transform:uppercase; cursor:pointer; background-image:linear-gradient(to top, #0C0C0C 50%, var(--accent,#FFF100) 50%); background-size:100% 200%; background-position:0 0; transition:background-position .3s ease, color .3s ease" style-hover="background-position:0 100%; color:var(--accent,#FFF100)">{{ sendLabel }}</button>
+        <input type="text" placeholder="Subject" style="height:56px; padding:12px; background:transparent; border:1px solid rgba(255,255,255,.44); color:#fff; font-size:15px; outline:none" style-focus="border-color:var(--warm)" />
+        <textarea placeholder="Message" style="height:150px; padding:12px; background:transparent; border:1px solid rgba(255,255,255,.44); color:#fff; font-size:15px; outline:none; resize:vertical" style-focus="border-color:var(--warm)"></textarea>
+        <button type="submit" style="width:100%; padding:13px 33px; border:2px solid var(--warm); color:#0B0B0C; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:13px; letter-spacing:.16em; text-transform:uppercase; cursor:pointer; background-image:linear-gradient(to top, #0B0B0C 50%, var(--warm) 50%); background-size:100% 200%; background-position:0 0; transition:background-position .3s ease, color .3s ease" style-hover="background-position:0 100%; color:var(--warm)">{{ sendLabel }}</button>
       </form>
     </div>
   </section>
 
-  <section data-sec="instagram" data-screen-label="Instagram" style="background:#0C0C0C; padding:0">
+  <section data-sec="instagram" data-screen-label="Instagram" style="background:#0B0B0C; padding:0">
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:0">
       <sc-for list="{{ grams }}" as="g" hint-placeholder-count="6">
-        <div style="position:relative; aspect-ratio:1; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border-right:1px solid #0C0C0C; border-bottom:1px solid #0C0C0C">
-          <div style="position:absolute; inset:0; background:rgba(12,12,12,.75); opacity:0; transition:opacity .3s ease; display:flex; align-items:center; justify-content:center; font-family:Karla,sans-serif; font-weight:700; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--accent,#FFF100)" style-hover="opacity:1">{{ g.label }}</div>
+        <div data-scope="{{ g.scope }}" style="position:relative; aspect-ratio:1; background-color:#131418; background-image:url({{ g.thumb }}); background-size:cover; background-position:center; border-right:1px solid #0B0B0C; border-bottom:1px solid #0B0B0C">
+          <div style="position:absolute; inset:0; background:rgba(12,12,12,.75); opacity:0; transition:opacity .3s ease; display:flex; align-items:center; justify-content:center; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:#fff" style-hover="opacity:1">{{ g.label }}</div>
         </div>
       </sc-for>
     </div>
   </section>
 
-  <section data-screen-label="Partners" style="background:#131313; padding:70px 24px">
-    <div style="max-width:1140px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:28px">
-      <div style="height:90px; border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.18em; color:rgba(255,255,255,.28); text-transform:uppercase">[ partner logo ]</div>
-      <div style="height:90px; border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.18em; color:rgba(255,255,255,.28); text-transform:uppercase">[ partner logo ]</div>
-      <div style="height:90px; border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.18em; color:rgba(255,255,255,.28); text-transform:uppercase">[ partner logo ]</div>
+  <!-- ロゴは架空。Works の Credit に出てくるダミーの取引先と同じ名前を使い、
+       仮素材の世界の中で辻褄が合うようにしている。実在企業は載せない -->
+  <section data-screen-label="Partners" style="background:#15161A; padding:70px 24px">
+    <div style="max-width:1140px; margin:0 auto">
+      <p style="font-family:var(--mono); font-size:11px; letter-spacing:.2em; color:rgba(255,255,255,.28); text-transform:uppercase; text-align:center; margin:0 0 30px">[ 仮素材 — 実績が出たら差し替え ]</p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:28px">
+        <sc-for list="{{ partners }}" as="p" hint-placeholder-count="3">
+          <div style="height:90px; border:1px solid rgba(255,255,255,.08); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:7px">
+            <span style="font-family:'Six Caps',sans-serif; font-size:30px; line-height:1; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,.6)">{{ p.name }}</span>
+            <span style="font-family:var(--mono); font-size:9px; letter-spacing:.24em; text-transform:uppercase; color:rgba(255,255,255,.26)">{{ p.kind }}</span>
+          </div>
+        </sc-for>
+      </div>
     </div>
   </section>
 
-  <footer style="background:#0C0C0C; padding:90px 24px 0; text-align:center">
+  <footer style="background:#0B0B0C; padding:90px 24px 0; text-align:center">
     <div style="font-family:'Six Caps',sans-serif; font-size:clamp(64px,9vw,96px); line-height:1; letter-spacing:2px; text-transform:uppercase; color:#fff">Studio Kairo</div>
-    <p style="font-family:Karla,sans-serif; font-size:14px; letter-spacing:.24em; text-transform:uppercase; color:rgba(255,255,255,.5); margin:14px 0 34px">Filmmaker</p>
+    <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:14px; letter-spacing:.24em; text-transform:uppercase; color:rgba(255,255,255,.5); margin:14px 0 34px">Filmmaker</p>
     <div style="display:flex; justify-content:center; gap:18px">
-      <a href="#contact" aria-label="Instagram" style="width:60px; height:60px; border-radius:50%; border:1px solid rgba(255,255,255,.35); display:flex; align-items:center; justify-content:center; font-family:Karla,sans-serif; font-weight:700; font-size:12px; letter-spacing:.1em; color:#fff; transition:background .3s ease, color .3s ease, border-color .3s ease" style-hover="background:var(--accent,#FFF100); color:#0C0C0C; border-color:var(--accent,#FFF100)">IG</a>
-      <a href="#contact" aria-label="YouTube" style="width:60px; height:60px; border-radius:50%; border:1px solid rgba(255,255,255,.35); display:flex; align-items:center; justify-content:center; font-family:Karla,sans-serif; font-weight:700; font-size:12px; letter-spacing:.1em; color:#fff; transition:background .3s ease, color .3s ease, border-color .3s ease" style-hover="background:var(--accent,#FFF100); color:#0C0C0C; border-color:var(--accent,#FFF100)">YT</a>
-      <a href="#contact" aria-label="Vimeo" style="width:60px; height:60px; border-radius:50%; border:1px solid rgba(255,255,255,.35); display:flex; align-items:center; justify-content:center; font-family:Karla,sans-serif; font-weight:700; font-size:12px; letter-spacing:.1em; color:#fff; transition:background .3s ease, color .3s ease, border-color .3s ease" style-hover="background:var(--accent,#FFF100); color:#0C0C0C; border-color:var(--accent,#FFF100)">VM</a>
+      <a href="#contact" aria-label="Instagram" style="width:60px; height:60px; border-radius:50%; border:1px solid rgba(255,255,255,.35); display:flex; align-items:center; justify-content:center; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:12px; letter-spacing:.1em; color:#fff; transition:background .3s ease, color .3s ease, border-color .3s ease" style-hover="background:var(--warm); color:#0B0B0C; border-color:var(--warm)">IG</a>
+      <a href="#contact" aria-label="YouTube" style="width:60px; height:60px; border-radius:50%; border:1px solid rgba(255,255,255,.35); display:flex; align-items:center; justify-content:center; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:12px; letter-spacing:.1em; color:#fff; transition:background .3s ease, color .3s ease, border-color .3s ease" style-hover="background:var(--warm); color:#0B0B0C; border-color:var(--warm)">YT</a>
+      <a href="#contact" aria-label="Vimeo" style="width:60px; height:60px; border-radius:50%; border:1px solid rgba(255,255,255,.35); display:flex; align-items:center; justify-content:center; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:12px; letter-spacing:.1em; color:#fff; transition:background .3s ease, color .3s ease, border-color .3s ease" style-hover="background:var(--warm); color:#0B0B0C; border-color:var(--warm)">VM</a>
     </div>
-    <div style="margin-top:70px; border-top:1px solid rgba(255,255,255,.08); padding:26px 0; font-family:Karla,sans-serif; font-size:12px; letter-spacing:.12em; color:rgba(255,255,255,.4)">© 2026 Studio Kairo — All rights reserved.</div>
+    <div style="margin-top:70px; border-top:1px solid rgba(255,255,255,.08); padding:26px 0; font-family:'Zen Kaku Gothic New',sans-serif; font-size:12px; letter-spacing:.12em; color:rgba(255,255,255,.4)">© 2026 Studio Kairo — All rights reserved.</div>
   </footer>
 
-  <button onClick="{{ toTop }}" aria-label="Back to top" style="position:fixed; right:50px; bottom:125px; z-index:99995; width:50px; height:50px; border:0; color:#fff; font-size:16px; cursor:pointer; opacity:{{ topOpacity }}; pointer-events:{{ topEvents }}; background-image:linear-gradient(to top, var(--accent,#FFF100) 50%, #333333 50%); background-size:100% 200%; background-position:0 0; transition:opacity .3s ease, background-position .3s ease, color .3s ease" style-hover="background-position:0 100%; color:#0C0C0C">↑</button>
+  <button onClick="{{ toTop }}" aria-label="Back to top" style="position:fixed; right:50px; bottom:125px; z-index:99995; width:50px; height:50px; border:0; color:#fff; font-size:16px; cursor:pointer; opacity:{{ topOpacity }}; pointer-events:{{ topEvents }}; background-image:linear-gradient(to top, var(--warm) 50%, #333333 50%); background-size:100% 200%; background-position:0 0; transition:opacity .3s ease, background-position .3s ease, color .3s ease" style-hover="background-position:0 100%; color:#0B0B0C">↑</button>
 </div>
 
 <div onClick="{{ closeMenu }}" style="position:fixed; inset:0; z-index:99998; background:rgba(0,0,0,.55); opacity:{{ scrimOpacity }}; pointer-events:{{ scrimEvents }}; transition:opacity .5s cubic-bezier(.13,1.07,.64,.97)"></div>
 
 <aside style="position:fixed; top:0; bottom:0; right:{{ panelRight }}; z-index:99999; width:min(230px,72vw); background:#151515; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0; transition:right .5s cubic-bezier(.13,1.07,.64,.97)">
-  <button onClick="{{ closeMenu }}" aria-label="Close" style="position:absolute; top:26px; right:30px; width:40px; height:40px; border:0; background:transparent; color:#fff; font-size:24px; cursor:pointer" style-hover="color:var(--accent,#FFF100)">×</button>
-  <a href="#home" onClick="{{ goHome }}" style="font-family:Karla,sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--accent,#FFF100)">Home</a>
-  <a href="#works" onClick="{{ navWorks }}" style="font-family:Karla,sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--accent,#FFF100)">Works</a>
-  <a href="#profile" onClick="{{ navProfile }}" style="font-family:Karla,sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--accent,#FFF100)">Profile</a>
-  <a href="#about" onClick="{{ navAbout }}" style="font-family:Karla,sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--accent,#FFF100)">About</a>
-  <a href="#price" onClick="{{ openPrice }}" style="font-family:Karla,sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--accent,#FFF100)">Price</a>
-  <a href="#contact" onClick="{{ navContact }}" style="font-family:Karla,sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--accent,#FFF100)">Contact</a>
+  <button onClick="{{ closeMenu }}" aria-label="Close" style="position:absolute; top:26px; right:30px; width:40px; height:40px; border:0; background:transparent; color:#fff; font-size:24px; cursor:pointer" style-hover="color:var(--warm)">×</button>
+  <a href="#home" onClick="{{ goHome }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--warm)">Home</a>
+  <a href="#works" onClick="{{ navWorks }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--warm)">Works</a>
+  <a href="#profile" onClick="{{ navProfile }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--warm)">Profile</a>
+  <a href="#about" onClick="{{ navAbout }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--warm)">About</a>
+  <a href="#price" onClick="{{ openPrice }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--warm)">Price</a>
+  <a href="#contact" onClick="{{ navContact }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--warm)">Contact</a>
 </aside>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#FFF100&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#FFF100&quot;,&quot;#FF4A1C&quot;,&quot;#8AF0C8&quot;,&quot;#FFFFFF&quot;],&quot;section&quot;:&quot;Theme&quot;},&quot;showLoader&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;pushMenu&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;sideDots&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#E9A94B&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#E9A94B&quot;,&quot;#F2C879&quot;,&quot;#C9793A&quot;,&quot;#FFFFFF&quot;],&quot;section&quot;:&quot;Theme&quot;},&quot;showLoader&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;pushMenu&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;sideDots&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
 class Component extends DCLogic {
-  state = { page: 'home', menu: false, loading: true, fading: false, y: 0, w: 1440, active: 'home', hoverDot: null, tab: 0, sent: false };
+  state = { page: 'home', menu: false, loading: true, fading: false, y: 0, w: 1440, active: 'home', hoverDot: null, hoverWork: null, slide: 0, tab: 0, sent: false };
 
   componentDidMount() {
     this.applyAccent();
@@ -446,7 +434,8 @@ class Component extends DCLogic {
   }
 
   applyAccent() {
-    document.documentElement.style.setProperty('--accent', this.props.accent || '#FFF100');
+    // プロップで差し替わるのは暖色（行動）側だけ。寒色は仕様表示用なので固定する
+    document.documentElement.style.setProperty('--warm', this.props.accent || '#E9A94B');
   }
 
   startLoader() {
@@ -502,11 +491,44 @@ class Component extends DCLogic {
   renderVals() {
     const s = this.state;
     const desktop = s.w >= 1200;
+    // Works は幅が取れるときだけ2カラム。シネスコ作品は全幅を占めて画角の差が出る
+    const cols = s.w >= 760 ? 2 : 1;
     const panelW = Math.min(230, s.w * 0.72);
     const secs = [
       { id: 'home', label: 'Home' }, { id: 'featured', label: 'Featured' }, { id: 'works', label: 'Works' },
       { id: 'profile', label: 'Profile' }, { id: 'about', label: 'About' }, { id: 'price', label: 'Price' },
       { id: 'contact', label: 'Contact' }
+    ];
+    // 仮素材。本番は高本の実作品に差し替える。
+    // 並びはシネスコ(全幅)が2本続かないよう挟んである。n は使うサムネイルの番号で、
+    // 既定の 2 が使えない場合だけ指定する
+    const workItems = [
+      { id: 'DhVz3xsAis0', title: 'Aoyama Coffee Works' },
+      // maxres2/3 は実在企業の船体ロゴが読めてしまう。遠景の 1 を使う
+      { id: '0hpkWLJzYQs', title: 'Setouchi Ferry', n: 1 },
+      { id: 'UyBsm2wU8ag', title: 'Wedding / M & S' },
+      { id: 'tSmyaP5QfeM', title: 'Kiso Woodwork' },
+      { id: 'FfBE5_gqTSY', title: 'Nightwalk / MV' },
+      { id: '4hs_GGss_Nc', title: 'Sanriku Divers' }
+    ];
+    const previewSrc = (id) => 'https://www.youtube-nocookie.com/embed/' + id +
+      '?autoplay=1&mute=1&loop=1&playlist=' + id +
+      '&controls=0&modestbranding=1&rel=0&playsinline=1&disablekb=1&fs=0&iv_load_policy=3';
+    // シネスコ(2.39:1)で撮られた素材。サムネイルの上下に黒帯が焼き込まれている。
+    // Works では 2.39:1 の枠で出すので帯は自然に枠外へ落ちるが、
+    // 正方形・16:9 の枠に入れる場合だけ data-scope で拡大して逃がす必要がある
+    const scopeIds = ['AwGjc8Yz8fc', '4HW_ymYfC2I', 'UyBsm2wU8ag', '4hs_GGss_Nc'];
+    const frame = (id, n) => ({
+      src: 'https://i.ytimg.com/vi/' + id + '/maxres' + n + '.jpg',
+      scope: scopeIds.indexOf(id) >= 0 ? '1' : null
+    });
+    // Profile のスライダー。仮素材の中から現場カットを並べている。
+    // 枠が全幅で横長のため、黒帯の入るシネスコ素材（scopeIds）はここでは使わない。
+    // 大きく映るので、他社ロゴや船名が写り込むカットも避けている
+    const slideShots = [frame('FfBE5_gqTSY', 1), frame('V-qTEo9IHTA', 1)];
+    const gramShots = [
+      frame('V-qTEo9IHTA', 1), frame('DhVz3xsAis0', 3), frame('0hpkWLJzYQs', 1),
+      frame('FfBE5_gqTSY', 3), frame('UyBsm2wU8ag', 3), frame('4hs_GGss_Nc', 2)
     ];
     const tabLabels = ['Drone', 'Audio', 'Grading', 'Vertical'];
     const tabBodies = [
@@ -535,10 +557,34 @@ class Component extends DCLogic {
       tabBody: tabBodies[s.tab],
       tabs: tabLabels.map((label, i) => ({
         label: label,
-        color: s.tab === i ? '#0D0D0D' : 'rgba(0,0,0,.42)',
-        line: s.tab === i ? (this.props.accent || '#FFF100') : 'transparent',
+        color: s.tab === i ? '#17181B' : 'rgba(23,24,27,.45)',
+        line: s.tab === i ? (this.props.accent || '#E9A94B') : 'transparent',
         click: () => this.setState({ tab: i })
       })),
+      // 21/9 は原寸に近いが、狭い画面では高さが足りず文字が溢れるので 4/3 に切り替える
+      slideRatio: cols === 2 ? '21/9' : '4/3',
+      workCols: cols,
+      partners: [
+        { name: 'Aoyama Coffee Works', kind: 'Brand Film' },
+        { name: 'Kiso Woodwork', kind: 'Documentary' },
+        { name: 'Haneda Tapes', kind: 'Music Video' }
+      ],
+      works: workItems.map((w, i) => {
+        const wide = scopeIds.indexOf(w.id) >= 0;
+        return {
+          title: w.title,
+          // 撮られた画角のまま出す。2.39:1 の枠なら cover だけで黒帯が枠外に落ちるので data-scope は要らない
+          ratio: wide ? '2.39/1' : '16/9',
+          label: wide ? '2.39:1' : '16:9',
+          span: wide ? 'span ' + cols : 'span 1',
+          thumb: frame(w.id, w.n || 2).src,
+          embed: previewSrc(w.id),
+          playing: s.hoverWork === i,
+          idle: s.hoverWork !== i,
+          enter: () => this.setState({ hoverWork: i }),
+          leave: () => this.setState({ hoverWork: null })
+        };
+      }),
       dots: secs.map((x) => ({
         href: '#' + x.id,
         label: x.label,
@@ -548,7 +594,10 @@ class Component extends DCLogic {
         enter: () => this.setState({ hoverDot: x.id }),
         leave: () => this.setState({ hoverDot: null })
       })),
-      grams: [1, 2, 3, 4, 5, 6].map((n) => ({ label: 'View' })),
+      slideShot: slideShots[s.slide].src,
+      slidePrev: () => this.setState({ slide: (s.slide + slideShots.length - 1) % slideShots.length }),
+      slideNext: () => this.setState({ slide: (s.slide + 1) % slideShots.length }),
+      grams: gramShots.map((g) => ({ label: 'View', thumb: g.src, scope: g.scope })),
       toggleMenu: () => this.setState({ menu: !s.menu }),
       closeMenu: () => this.setState({ menu: false }),
       goHome: this.go('home'),
