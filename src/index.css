@@ -3,29 +3,28 @@
 /* =========================================================================
    デザイントークン。色・書体・動きの定義はすべてここ。
    ここで定義した値は Tailwind のユーティリティ名として使える。
-   例) --color-accent → text-accent / bg-accent / border-accent
+   例) --color-warm → text-warm / bg-warm / border-warm
    ========================================================================= */
 @theme {
-  /* 配色 */
-  --color-accent: #fff100;
-  --color-bg: #0c0c0c;
-  --color-bg-alt: #131313;
+  /* 配色。色温度から取っている。撮影者が毎カット設定している実際の値に対応させ、
+     暖(3200K)は「押せるもの」だけ、寒(5600K)は「仕様」だけに使って意味の分担を守る */
+  --color-warm: #e9a94b; /* 3200K タングステン: CTA・リンク・フォーカス */
+  --color-cool: #93b4c9; /* 5600K デイライト: 比率タグ・スペック・工程番号・金額 */
+  --color-bg: #0b0b0c; /* 素材の黒 */
+  --color-bg-alt: #15161a; /* 交互セクション。フィルムベース寄りに青を残す */
+  --color-paper: #e9e5dc; /* 明色セクションの地。純白は使わない */
   --color-line: rgb(255 255 255 / 0.12);
 
-  /* 書体 */
+  /* 書体。原本と同じ2ファミリーに絞っている */
   --font-display: 'Six Caps', sans-serif;
-  --font-sans: Karla, 'Noto Sans JP', sans-serif;
-  /* 細身の欧文。Hero の見出しと料金表示に使う。
-     font-thin は Tailwind の font-weight:100 と名前がぶつかるので slim にしている */
-  --font-slim: Roboto, 'Noto Sans JP', sans-serif;
-  --font-mono: ui-monospace, Menlo, Consolas, monospace;
+  --font-sans: 'Zen Kaku Gothic New', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   /* 画面端の余白。px-pad / py-pad のように使う */
   --spacing-pad: clamp(20px, 5vw, 50px);
 
-  /* Tailwind の text-* は既定で行間も一緒に指定してくるが、
-     このサイトは body の line-height 1.88 を全体で継承する設計なので上書きしておく。
-     個別に詰めたいところは leading-* を足して打ち消す */
+  /* 本文の行間。原本は要素ごとに 1.88 を指定しているので、
+     text-* を当てた箇所だけが行間を持つようにする（body には敷かない） */
   --text-xs--line-height: 1.88;
   --text-sm--line-height: 1.88;
   --text-base--line-height: 1.88;
@@ -49,6 +48,12 @@
       transform: rotate(360deg);
     }
   }
+  /* 背景動画は再生が始まるまで隠す。下に敷いたサムネイルを見せてから差し替える */
+  @keyframes videoIn {
+    to {
+      opacity: 1;
+    }
+  }
 
   /* PC用ナビとサイドドットが出現する幅。wide:flex のように使う */
   --breakpoint-wide: 1200px;
@@ -65,7 +70,6 @@
     color: #fff;
     font-family: var(--font-sans);
     font-size: 16px;
-    line-height: 1.88;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
@@ -76,19 +80,13 @@
   }
 
   ::selection {
-    background: var(--color-accent);
+    background: var(--color-warm);
     color: var(--color-bg);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-accent);
+    outline: 2px solid var(--color-warm);
     outline-offset: 3px;
-  }
-
-  /* セクションの背景を交互に切り替える。
-     並べ替えても自動で追従するので、各セクション側では背景を指定しない */
-  main > section:nth-of-type(even) {
-    background: var(--color-bg-alt);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -108,9 +106,4 @@
 /* 全面に敷くフィルムグレイン。データURIを含むためユーティリティ化している */
 @utility film-grain {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-/* 素材差し替え待ちを示す斜線。Placeholder と Hero の背景で使う */
-@utility hatch {
-  background-image: repeating-linear-gradient(45deg, #181818 0 10px, #121212 10px 20px);
 }

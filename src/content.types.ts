@@ -5,17 +5,12 @@
  */
 
 /** セクションの識別子。ナビ・サイドドット・スクロール位置の対応付けに使う */
-export type SectionId = 'home' | 'works' | 'profile' | 'service' | 'contact';
+export type SectionId = 'home' | 'featured' | 'works' | 'profile' | 'about' | 'price' | 'contact';
 
 export type NavItem = {
   id: SectionId;
   label: string;
 };
-
-/** Hero の背景。null のあいだは斜線のプレースホルダが出る */
-export type HeroMedia =
-  | { type: 'video'; src: string; poster?: string }
-  | { type: 'image'; src: string };
 
 export type Brand = {
   /** ロゴ・フッターに出る表記 */
@@ -27,39 +22,72 @@ export type Brand = {
 export type Hero = {
   eyebrow: string;
   title: string;
-  copy?: string;
-  media: HeroMedia | null;
-  /** media が null のときだけ左下に出る注記 */
+  /** 見出し下に等幅で添える所在と稼働年 */
+  meta: string;
+  /** 背景で流す YouTube の動画ID。null なら静止画のみ */
+  youtubeId: string | null;
+  /** 動画が始まるまで下に敷くサムネイル */
+  poster: string;
+  /** 仮素材であることを示す左下の注記 */
   mediaNote?: string;
 };
 
-export type WorkItem = {
-  title: string;
-  category: string;
-  /** YouTube の動画ID。入れると埋め込みプレイヤーに変わる */
-  youtubeId: string | null;
+export type Credit = { label: string; value: string };
+
+export type Featured = {
+  heading: string;
+  lead: string;
+  /** 本編。埋め込みプレイヤーで出す */
+  youtubeId: string;
+  /**
+   * 本編から抜いたスチル。1本の作品のコンタクトシートなので比率は揃える。
+   * scope はシネスコ素材を 16:9 の枠へ入れるときの黒帯逃がし
+   */
+  stills: { src: string; scope: boolean }[];
+  messageHeading: string;
+  message: string;
+  creditHeading: string;
+  credits: Credit[];
 };
 
-export type FeaturedWork = {
-  category: string;
+/** 撮られた画角。Works はこれをそのまま枠の比率に使う */
+export type Ratio = '16/9' | '2.39/1';
+
+export type WorkItem = {
   title: string;
+  youtubeId: string;
+  /** カードに敷くサムネイル */
+  thumb: string;
+  ratio: Ratio;
+  /** 比率タグの表示 */
+  ratioLabel: string;
 };
 
 export type Works = {
   heading: string;
-  lead?: string;
-  /** グリッド上部のスライダーに出す代表作。1件以上必須 */
-  featured: FeaturedWork[];
+  /** 上部のスライダー。1本を大きく見せる */
+  feature: { category: string; title: string; youtubeId: string; poster: string; slides: number };
   items: WorkItem[];
+  moreLabel: string;
 };
 
 export type Profile = {
   heading: string;
-  /** 'portrait.jpg' のように指定すると写真に変わる */
-  portrait: string | null;
-  portraitNote?: string;
+  /** 全幅のスライダー。黒帯の入るシネスコ素材と、ロゴが写り込むカットは使わない */
+  slides: string[];
+};
+
+export type About = {
+  heading: string;
   body: string[];
   meta: { label: string; value: string }[];
+  portrait: string;
+};
+
+export type PriceCta = {
+  heading: string;
+  lead: string;
+  label: string;
 };
 
 export type Plan = {
@@ -67,23 +95,34 @@ export type Plan = {
   title: string;
   desc: string;
   price: string;
-  /** 価格の後ろに小さく添える単位。不要なら空文字 */
-  unit?: string;
+  /** 価格の後ろに小さく添える単位 */
+  unit: string;
 };
 
-export type Service = {
+export type PricePage = {
   heading: string;
-  lead?: string;
+  lead: string;
+  /** キービジュアル。3:1 と横長なのでシネスコ素材でも cover だけで黒帯が枠外に落ちる */
+  keyVisual: string;
+  plansHeading: string;
   plans: Plan[];
+  specHeading: string;
+  /** スペック欄の横に置くサンプル映像 */
+  specYoutubeId: string;
+  spec: Credit[];
+  optionsHeading: string;
+  options: { label: string; body: string }[];
   flow: { no: string; title: string; text: string }[];
   notes: string[];
+  backLabel: string;
 };
 
 export type Contact = {
   heading: string;
-  lead?: string;
-  links: { label: string; href: string }[];
-  note?: string;
+  lead: string;
+  fields: { name: string; email: string; subject: string; message: string };
+  sendLabel: string;
+  sentLabel: string;
 };
 
 export type Footer = {
@@ -93,11 +132,22 @@ export type Footer = {
 
 export type SiteContent = {
   brand: Brand;
+  /** ヘッダーのナビ。Home は含めない */
   nav: NavItem[];
+  /** サイドドット。Home を含む全セクション */
+  dots: NavItem[];
   hero: Hero;
+  featured: Featured;
   works: Works;
   profile: Profile;
-  service: Service;
+  about: About;
+  priceCta: PriceCta;
+  pricePage: PricePage;
   contact: Contact;
+  /** Instagram 風の正方形グリッド */
+  gram: { src: string; scope: boolean }[];
+  /** 架空のロゴ。Credit のダミー取引先と同じ名前で辻褄を合わせている */
+  partners: { name: string; kind: string }[];
+  partnersNote: string;
   footer: Footer;
 };

@@ -79,11 +79,11 @@ export function Loader() {
       <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-white/7" />
       <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-white/7" />
 
-      <div className="relative flex aspect-square w-[min(380px,70vw)] items-center justify-center rounded-full border border-white/12">
+      <div className="relative flex aspect-square w-[min(380px,80vw)] items-center justify-center rounded-full border border-white/12">
         {/* 間隔を % で置き、画面が狭くなっても二重丸の比率を保つ。
             % はパディングボックス基準なので、380px のとき内円が 309px になる値 */}
-        <div className="absolute inset-[9.1%] rounded-full border border-white/8" />
-        <div className="absolute inset-[9.1%] animate-ring rounded-full border border-transparent border-t-accent" />
+        <div className="absolute inset-[8.95%] rounded-full border border-white/8" />
+        <div className="absolute inset-[8.95%] animate-ring rounded-full border border-transparent border-t-white/45" />
         <span
           className={cn(
             'relative font-display text-[clamp(40px,12vw,56px)] leading-none tracking-[6px] whitespace-nowrap',
