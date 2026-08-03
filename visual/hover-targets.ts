@@ -51,7 +51,9 @@ export const hoverTargets: HoverTarget[] = [
     key: 'works-card',
     label: 'works: 作品カード',
     scrollId: 'works',
-    designSelector: '#works [style*="16 / 9"]',
+    // 一部のカードは実際のYouTube埋め込みに差し替わっており(:not(iframe)で除外)、
+    // freeze CSSでiframeをvisibility:hiddenにしているためhoverできない
+    designSelector: '#works [style*="16 / 9"]:not(iframe)',
     // FeaturedSlider にも同じ .hatch（斜線プレースホルダー）クラスを使っているため、
     // カードにしか付かない .group で絞り込む
     reactSelector: '#works .group.hatch',
