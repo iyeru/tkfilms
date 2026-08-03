@@ -92,16 +92,13 @@ function FeaturedSlider({ slides }: { slides: FeaturedWork[] }) {
         </h3>
       </div>
 
-      {slides.length > 1 && (
-        <>
-          <SliderButton aria-label="Previous" onClick={() => go(-1)} className="left-[22px]">
-            ‹
-          </SliderButton>
-          <SliderButton aria-label="Next" onClick={() => go(1)} className="right-[22px]">
-            ›
-          </SliderButton>
-        </>
-      )}
+      {/* design/では件数に関わらず矢印を常時表示するため、1件でも隠さない */}
+      <SliderButton aria-label="Previous" onClick={() => go(-1)} className="left-[22px]">
+        ‹
+      </SliderButton>
+      <SliderButton aria-label="Next" onClick={() => go(1)} className="right-[22px]">
+        ›
+      </SliderButton>
 
       <div className="absolute bottom-[22px] left-1/2 flex -translate-x-1/2 gap-2.5">
         {slides.map((s, i) => (
