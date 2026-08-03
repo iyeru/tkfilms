@@ -9,6 +9,19 @@ import { hoverTargets } from './hover-targets';
 //  これも3秒待機でカバーされる)
 const LOADER_SETTLE_MS = 3000;
 
+/**
+ * YouTube 埋め込みへの通信を遮断する。
+ * iframe は freeze CSS で visibility:hidden にしており画には出ないが、
+ * 実際には読み込みと再生が続いていて再描画が止まらず、
+ * toHaveScreenshot の安定待ちがタイムアウトすることがある（特にホバーで
+ * プレビューを差し込む works のカード）。サムネイル(i.ytimg.com)は
+ * 背景として実際に見えているので遮断しない。
+ */
+async function blockEmbeds(page: Page) {
+  await page.route('**://*.youtube.com/**', (route) => route.abort());
+  await page.route('**://*.youtube-nocookie.com/**', (route) => route.abort());
+}
+
 async function injectFreezeStyles(page: Page) {
   // page.addStyleTag() は「今表示しているドキュメント」に注入するため、
   // goto() より前に呼ぶとその後のナビゲーションで消えて何も効かなくなる。
@@ -48,6 +61,7 @@ for (const viewport of viewports) {
         // reactのuseInViewはreduced-motionだと初期表示から即座にinView=trueを返すため、
         // スクロール到達アニメーションのタイミング待ちが不要になる。emulateMediaはpage単位の
         // 設定でドキュメントに紐付かないため、goto()より前でも後でも構わない。
+        await blockEmbeds(page);
         await page.emulateMedia({ reducedMotion: 'reduce' });
         await page.goto('/');
         await injectFreezeStyles(page);
@@ -84,6 +98,7 @@ test.describe('hover', () => {
 
       test.skip(selector === null, `${target.label}: src/ 側に未実装（visual/hover-targets.ts の reactSelector が null）`);
 
+      await blockEmbeds(page);
       await page.emulateMedia({ reducedMotion: 'reduce' });
       await page.goto('/');
       await injectFreezeStyles(page);
