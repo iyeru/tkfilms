@@ -19,10 +19,10 @@ export type SectionDef = {
 // セクションを作ったらここの reactId を埋めるだけでテスト対象になる。
 export const sections: SectionDef[] = [
   { key: 'home', label: 'Hero', designId: 'home', reactId: 'home' },
-  { key: 'featured', label: 'Featured Work', designId: 'featured', reactId: null },
+  { key: 'featured', label: 'Featured Work', designId: 'featured', reactId: 'featured' },
   { key: 'works', label: 'Works', designId: 'works', reactId: 'works' },
   { key: 'profile', label: 'Profile', designId: 'profile', reactId: 'profile' },
-  { key: 'about', label: 'About', designId: 'about', reactId: null },
-  { key: 'price', label: 'Price CTA', designId: 'price', reactId: null },
+  { key: 'about', label: 'About', designId: 'about', reactId: 'about' },
+  { key: 'price', label: 'Price CTA', designId: 'price', reactId: 'price' },
   { key: 'contact', label: 'Contact', designId: 'contact', reactId: 'contact' },
 ];

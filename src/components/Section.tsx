@@ -1,42 +1,51 @@
 import type { ReactNode } from 'react';
-import type { SectionId } from '@/content.types';
 import { Reveal } from './Reveal';
+import { cn } from '@/lib/cn';
 
 /**
  * Hero 以外のセクションの外枠。
- * 背景色は index.css の nth-of-type で交互に切り替わるのでここでは指定しない。
+ * 背景は交互ではなく明示で持つ。Contact はトップページと Price ページの両方から
+ * 使われて並び順が変わるため、位置に依存する指定では色を再現できない。
  */
-export function Section({ id, children }: { id: SectionId; children: ReactNode }) {
+export function Section({
+  id,
+  tone = 'base',
+  className,
+  children,
+}: {
+  id?: string;
+  tone?: 'base' | 'alt';
+  className?: string;
+  children: ReactNode;
+}) {
   return (
-    <section id={id} className="scroll-mt-14 px-pad py-24 md:py-[110px]">
+    <section
+      id={id}
+      className={cn('px-6 py-[110px]', tone === 'alt' ? 'bg-bg-alt' : 'bg-bg', className)}
+    >
       <div className="mx-auto w-full max-w-[1140px]">{children}</div>
     </section>
   );
 }
 
-/** 英字の大見出し＋アクセントの罫＋リード文 */
+/**
+ * 英字の大見出し。
+ * 以前は見出しごとにアクセントの罫を敷いていたが、同じ装飾が全セクションに
+ * 並ぶだけで何も語っていなかったため落としている。
+ */
 export function SectionHeading({ title, lead }: { title: string; lead?: string }) {
   return (
     <>
       <Reveal className="text-center">
-        <h2 className="font-display text-[clamp(58px,14vw,96px)] leading-none tracking-[1px] uppercase">
+        <h2 className="font-display text-[clamp(64px,9vw,96px)] leading-none tracking-[1px] uppercase">
           {title}
         </h2>
       </Reveal>
-      <Rule className="mt-[26px] mb-8" />
       {lead && (
-        <Reveal
-          as="p"
-          className="mx-auto mb-12 max-w-[620px] text-center text-pretty text-white/70"
-        >
+        <Reveal as="p" className="mx-auto mb-14 max-w-[620px] text-center text-base text-pretty text-white/70">
           {lead}
         </Reveal>
       )}
     </>
   );
-}
-
-/** 見出し下のアクセントの罫 */
-export function Rule({ className }: { className?: string }) {
-  return <div className={`mx-auto h-[5px] w-10 bg-accent ${className ?? ''}`} />;
 }
