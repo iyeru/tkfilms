@@ -7,13 +7,17 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "visual:baseline": "playwright test --project=design --update-snapshots",
+    "visual:test": "playwright test --project=react",
+    "visual:report": "playwright show-report"
   },
   "dependencies": {
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.55.0",
     "@tailwindcss/vite": "^4.1.0",
     "@types/node": "^26.1.2",
     "@types/react": "^19.1.0",
