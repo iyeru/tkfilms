@@ -1,5 +1,6 @@
 import { test, expect, type Page } from '@playwright/test';
 import { sections, viewports } from './sections';
+import { hoverTargets } from './hover-targets';
 
 // 初回ロードのローディング演出を確実に畳ませるための待機。
 // design側は固定1100ms+520ms(fade)で最大1.62秒。react側はreduced-motion指定時は
@@ -23,8 +24,9 @@ async function injectFreezeStyles(page: Page) {
       iframe { visibility: hidden !important; }
       /* works の「THE LONG LIGHT」バナー（5点ドットのカルーセル）も、design原本の
          プレビュー機能が実写真を自動で差し込んでおり、キャプチャの度に写真が変わる。
-         同様に中身だけ隠す */
-      [style*="21 / 9"] { visibility: hidden !important; }
+         背景だけプレースホルダーの斜線に固定する（矢印ボタンのホバーには要素自体が
+         見えている必要があるため、visibility:hidden で丸ごと隠すことはしない） */
+      [style*="21 / 9"] { background-image: repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px) !important; }
     `,
   });
 }
@@ -64,3 +66,48 @@ for (const viewport of viewports) {
     }
   });
 }
+
+// ホバーはポインタ操作前提のため、デスクトップ幅のみで比較する
+const desktop = viewports.find((v) => v.name === 'desktop');
+if (!desktop) throw new Error('visual/sections.ts の viewports に desktop が無い');
+
+test.describe('hover', () => {
+  test.use({ viewport: { width: desktop.width, height: desktop.height } });
+
+  for (const target of hoverTargets) {
+    test(target.key, async ({ page }, testInfo) => {
+      const isDesign = testInfo.project.name === 'design';
+      const selector = isDesign ? target.designSelector : target.reactSelector;
+
+      test.skip(selector === null, `${target.label}: src/ 側に未実装（visual/hover-targets.ts の reactSelector が null）`);
+
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await page.goto('/');
+      await injectFreezeStyles(page);
+      await page.waitForTimeout(LOADER_SETTLE_MS);
+
+      await page.locator(`#${target.scrollId}`).scrollIntoViewIfNeeded();
+      await page.waitForTimeout(200);
+
+      const el = page.locator(selector!).first();
+      await el.hover();
+      // トランジションは無効化済みなのでアニメーション待ちは不要。ただしReactの
+      // useScrollPast等、状態更新が次の描画を待つものがあるため一呼吸だけ置く
+      await page.waitForTimeout(100);
+
+      const box = await el.boundingBox();
+      if (!box) throw new Error(`${target.key} の boundingBox が取得できない`);
+
+      // hoverでscale(1.12)する要素があり、拡大後の見切れを防ぐため余白を持たせてクリップする
+      const pad = 20;
+      await expect(page).toHaveScreenshot(`hover-${target.key}.png`, {
+        clip: {
+          x: Math.max(0, box.x - pad),
+          y: Math.max(0, box.y - pad),
+          width: box.width + pad * 2,
+          height: box.height + pad * 2,
+        },
+      });
+    });
+  }
+});

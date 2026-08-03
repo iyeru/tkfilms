@@ -38,6 +38,8 @@ export const content: SiteContent = {
   works: {
     heading: 'Works',
     lead: '企画・撮影・編集・カラーグレーディングまで一貫して制作しています。',
+    // 代表作が増えたら配列に追加する（スライダーの矢印・dotは件数に自動で追従する）
+    featured: [{ category: 'Brand Film', title: '[ 代表作 — 差し替え予定 ]' }],
     // youtubeId に動画IDを入れると埋め込みに変わる（null のあいだはプレースホルダ表示）
     items: [
       { title: '[ 作品タイトル 01 ]', category: 'Brand Movie', youtubeId: null },

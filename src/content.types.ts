@@ -40,9 +40,16 @@ export type WorkItem = {
   youtubeId: string | null;
 };
 
+export type FeaturedWork = {
+  category: string;
+  title: string;
+};
+
 export type Works = {
   heading: string;
   lead?: string;
+  /** グリッド上部のスライダーに出す代表作。1件以上必須 */
+  featured: FeaturedWork[];
   items: WorkItem[];
 };
 
