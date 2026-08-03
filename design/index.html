@@ -28,6 +28,9 @@
   @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
   /* 背景動画は再生が始まるまで黒板を出す。下に敷いたサムネイルを見せてから差し替える */
   @keyframes videoIn { to { opacity: 1; } }
+  /* シネスコ(2.39:1)で撮られた素材のサムネイルは上下に黒帯が焼き込まれている。帯の分だけ拡大して枠外へ逃がす。
+     横長すぎる枠（21:9 より広い）では逆に幅が足りなくなるため、16:9 以下の枠でのみ使う */
+  [data-scope] { background-size: auto 132% !important; background-repeat: no-repeat; }
 </style>
 </helmet>
 
@@ -106,9 +109,9 @@
           <iframe src="https://www.youtube-nocookie.com/embed/JfmmA2cU2-k?rel=0&amp;modestbranding=1&amp;playsinline=1" title="THE LONG LIGHT" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style="position:absolute; inset:0; width:100%; height:100%; border:0"></iframe>
         </div>
         <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:28px; margin-top:28px">
-          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.14em; color:rgba(255,255,255,.3)">[ still 01 ]</div>
-          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.14em; color:rgba(255,255,255,.3)">[ still 02 ]</div>
-          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease; aspect-ratio:16/9; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; font-family:ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.14em; color:rgba(255,255,255,.3)">[ still 03 ]</div>
+          <div data-anim="fade" data-scope="1" style="opacity:0; transition:opacity .8s ease; aspect-ratio:16/9; background-color:#121212; background-image:url(https://i.ytimg.com/vi/AwGjc8Yz8fc/maxres1.jpg); background-size:cover; background-position:center; border:1px solid rgba(255,255,255,.08)"></div>
+          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease; aspect-ratio:16/9; background-color:#121212; background-image:url(https://i.ytimg.com/vi/DhVz3xsAis0/maxres1.jpg); background-size:cover; background-position:center; border:1px solid rgba(255,255,255,.08)"></div>
+          <div data-anim="fade" data-scope="1" style="opacity:0; transition:opacity .8s ease; aspect-ratio:16/9; background-color:#121212; background-image:url(https://i.ytimg.com/vi/AwGjc8Yz8fc/maxres3.jpg); background-size:cover; background-position:center; border:1px solid rgba(255,255,255,.08)"></div>
         </div>
         <div style="display:flex; flex-wrap:wrap; gap:56px; margin-top:64px">
           <div style="flex:1 1 380px; min-width:280px">
@@ -156,7 +159,7 @@
 
         <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:28px; margin-top:42px">
           <sc-for list="{{ works }}" as="w" hint-placeholder-count="6">
-            <div data-anim="fade" onMouseEnter="{{ w.enter }}" onMouseLeave="{{ w.leave }}" style="opacity:0; transition:opacity .8s ease, transform .45s cubic-bezier(.13,1.07,.64,.97), box-shadow .45s ease, border-color .45s ease; position:relative; aspect-ratio:16/9; background-color:#121212; background-image:url({{ w.thumb }}); background-size:cover; background-position:center; border:1px solid rgba(255,255,255,.08); cursor:pointer; overflow:hidden; will-change:transform" style-hover="transform:translateY(-14px) scale(1.02); box-shadow:0 26px 50px -14px rgba(0,0,0,.85); border-color:rgba(255,255,255,.22); z-index:2">
+            <div data-anim="fade" data-scope="{{ w.scope }}" onMouseEnter="{{ w.enter }}" onMouseLeave="{{ w.leave }}" style="opacity:0; transition:opacity .8s ease, transform .45s cubic-bezier(.13,1.07,.64,.97), box-shadow .45s ease, border-color .45s ease; position:relative; aspect-ratio:16/9; background-color:#121212; background-image:url({{ w.thumb }}); background-size:cover; background-position:center; border:1px solid rgba(255,255,255,.08); cursor:pointer; overflow:hidden; will-change:transform" style-hover="transform:translateY(-14px) scale(1.02); box-shadow:0 26px 50px -14px rgba(0,0,0,.85); border-color:rgba(255,255,255,.22); z-index:2">
               <sc-if value="{{ w.playing }}" hint-placeholder-val="{{ false }}">
                 <iframe src="{{ w.embed }}" title="{{ w.title }}" allow="autoplay; encrypted-media" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; transform:scale(1.45)"></iframe>
               </sc-if>
@@ -182,10 +185,10 @@
           </div>
           <div data-anim="fade" style="opacity:0; transition:opacity .8s ease; width:40px; height:5px; background:var(--accent,#FFF100); margin:30px auto"></div>
         </div>
-        <div style="position:relative; width:100%; height:min(62vh,520px); background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); display:flex; align-items:center; justify-content:center">
-          <span style="font-family:ui-monospace,Menlo,monospace; font-size:12px; letter-spacing:.16em; color:rgba(255,255,255,.3); text-transform:uppercase">[ behind the scenes — full bleed slider ]</span>
-          <button aria-label="Previous" style="position:absolute; left:clamp(16px,4vw,60px); top:50%; transform:translateY(-50%); width:70px; height:70px; border-radius:50%; border:1px solid rgba(255,255,255,.45); background:transparent; color:#fff; font-size:20px; cursor:pointer; transition:background .35s ease, color .35s ease, border-color .35s ease, transform .35s cubic-bezier(.13,1.07,.64,.97)" style-hover="background:var(--accent,#FFF100); color:#0C0C0C; border-color:var(--accent,#FFF100); transform:translateY(-50%) scale(1.12)">‹</button>
-          <button aria-label="Next" style="position:absolute; right:clamp(16px,4vw,60px); top:50%; transform:translateY(-50%); width:70px; height:70px; border-radius:50%; border:1px solid rgba(255,255,255,.45); background:transparent; color:#fff; font-size:20px; cursor:pointer; transition:background .35s ease, color .35s ease, border-color .35s ease, transform .35s cubic-bezier(.13,1.07,.64,.97)" style-hover="background:var(--accent,#FFF100); color:#0C0C0C; border-color:var(--accent,#FFF100); transform:translateY(-50%) scale(1.12)">›</button>
+        <div style="position:relative; width:100%; height:min(62vh,520px); background-color:#121212; background-image:url({{ slideShot }}); background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center">
+          <div style="position:absolute; inset:0; background:rgba(12,12,12,.25)"></div>
+          <button aria-label="Previous" onClick="{{ slidePrev }}" style="position:absolute; left:clamp(16px,4vw,60px); top:50%; transform:translateY(-50%); width:70px; height:70px; border-radius:50%; border:1px solid rgba(255,255,255,.45); background:transparent; color:#fff; font-size:20px; cursor:pointer; transition:background .35s ease, color .35s ease, border-color .35s ease, transform .35s cubic-bezier(.13,1.07,.64,.97)" style-hover="background:var(--accent,#FFF100); color:#0C0C0C; border-color:var(--accent,#FFF100); transform:translateY(-50%) scale(1.12)">‹</button>
+          <button aria-label="Next" onClick="{{ slideNext }}" style="position:absolute; right:clamp(16px,4vw,60px); top:50%; transform:translateY(-50%); width:70px; height:70px; border-radius:50%; border:1px solid rgba(255,255,255,.45); background:transparent; color:#fff; font-size:20px; cursor:pointer; transition:background .35s ease, color .35s ease, border-color .35s ease, transform .35s cubic-bezier(.13,1.07,.64,.97)" style-hover="background:var(--accent,#FFF100); color:#0C0C0C; border-color:var(--accent,#FFF100); transform:translateY(-50%) scale(1.12)">›</button>
         </div>
       </div>
     </section>
@@ -202,9 +205,7 @@
           <div><span style="display:block; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#fff; font-size:12px; margin-bottom:6px">Field</span>Brand / Doc / MV</div>
         </div>
       </div>
-      <div style="flex:1 1 420px; min-width:min(100%,360px); min-height:60vh; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); display:flex; align-items:center; justify-content:center">
-        <span style="font-family:ui-monospace,Menlo,monospace; font-size:12px; letter-spacing:.16em; color:rgba(255,255,255,.3); text-transform:uppercase">[ portrait — 4:5 ]</span>
-      </div>
+      <div style="flex:1 1 420px; min-width:min(100%,360px); min-height:60vh; background-color:#121212; background-image:url(https://i.ytimg.com/vi/tSmyaP5QfeM/maxres1.jpg); background-size:cover; background-position:center"></div>
     </section>
 
     <section id="price" data-sec="price" data-screen-label="Price CTA" style="min-height:70vh; padding:110px 24px; display:flex; align-items:center; justify-content:center; text-align:center; background:#131313">
@@ -226,8 +227,8 @@
       <h1 style="font-family:'Six Caps',sans-serif; font-size:clamp(64px,10vw,110px); line-height:1; letter-spacing:2px; text-transform:uppercase; color:#fff; margin:0">Price</h1>
       <p style="font-family:Karla,'Noto Sans JP',sans-serif; font-size:16px; line-height:1.88; color:rgba(255,255,255,.65); margin:18px 0 0">料金と撮影プランのご案内 — Plans, gear and options.</p>
     </section>
-    <div style="position:relative; width:100%; height:min(60vh,480px); background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); display:flex; align-items:center; justify-content:center">
-      <span style="font-family:ui-monospace,Menlo,monospace; font-size:12px; letter-spacing:.16em; color:rgba(255,255,255,.3); text-transform:uppercase">[ full-bleed key visual ]</span>
+    <div style="position:relative; width:100%; height:min(60vh,480px); background-color:#121212; background-image:url(https://i.ytimg.com/vi/4hs_GGss_Nc/maxres3.jpg); background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center">
+      <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(12,12,12,.15), rgba(12,12,12,.6))"></div>
       <span style="position:absolute; bottom:26px; left:50%; transform:translateX(-50%); font-size:22px; color:rgba(255,255,255,.6); animation:bob 2.4s ease-in-out infinite">⌄</span>
     </div>
 
@@ -338,7 +339,7 @@
   <section data-sec="instagram" data-screen-label="Instagram" style="background:#0C0C0C; padding:0">
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:0">
       <sc-for list="{{ grams }}" as="g" hint-placeholder-count="6">
-        <div style="position:relative; aspect-ratio:1; background-image:repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px); border-right:1px solid #0C0C0C; border-bottom:1px solid #0C0C0C">
+        <div data-scope="{{ g.scope }}" style="position:relative; aspect-ratio:1; background-color:#121212; background-image:url({{ g.thumb }}); background-size:cover; background-position:center; border-right:1px solid #0C0C0C; border-bottom:1px solid #0C0C0C">
           <div style="position:absolute; inset:0; background:rgba(12,12,12,.75); opacity:0; transition:opacity .3s ease; display:flex; align-items:center; justify-content:center; font-family:Karla,sans-serif; font-weight:700; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--accent,#FFF100)" style-hover="opacity:1">{{ g.label }}</div>
         </div>
       </sc-for>
@@ -381,7 +382,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#FFF100&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#FFF100&quot;,&quot;#FF4A1C&quot;,&quot;#8AF0C8&quot;,&quot;#FFFFFF&quot;],&quot;section&quot;:&quot;Theme&quot;},&quot;showLoader&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;pushMenu&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;sideDots&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
 class Component extends DCLogic {
-  state = { page: 'home', menu: false, loading: true, fading: false, y: 0, w: 1440, active: 'home', hoverDot: null, hoverWork: null, tab: 0, sent: false };
+  state = { page: 'home', menu: false, loading: true, fading: false, y: 0, w: 1440, active: 'home', hoverDot: null, hoverWork: null, slide: 0, tab: 0, sent: false };
 
   componentDidMount() {
     this.applyAccent();
@@ -486,6 +487,20 @@ class Component extends DCLogic {
     const previewSrc = (id) => 'https://www.youtube-nocookie.com/embed/' + id +
       '?autoplay=1&mute=1&loop=1&playlist=' + id +
       '&controls=0&modestbranding=1&rel=0&playsinline=1&disablekb=1&fs=0&iv_load_policy=3';
+    // シネスコで撮られた素材。サムネイルに黒帯が入るので data-scope で拡大して隠す
+    const scopeIds = ['AwGjc8Yz8fc', '4HW_ymYfC2I', 'UyBsm2wU8ag', '4hs_GGss_Nc'];
+    const frame = (id, n) => ({
+      src: 'https://i.ytimg.com/vi/' + id + '/maxres' + n + '.jpg',
+      scope: scopeIds.indexOf(id) >= 0 ? '1' : null
+    });
+    // Profile のスライダー。仮素材の中から現場カットを並べている。
+    // 枠が全幅で横長のため、黒帯の入るシネスコ素材（scopeIds）はここでは使わない。
+    // 大きく映るので、他社ロゴや船名が写り込むカットも避けている
+    const slideShots = [frame('FfBE5_gqTSY', 1), frame('V-qTEo9IHTA', 1)];
+    const gramShots = [
+      frame('V-qTEo9IHTA', 1), frame('DhVz3xsAis0', 3), frame('0hpkWLJzYQs', 1),
+      frame('FfBE5_gqTSY', 3), frame('UyBsm2wU8ag', 3), frame('4hs_GGss_Nc', 2)
+    ];
     const tabLabels = ['Drone', 'Audio', 'Grading', 'Vertical'];
     const tabBodies = [
       'ドローン空撮（国交省許可取得済み・機体2種）。1フライトあたり ¥40,000〜。天候による予備日の設定を含みます。',
@@ -519,7 +534,8 @@ class Component extends DCLogic {
       })),
       works: workItems.map((w, i) => ({
         title: w.title,
-        thumb: 'https://i.ytimg.com/vi/' + w.id + '/maxres2.jpg',
+        thumb: frame(w.id, 2).src,
+        scope: frame(w.id, 2).scope,
         embed: previewSrc(w.id),
         playing: s.hoverWork === i,
         idle: s.hoverWork !== i,
@@ -535,7 +551,10 @@ class Component extends DCLogic {
         enter: () => this.setState({ hoverDot: x.id }),
         leave: () => this.setState({ hoverDot: null })
       })),
-      grams: [1, 2, 3, 4, 5, 6].map((n) => ({ label: 'View' })),
+      slideShot: slideShots[s.slide].src,
+      slidePrev: () => this.setState({ slide: (s.slide + slideShots.length - 1) % slideShots.length }),
+      slideNext: () => this.setState({ slide: (s.slide + 1) % slideShots.length }),
+      grams: gramShots.map((g) => ({ label: 'View', thumb: g.src, scope: g.scope })),
       toggleMenu: () => this.setState({ menu: !s.menu }),
       closeMenu: () => this.setState({ menu: false }),
       goHome: this.go('home'),
