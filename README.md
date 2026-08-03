@@ -5,6 +5,21 @@
 - 公開URL: https://iyeru.github.io/tkfilms/
 - 構成: React + TypeScript + Tailwind CSS v4 + Vite
 
+## ⚠️ いま公開しているのは design 原本
+
+**公開URLが返しているのは `design/`（Claude Design のデザイン原本）で、React 版ではない。**
+
+React 版はデザイン原本と挙動が食い違っていたため、基準となる原本を先に本番へ戻した。React + TypeScript のソースは `src/` にそのまま残してあり、消していない。
+
+| | 中身 | 状態 |
+|---|---|---|
+| `design/` | Claude Design の出力（`support.js` が unpkg から React+Babel を読むプレビュー用） | **配信中** |
+| `src/` ほか | React + TypeScript + Tailwind v4 + Vite | ソースのみ。配信していない |
+
+切り替えは `.github/workflows/deploy.yml` の中でコメントを入れ替えるだけ。手順はファイル冒頭に書いてある。
+
+> `design/` は動作確認用。unpkg 依存で初回表示が遅く、ダミーの実績・料金を含むため `robots noindex` を入れてある。**このまま恒久的に公開する想定ではない。**
+
 ## 開発
 
 ```bash
@@ -21,7 +36,9 @@ npm run dev        # http://localhost:5173/tkfilms/
 
 ## 公開
 
-`main` に push すると GitHub Actions がビルドして Pages に配信する（1分ほど）。手順は `.github/workflows/deploy.yml`。
+`main` に push すると GitHub Actions が Pages に配信する（1分ほど）。手順は `.github/workflows/deploy.yml`。
+
+**現在は `design/` をビルドせずそのまま配信する設定。** React 版に切り替えるときは `deploy.yml` のコメントを入れ替える。
 
 > **初回だけ設定が必要**
 > リポジトリの Settings → Pages → Build and deployment → Source を **GitHub Actions** に変更する。

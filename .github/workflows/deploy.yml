@@ -1,5 +1,13 @@
 name: Deploy to GitHub Pages
 
+# いま公開しているのは design/（Claude Design のデザイン原本）。
+# React + TypeScript 版のソースは src/ に残してあるが、まだ配信していない。
+#
+# React 版の配信に切り替えるとき:
+#   1. build ジョブの「デザイン原本を配信」ステップを消す
+#   2. 下にコメントアウトしてある「React 版をビルドして配信」の4ステップを有効にする
+#   （逆に戻すときはその逆）
+
 on:
   push:
     branches: [main]
@@ -22,18 +30,24 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 22
-          cache: npm
-
-      - run: npm ci
-      - run: npm run build
-
+      # --- デザイン原本を配信（現在有効） ---------------------------------
+      # ビルド不要。design/ をそのまま配る
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:
-          path: dist
+          path: design
+
+      # --- React 版をビルドして配信（切り替えるときはこちらを有効にする） ---
+      # - uses: actions/setup-node@v7
+      #   with:
+      #     node-version: 22
+      #     cache: npm
+      # - run: npm ci
+      # - run: npm run build
+      # - uses: actions/configure-pages@v6
+      # - uses: actions/upload-pages-artifact@v5
+      #   with:
+      #     path: dist
 
   deploy:
     needs: build
