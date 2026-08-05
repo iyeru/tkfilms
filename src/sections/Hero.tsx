@@ -44,7 +44,7 @@ export function Hero({ hero }: { hero: HeroContent }) {
       </div>
 
       <a
-        href="#featured"
+        href="#works"
         aria-label="下へスクロール"
         className="absolute bottom-[38px] left-1/2 z-2 -translate-x-1/2 animate-bob text-[22px] text-white/60"
       >

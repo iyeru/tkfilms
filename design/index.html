@@ -111,39 +111,6 @@
       </div>
     </section>
 
-    <section id="featured" data-sec="featured" data-screen-label="Featured Work" style="min-height:100vh; padding:110px 24px; display:flex; align-items:center; background:#15161A">
-      <div style="width:100%; max-width:1140px; margin:0 auto">
-        <div data-anim="up" style="opacity:0; transform:translateY(30px); transition:opacity .8s cubic-bezier(.13,1.07,.64,.97), transform .8s cubic-bezier(.13,1.07,.64,.97); text-align:center">
-          <h2 style="font-family:'Six Caps',sans-serif; font-size:clamp(64px,9vw,96px); line-height:1; letter-spacing:1px; text-transform:uppercase; color:#fff; margin:0">Featured Work</h2>
-        </div>
-        <p data-anim="fade" style="opacity:0; transition:opacity .8s ease; text-align:center; font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; line-height:1.88; color:rgba(255,255,255,.7); max-width:620px; margin:0 auto 56px">2025年 / ブランドフィルム「THE LONG LIGHT」— 撮影・編集・カラーグレーディングまで一貫制作</p>
-        <div data-anim="fade" style="opacity:0; transition:opacity .9s ease; position:relative; aspect-ratio:16/9; background:#000000; border:1px solid rgba(255,255,255,.08); overflow:hidden">
-          <iframe src="https://www.youtube-nocookie.com/embed/JfmmA2cU2-k?rel=0&amp;modestbranding=1&amp;playsinline=1" title="THE LONG LIGHT" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style="position:absolute; inset:0; width:100%; height:100%; border:0"></iframe>
-        </div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:28px; margin-top:28px">
-          <div data-anim="fade" data-scope="1" style="opacity:0; transition:opacity .8s ease; aspect-ratio:16/9; background-color:#131418; background-image:url(https://i.ytimg.com/vi/AwGjc8Yz8fc/maxres1.jpg); background-size:cover; background-position:center; border:1px solid rgba(255,255,255,.08)"></div>
-          <div data-anim="fade" style="opacity:0; transition:opacity .8s ease; aspect-ratio:16/9; background-color:#131418; background-image:url(https://i.ytimg.com/vi/DhVz3xsAis0/maxres1.jpg); background-size:cover; background-position:center; border:1px solid rgba(255,255,255,.08)"></div>
-          <div data-anim="fade" data-scope="1" style="opacity:0; transition:opacity .8s ease; aspect-ratio:16/9; background-color:#131418; background-image:url(https://i.ytimg.com/vi/AwGjc8Yz8fc/maxres3.jpg); background-size:cover; background-position:center; border:1px solid rgba(255,255,255,.08)"></div>
-        </div>
-        <div style="display:flex; flex-wrap:wrap; gap:56px; margin-top:64px">
-          <div style="flex:1 1 380px; min-width:280px">
-            <h3 style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:16px; letter-spacing:.16em; text-transform:uppercase; color:#fff; margin:0 0 18px">Message</h3>
-            <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; line-height:1.88; color:rgba(255,255,255,.7); margin:0">A film is a record of light that will never happen twice. We shoot the quiet minutes between the ones everybody remembers — the breath before the door opens, the hand that hesitates. That is where a brand actually lives.</p>
-          </div>
-          <div style="flex:1 1 260px; min-width:240px">
-            <h3 style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:16px; letter-spacing:.16em; text-transform:uppercase; color:#fff; margin:0 0 18px">Credit</h3>
-            <div style="display:grid; grid-template-columns:auto 1fr; gap:10px 20px; font-family:'Zen Kaku Gothic New',sans-serif; font-size:15px; line-height:1.6">
-              <span style="color:rgba(255,255,255,.4); letter-spacing:.08em">Director</span><span style="color:rgba(255,255,255,.85)">Rei Kanzaki</span>
-              <span style="color:rgba(255,255,255,.4); letter-spacing:.08em">DoP</span><span style="color:rgba(255,255,255,.85)">Studio Kairo</span>
-              <span style="color:rgba(255,255,255,.4); letter-spacing:.08em">Edit</span><span style="color:rgba(255,255,255,.85)">Studio Kairo</span>
-              <span style="color:rgba(255,255,255,.4); letter-spacing:.08em">Music</span><span style="color:rgba(255,255,255,.85)">Haneda Tapes</span>
-              <span style="color:rgba(255,255,255,.4); letter-spacing:.08em">Client</span><span style="color:rgba(255,255,255,.85)">Aoyama Coffee Works</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section id="works" data-sec="works" data-screen-label="Works" style="min-height:100vh; padding:110px 24px; display:flex; align-items:center; background:#0B0B0C">
       <div style="width:100%; max-width:1140px; margin:0 auto">
         <div data-anim="up" style="opacity:0; transform:translateY(30px); transition:opacity .8s cubic-bezier(.13,1.07,.64,.97), transform .8s cubic-bezier(.13,1.07,.64,.97); text-align:center">
@@ -496,7 +463,7 @@ class Component extends DCLogic {
     const cols = s.w >= 760 ? 2 : 1;
     const panelW = Math.min(230, s.w * 0.72);
     const secs = [
-      { id: 'home', label: 'Home' }, { id: 'featured', label: 'Featured' }, { id: 'works', label: 'Works' },
+      { id: 'home', label: 'Home' }, { id: 'works', label: 'Works' },
       { id: 'profile', label: 'Profile' }, { id: 'about', label: 'About' }, { id: 'price', label: 'Price' },
       { id: 'contact', label: 'Contact' }
     ];
