@@ -104,19 +104,46 @@ export const content: SiteContent = {
   /* ---- 3. About ----------------------------------------------------- */
   about: {
     heading: 'About',
-    body: [
-      '神谷 玲 / Rei Kanzaki。東京を拠点に、ブランドフィルム・ドキュメンタリー・ミュージックビデオを手がける映像作家です。企画から撮影、編集、カラーグレーディングまでを少人数のチームで一貫して担当し、被写体との距離が近い現場づくりを大切にしています。',
-      'Tokyo-based filmmaker working across brand films, documentary and music video. Ten years of shooting, cutting and grading — a small crew, a quiet set, and one long take more than anyone asked for.',
+    // 1人目は写真が右、2人目は左。Section 側が並び順から自動で振り分ける
+    blocks: [
+      {
+        body: [
+          '神谷 玲 / Rei Kanzaki。東京を拠点に、ブランドフィルム・ドキュメンタリー・ミュージックビデオを手がける映像作家です。企画から撮影、編集、カラーグレーディングまでを少人数のチームで一貫して担当し、被写体との距離が近い現場づくりを大切にしています。',
+          'Tokyo-based filmmaker working across brand films, documentary and music video. Ten years of shooting, cutting and grading — a small crew, a quiet set, and one long take more than anyone asked for.',
+        ],
+        meta: [
+          { label: 'Base', value: 'Tokyo, Japan' },
+          { label: 'Since', value: '2016' },
+          { label: 'Field', value: 'Brand / Doc / MV' },
+        ],
+        portrait: frame('tSmyaP5QfeM', 1),
+      },
+      {
+        body: [
+          '[ 仮素材 ] 遠藤 蒼 / Ao Endo。プロデューサー / 編集。企画立案から予算管理、撮影のロジスティクスまでを担当し、神谷とともに制作全体を組み立てています。',
+          'Producer / Editor. Handles planning, budgeting and on-set logistics, building the production alongside Kanzaki from the ground up.',
+        ],
+        meta: [
+          { label: 'Role', value: 'Producer / Editor' },
+          { label: 'Since', value: '2018' },
+          { label: 'Field', value: 'Production / Post' },
+        ],
+        portrait: frame('DhVz3xsAis0', 1),
+      },
     ],
-    meta: [
-      { label: 'Base', value: 'Tokyo, Japan' },
-      { label: 'Since', value: '2016' },
-      { label: 'Field', value: 'Brand / Doc / MV' },
-    ],
-    portrait: frame('tSmyaP5QfeM', 1),
   },
 
-  /* ---- 4. Contact ---------------------------------------------------- */
+  /* ---- 4. Equipment -------------------------------------------------- */
+  equipment: {
+    heading: 'Equipment',
+    items: [
+      { brand: 'DJI', model: 'Mini 4 Pro' },
+      { brand: 'Sony', model: 'α7C' },
+      { brand: 'Adobe', model: 'Premiere Pro' },
+    ],
+  },
+
+  /* ---- 5. Contact ---------------------------------------------------- */
   contact: {
     heading: 'Contact',
     lead: '撮影のご相談・お見積りはこちらから。2営業日以内にご返信します。',
@@ -135,21 +162,8 @@ export const content: SiteContent = {
     { src: frame('4hs_GGss_Nc', 2), scope: true },
   ],
 
-  /* ---- パートナー（架空） -------------------------------------------- */
-  partners: [
-    { name: 'Aoyama Coffee Works', kind: 'Brand Film' },
-    { name: 'Kiso Woodwork', kind: 'Documentary' },
-    { name: 'Haneda Tapes', kind: 'Music Video' },
-  ],
-  partnersNote: '[ 仮素材 — 実績が出たら差し替え ]',
-
   /* ---- フッター ------------------------------------------------------ */
   footer: {
-    sns: [
-      { label: 'IG', href: '#contact', name: 'Instagram' },
-      { label: 'YT', href: '#contact', name: 'YouTube' },
-      { label: 'VM', href: '#contact', name: 'Vimeo' },
-    ],
     copyright: '© 2026 Studio Kairo — All rights reserved.',
   },
 };

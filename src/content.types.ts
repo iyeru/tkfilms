@@ -32,8 +32,6 @@ export type Hero = {
   mediaNote?: string;
 };
 
-export type Credit = { label: string; value: string };
-
 /** 撮られた画角。Works はこれをそのまま枠の比率に使う */
 export type Ratio = '16/9' | '2.39/1';
 
@@ -55,11 +53,23 @@ export type Works = {
   moreLabel: string;
 };
 
-export type About = {
-  heading: string;
+/** About に並ぶ人物1人ぶん。本文・肩書きの表・顔写真を持つ */
+export type AboutBlock = {
   body: string[];
   meta: { label: string; value: string }[];
   portrait: string;
+};
+
+export type About = {
+  heading: string;
+  /** 上から順に並ぶ。写真の左右は自動で交互になる */
+  blocks: AboutBlock[];
+};
+
+export type Equipment = {
+  heading: string;
+  /** brand は Six Caps で大きく、model は等幅・寒色で添える */
+  items: { brand: string; model: string }[];
 };
 
 export type Contact = {
@@ -71,7 +81,6 @@ export type Contact = {
 };
 
 export type Footer = {
-  sns: { label: string; href: string; name: string }[];
   copyright: string;
 };
 
@@ -84,11 +93,9 @@ export type SiteContent = {
   hero: Hero;
   works: Works;
   about: About;
+  equipment: Equipment;
   contact: Contact;
   /** Instagram 風の正方形グリッド */
   gram: { src: string; scope: boolean }[];
-  /** 架空のロゴ。Credit のダミー取引先と同じ名前で辻褄を合わせている */
-  partners: { name: string; kind: string }[];
-  partnersNote: string;
   footer: Footer;
 };
