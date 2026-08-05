@@ -7,7 +7,6 @@ import { Header } from '@/components/Header';
 import { BackToTop, SideDots } from '@/components/SideDots';
 import { About } from '@/sections/About';
 import { Contact } from '@/sections/Contact';
-import { Featured } from '@/sections/Featured';
 import { Gram, Partners } from '@/sections/Gram';
 import { Hero } from '@/sections/Hero';
 import { PriceCta } from '@/sections/PriceCta';
@@ -80,7 +79,6 @@ export function App() {
         {page === 'home' ? (
           <>
             <Hero hero={content.hero} />
-            <Featured featured={content.featured} />
             <Works works={content.works} />
             <Profile profile={content.profile} />
             <About about={content.about} />

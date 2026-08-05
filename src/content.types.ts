@@ -5,7 +5,7 @@
  */
 
 /** セクションの識別子。ナビ・サイドドット・スクロール位置の対応付けに使う */
-export type SectionId = 'home' | 'featured' | 'works' | 'profile' | 'about' | 'price' | 'contact';
+export type SectionId = 'home' | 'works' | 'profile' | 'about' | 'price' | 'contact';
 
 export type NavItem = {
   id: SectionId;
@@ -33,22 +33,6 @@ export type Hero = {
 };
 
 export type Credit = { label: string; value: string };
-
-export type Featured = {
-  heading: string;
-  lead: string;
-  /** 本編。埋め込みプレイヤーで出す */
-  youtubeId: string;
-  /**
-   * 本編から抜いたスチル。1本の作品のコンタクトシートなので比率は揃える。
-   * scope はシネスコ素材を 16:9 の枠へ入れるときの黒帯逃がし
-   */
-  stills: { src: string; scope: boolean }[];
-  messageHeading: string;
-  message: string;
-  creditHeading: string;
-  credits: Credit[];
-};
 
 /** 撮られた画角。Works はこれをそのまま枠の比率に使う */
 export type Ratio = '16/9' | '2.39/1';
@@ -137,7 +121,6 @@ export type SiteContent = {
   /** サイドドット。Home を含む全セクション */
   dots: NavItem[];
   hero: Hero;
-  featured: Featured;
   works: Works;
   profile: Profile;
   about: About;

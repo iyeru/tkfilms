@@ -29,7 +29,6 @@ export const content: SiteContent = {
 
   dots: [
     { id: 'home', label: 'Home' },
-    { id: 'featured', label: 'Featured' },
     { id: 'works', label: 'Works' },
     { id: 'profile', label: 'Profile' },
     { id: 'about', label: 'About' },
@@ -47,31 +46,7 @@ export const content: SiteContent = {
     mediaNote: '[ 仮素材 — 本番は showreel.mp4 に差し替え ]',
   },
 
-  /* ---- 2. Featured Work --------------------------------------------- */
-  featured: {
-    heading: 'Featured Work',
-    lead: '2025年 / ブランドフィルム「THE LONG LIGHT」— 撮影・編集・カラーグレーディングまで一貫制作',
-    youtubeId: 'JfmmA2cU2-k',
-    // 1本の作品から抜いたコンタクトシート。連番の並びなので比率は 16:9 に揃える
-    stills: [
-      { src: frame('AwGjc8Yz8fc', 1), scope: true },
-      { src: frame('DhVz3xsAis0', 1), scope: false },
-      { src: frame('AwGjc8Yz8fc', 3), scope: true },
-    ],
-    messageHeading: 'Message',
-    message:
-      'A film is a record of light that will never happen twice. We shoot the quiet minutes between the ones everybody remembers — the breath before the door opens, the hand that hesitates. That is where a brand actually lives.',
-    creditHeading: 'Credit',
-    credits: [
-      { label: 'Director', value: 'Rei Kanzaki' },
-      { label: 'DoP', value: 'Studio Kairo' },
-      { label: 'Edit', value: 'Studio Kairo' },
-      { label: 'Music', value: 'Haneda Tapes' },
-      { label: 'Client', value: 'Aoyama Coffee Works' },
-    ],
-  },
-
-  /* ---- 3. Works ----------------------------------------------------- */
+  /* ---- 2. Works ----------------------------------------------------- */
   works: {
     heading: 'Works',
     feature: {
@@ -130,7 +105,7 @@ export const content: SiteContent = {
     moreLabel: 'View more',
   },
 
-  /* ---- 4. Profile --------------------------------------------------- */
+  /* ---- 3. Profile --------------------------------------------------- */
   profile: {
     heading: 'Profile',
     // 枠が全幅で横長のため、黒帯の入るシネスコ素材は使わない。
@@ -138,7 +113,7 @@ export const content: SiteContent = {
     slides: [frame('FfBE5_gqTSY', 1), frame('V-qTEo9IHTA', 1)],
   },
 
-  /* ---- 5. About ----------------------------------------------------- */
+  /* ---- 4. About ----------------------------------------------------- */
   about: {
     heading: 'About',
     body: [
@@ -153,14 +128,14 @@ export const content: SiteContent = {
     portrait: frame('tSmyaP5QfeM', 1),
   },
 
-  /* ---- 6. Price（トップの導線） ------------------------------------- */
+  /* ---- 5. Price（トップの導線） ------------------------------------- */
   priceCta: {
     heading: 'Price',
     lead: '撮影内容・尺・納期に応じたプラン一覧と、機材・オプションの詳細はこちらから。',
     label: 'View price',
   },
 
-  /* ---- 6b. Price（別ページ） ---------------------------------------- */
+  /* ---- 5b. Price（別ページ） ---------------------------------------- */
   pricePage: {
     heading: 'Price',
     lead: '料金と撮影プランのご案内 — Plans, gear and options.',
@@ -221,7 +196,7 @@ export const content: SiteContent = {
     backLabel: 'Back to top page',
   },
 
-  /* ---- 7. Contact ---------------------------------------------------- */
+  /* ---- 6. Contact ---------------------------------------------------- */
   contact: {
     heading: 'Contact',
     lead: '撮影のご相談・お見積りはこちらから。2営業日以内にご返信します。',

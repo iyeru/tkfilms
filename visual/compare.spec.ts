@@ -32,7 +32,7 @@ async function injectFreezeStyles(page: Page) {
       /* フィルムグレインはランダムノイズで比較しても意味がなく、
          わずかな再描画差でスクリーンショットの安定待ちが終わらない原因にもなるため隠す */
       [style*="opacity: 0.055"], .film-grain { display: none !important; }
-      /* home/featured/works の動画プレースホルダは実際に YouTube 埋め込みが自動再生されており、
+      /* home/works の動画プレースホルダは実際に YouTube 埋め込みが自動再生されており、
          フレームが毎回変わって絶対に安定しない。レイアウトは崩さず中身だけ見えなくする */
       iframe { visibility: hidden !important; }
       /* works の「THE LONG LIGHT」バナー（5点ドットのカルーセル）も、design原本の
