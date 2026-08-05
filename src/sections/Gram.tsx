@@ -11,16 +11,12 @@ export function Gram({ gram }: { gram: SiteContent['gram'] }) {
             key={tile.src}
             style={{ backgroundImage: `url(${tile.src})` }}
             className={cn(
-              'group relative aspect-square border-r border-b border-bg bg-bg bg-center',
+              'aspect-square border-r border-b border-bg bg-bg bg-center',
               // 正方形は元の画角より狭いので、シネスコ素材だけ黒帯を枠外へ逃がす。
               // cover と background-size が衝突するので、どちらか一方だけを当てる
               tile.scope ? 'bg-[length:auto_132%] bg-no-repeat' : 'bg-cover',
             )}
-          >
-            <div className="absolute inset-0 flex items-center justify-center bg-[rgb(12_12_12/0.75)] text-[11px] font-bold tracking-[0.18em] text-white uppercase opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-              View
-            </div>
-          </div>
+          />
         ))}
       </div>
     </section>
