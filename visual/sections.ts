@@ -20,7 +20,6 @@ export type SectionDef = {
 export const sections: SectionDef[] = [
   { key: 'home', label: 'Hero', designId: 'home', reactId: 'home' },
   { key: 'works', label: 'Works', designId: 'works', reactId: 'works' },
-  { key: 'profile', label: 'Profile', designId: 'profile', reactId: 'profile' },
   { key: 'about', label: 'About', designId: 'about', reactId: 'about' },
   { key: 'price', label: 'Price CTA', designId: 'price', reactId: 'price' },
   { key: 'contact', label: 'Contact', designId: 'contact', reactId: 'contact' },

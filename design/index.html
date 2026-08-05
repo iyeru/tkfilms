@@ -70,7 +70,6 @@
       <nav style="position:relative; display:flex; align-items:center; gap:30px">
         <a href="#home" onClick="{{ goHome }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff" style-hover="color:var(--warm)">Home</a>
         <a href="#works" onClick="{{ navWorks }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff" style-hover="color:var(--warm)">Works</a>
-        <a href="#profile" onClick="{{ navProfile }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff" style-hover="color:var(--warm)">Profile</a>
         <a href="#about" onClick="{{ navAbout }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff" style-hover="color:var(--warm)">About</a>
         <a href="#price" onClick="{{ openPrice }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff" style-hover="color:var(--warm)">Price</a>
         <a href="#contact" onClick="{{ navContact }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff" style-hover="color:var(--warm)">Contact</a>
@@ -159,21 +158,6 @@
         </div>
         <div style="display:flex; justify-content:center; margin-top:48px">
           <a href="#works" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:#0B0B0C; border:2px solid var(--warm); padding:13px 33px; background-image:linear-gradient(to top, #0B0B0C 50%, var(--warm) 50%); background-size:100% 200%; background-position:0 0; transition:background-position .3s ease, color .3s ease" style-hover="background-position:0 100%; color:var(--warm)">View more</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="profile" data-sec="profile" data-screen-label="Profile" style="position:relative; min-height:100vh; display:flex; align-items:center; background:#15161A; padding:110px 0">
-      <div style="width:100%">
-        <div style="max-width:1140px; margin:0 auto 60px; padding:0 24px; text-align:center">
-          <div data-anim="up" style="opacity:0; transform:translateY(30px); transition:opacity .8s cubic-bezier(.13,1.07,.64,.97), transform .8s cubic-bezier(.13,1.07,.64,.97)">
-            <h2 style="font-family:'Six Caps',sans-serif; font-size:clamp(64px,9vw,96px); line-height:1; letter-spacing:1px; text-transform:uppercase; color:#fff; margin:0">Profile</h2>
-          </div>
-        </div>
-        <div style="position:relative; width:100%; height:min(62vh,520px); background-color:#131418; background-image:url({{ slideShot }}); background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center">
-          <div style="position:absolute; inset:0; background:rgba(12,12,12,.25)"></div>
-          <button aria-label="Previous" onClick="{{ slidePrev }}" style="position:absolute; left:clamp(16px,4vw,60px); top:50%; transform:translateY(-50%); width:70px; height:70px; border-radius:50%; border:1px solid rgba(255,255,255,.45); background:transparent; color:#fff; font-size:20px; cursor:pointer; transition:background .35s ease, color .35s ease, border-color .35s ease, transform .35s cubic-bezier(.13,1.07,.64,.97)" style-hover="background:var(--warm); color:#0B0B0C; border-color:var(--warm); transform:translateY(-50%) scale(1.12)">‹</button>
-          <button aria-label="Next" onClick="{{ slideNext }}" style="position:absolute; right:clamp(16px,4vw,60px); top:50%; transform:translateY(-50%); width:70px; height:70px; border-radius:50%; border:1px solid rgba(255,255,255,.45); background:transparent; color:#fff; font-size:20px; cursor:pointer; transition:background .35s ease, color .35s ease, border-color .35s ease, transform .35s cubic-bezier(.13,1.07,.64,.97)" style-hover="background:var(--warm); color:#0B0B0C; border-color:var(--warm); transform:translateY(-50%) scale(1.12)">›</button>
         </div>
       </div>
     </section>
@@ -363,7 +347,6 @@
   <button onClick="{{ closeMenu }}" aria-label="Close" style="position:absolute; top:26px; right:30px; width:40px; height:40px; border:0; background:transparent; color:#fff; font-size:24px; cursor:pointer" style-hover="color:var(--warm)">×</button>
   <a href="#home" onClick="{{ goHome }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--warm)">Home</a>
   <a href="#works" onClick="{{ navWorks }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--warm)">Works</a>
-  <a href="#profile" onClick="{{ navProfile }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--warm)">Profile</a>
   <a href="#about" onClick="{{ navAbout }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--warm)">About</a>
   <a href="#price" onClick="{{ openPrice }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--warm)">Price</a>
   <a href="#contact" onClick="{{ navContact }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--warm)">Contact</a>
@@ -371,7 +354,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#E9A94B&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#E9A94B&quot;,&quot;#F2C879&quot;,&quot;#C9793A&quot;,&quot;#FFFFFF&quot;],&quot;section&quot;:&quot;Theme&quot;},&quot;showLoader&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;pushMenu&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;sideDots&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
 class Component extends DCLogic {
-  state = { page: 'home', menu: false, loading: true, fading: false, y: 0, w: 1440, active: 'home', hoverDot: null, hoverWork: null, slide: 0, tab: 0, sent: false };
+  state = { page: 'home', menu: false, loading: true, fading: false, y: 0, w: 1440, active: 'home', hoverDot: null, hoverWork: null, tab: 0, sent: false };
 
   componentDidMount() {
     this.applyAccent();
@@ -464,7 +447,7 @@ class Component extends DCLogic {
     const panelW = Math.min(230, s.w * 0.72);
     const secs = [
       { id: 'home', label: 'Home' }, { id: 'works', label: 'Works' },
-      { id: 'profile', label: 'Profile' }, { id: 'about', label: 'About' }, { id: 'price', label: 'Price' },
+      { id: 'about', label: 'About' }, { id: 'price', label: 'Price' },
       { id: 'contact', label: 'Contact' }
     ];
     // 仮素材。本番は高本の実作品に差し替える。
@@ -490,10 +473,6 @@ class Component extends DCLogic {
       src: 'https://i.ytimg.com/vi/' + id + '/maxres' + n + '.jpg',
       scope: scopeIds.indexOf(id) >= 0 ? '1' : null
     });
-    // Profile のスライダー。仮素材の中から現場カットを並べている。
-    // 枠が全幅で横長のため、黒帯の入るシネスコ素材（scopeIds）はここでは使わない。
-    // 大きく映るので、他社ロゴや船名が写り込むカットも避けている
-    const slideShots = [frame('FfBE5_gqTSY', 1), frame('V-qTEo9IHTA', 1)];
     const gramShots = [
       frame('V-qTEo9IHTA', 1), frame('DhVz3xsAis0', 3), frame('0hpkWLJzYQs', 1),
       frame('FfBE5_gqTSY', 3), frame('UyBsm2wU8ag', 3), frame('4hs_GGss_Nc', 2)
@@ -562,15 +541,11 @@ class Component extends DCLogic {
         enter: () => this.setState({ hoverDot: x.id }),
         leave: () => this.setState({ hoverDot: null })
       })),
-      slideShot: slideShots[s.slide].src,
-      slidePrev: () => this.setState({ slide: (s.slide + slideShots.length - 1) % slideShots.length }),
-      slideNext: () => this.setState({ slide: (s.slide + 1) % slideShots.length }),
       grams: gramShots.map((g) => ({ label: 'View', thumb: g.src, scope: g.scope })),
       toggleMenu: () => this.setState({ menu: !s.menu }),
       closeMenu: () => this.setState({ menu: false }),
       goHome: this.go('home'),
       navWorks: this.go('works'),
-      navProfile: this.go('profile'),
       navAbout: this.go('about'),
       navContact: this.go('contact'),
       openPrice: (e) => {

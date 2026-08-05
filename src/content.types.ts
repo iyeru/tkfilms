@@ -5,7 +5,7 @@
  */
 
 /** セクションの識別子。ナビ・サイドドット・スクロール位置の対応付けに使う */
-export type SectionId = 'home' | 'works' | 'profile' | 'about' | 'price' | 'contact';
+export type SectionId = 'home' | 'works' | 'about' | 'price' | 'contact';
 
 export type NavItem = {
   id: SectionId;
@@ -53,12 +53,6 @@ export type Works = {
   feature: { category: string; title: string; youtubeId: string; poster: string; slides: number };
   items: WorkItem[];
   moreLabel: string;
-};
-
-export type Profile = {
-  heading: string;
-  /** 全幅のスライダー。黒帯の入るシネスコ素材と、ロゴが写り込むカットは使わない */
-  slides: string[];
 };
 
 export type About = {
@@ -122,7 +116,6 @@ export type SiteContent = {
   dots: NavItem[];
   hero: Hero;
   works: Works;
-  profile: Profile;
   about: About;
   priceCta: PriceCta;
   pricePage: PricePage;

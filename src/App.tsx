@@ -11,7 +11,6 @@ import { Gram, Partners } from '@/sections/Gram';
 import { Hero } from '@/sections/Hero';
 import { PriceCta } from '@/sections/PriceCta';
 import { PricePage } from '@/sections/PricePage';
-import { Profile } from '@/sections/Profile';
 import { Works } from '@/sections/Works';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import { useScrollPast } from '@/hooks/useScrollPast';
@@ -80,7 +79,6 @@ export function App() {
           <>
             <Hero hero={content.hero} />
             <Works works={content.works} />
-            <Profile profile={content.profile} />
             <About about={content.about} />
             <PriceCta price={content.priceCta} onOpen={() => goTo('price')} />
           </>
