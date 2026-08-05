@@ -37,7 +37,7 @@ export function SectionHeading({ title, lead }: { title: string; lead?: string }
   return (
     <>
       <Reveal className="text-center">
-        <h2 className="font-display text-[clamp(64px,9vw,96px)] leading-none tracking-[1px] uppercase [text-shadow:0.5px_0_currentColor,-0.5px_0_currentColor,0_0.5px_currentColor,0_-0.5px_currentColor]">
+        <h2 className="font-display text-[clamp(64px,9vw,96px)] leading-none tracking-[1px] uppercase">
           {title}
         </h2>
       </Reveal>
