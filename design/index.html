@@ -199,9 +199,7 @@
   <section data-sec="instagram" data-screen-label="Instagram" style="background:#0B0B0C; padding:0">
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:0">
       <sc-for list="{{ grams }}" as="g" hint-placeholder-count="6">
-        <div data-scope="{{ g.scope }}" style="position:relative; aspect-ratio:1; background-color:#131418; background-image:url({{ g.thumb }}); background-size:cover; background-position:center; border-right:1px solid #0B0B0C; border-bottom:1px solid #0B0B0C">
-          <div style="position:absolute; inset:0; background:rgba(12,12,12,.75); opacity:0; transition:opacity .3s ease; display:flex; align-items:center; justify-content:center; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:#fff" style-hover="opacity:1">{{ g.label }}</div>
-        </div>
+        <div data-scope="{{ g.scope }}" style="position:relative; aspect-ratio:1; background-color:#131418; background-image:url({{ g.thumb }}); background-size:cover; background-position:center; border-right:1px solid #0B0B0C; border-bottom:1px solid #0B0B0C"></div>
       </sc-for>
     </div>
   </section>
@@ -420,7 +418,7 @@ class Component extends DCLogic {
         enter: () => this.setState({ hoverDot: x.id }),
         leave: () => this.setState({ hoverDot: null })
       })),
-      grams: gramShots.map((g) => ({ label: 'View', thumb: g.src, scope: g.scope })),
+      grams: gramShots.map((g) => ({ thumb: g.src, scope: g.scope })),
       toggleMenu: () => this.setState({ menu: !s.menu }),
       closeMenu: () => this.setState({ menu: false }),
       goHome: this.go('home'),
