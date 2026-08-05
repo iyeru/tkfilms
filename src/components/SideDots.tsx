@@ -29,7 +29,7 @@ export function SideDots({
             onNavigate(item.id);
           }}
           className={cn(
-            'group relative h-3 w-3 rounded-full border-2 border-white transition-colors duration-300',
+            'group relative h-3 w-3 rounded-full border-2 border-white',
             active === item.id ? 'bg-white' : 'bg-transparent',
           )}
         >
@@ -43,7 +43,7 @@ export function SideDots({
 }
 
 /** 右下のページ先頭へ戻るボタン */
-export function BackToTop({ visible }: { visible: boolean }) {
+export function BackToTop({ visible, shifted }: { visible: boolean; shifted: boolean }) {
   return (
     <button
       type="button"
@@ -52,8 +52,11 @@ export function BackToTop({ visible }: { visible: boolean }) {
       className={cn(
         'fixed right-[50px] bottom-[125px] z-98 h-[50px] w-[50px] border-0 text-[16px] leading-[normal] text-white',
         'bg-[linear-gradient(to_top,var(--color-warm)_50%,#333_50%)] bg-[length:100%_200%] bg-[position:0_0]',
-        'transition-[opacity,background-position,color] duration-300 hover:bg-[position:0_100%] hover:text-bg',
+        '[transition:opacity_.3s_ease,background-position_.3s_ease,color_.3s_ease,translate_.5s_var(--ease-brand)]',
+        'hover:bg-[position:0_100%] hover:text-bg',
         visible ? 'opacity-100' : 'pointer-events-none opacity-0',
+        // 本文と一緒にドロワーのぶんだけ左へ寄る
+        shifted && '-translate-x-panel',
       )}
     >
       ↑

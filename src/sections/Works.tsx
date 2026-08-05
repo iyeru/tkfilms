@@ -7,7 +7,7 @@ import { bgVideoSrc, cn } from '@/lib/cn';
 export function Works({ works }: { works: WorksContent }) {
   return (
     <Section id="works" className="flex min-h-screen items-center">
-      <SectionHeading title={works.heading} />
+      <SectionHeading title={works.heading} tracking="2px" />
       <Feature feature={works.feature} />
 
       {/*
@@ -15,7 +15,7 @@ export function Works({ works }: { works: WorksContent }) {
         シネスコ(2.39:1)の作品は2カラム分を占め、帯の分だけ横に長い枠になる。
         不揃いは内容が決めたもので、比率そのものがこの人の仕事の情報になる
       */}
-      <div className="mt-[42px] grid grid-cols-1 gap-7 md:grid-cols-2">
+      <div className="mt-[42px] grid grid-cols-1 gap-7 duo:grid-cols-2">
         {works.items.map((item) => (
           <WorkCard key={item.youtubeId} item={item} />
         ))}
@@ -41,7 +41,7 @@ export function Works({ works }: { works: WorksContent }) {
 function Feature({ feature }: { feature: WorksContent['feature'] }) {
   return (
     <div
-      className="relative flex aspect-4/3 items-center justify-center overflow-hidden border border-white/8 bg-bg bg-cover bg-center md:aspect-21/9"
+      className="relative flex aspect-4/3 items-center justify-center overflow-hidden border border-white/8 bg-bg bg-cover bg-center duo:aspect-21/9"
       style={{ backgroundImage: `url(${feature.poster})` }}
     >
       <iframe
@@ -84,7 +84,7 @@ function SlideButton({ side }: { side: 'prev' | 'next' }) {
       aria-label={side === 'prev' ? '前の作品' : '次の作品'}
       className={cn(
         'absolute top-1/2 h-[clamp(40px,11vw,52px)] w-[clamp(40px,11vw,52px)] -translate-y-1/2 rounded-full border border-white/40 bg-black/25 text-[16px] leading-[normal] text-white',
-        'transition-[background-color,color,border-color,transform] duration-350 ease-brand hover:scale-112 hover:border-warm hover:bg-warm hover:text-bg',
+        'transition-[background-color,color,border-color,scale] duration-350 ease-brand hover:scale-112 hover:border-warm hover:bg-warm hover:text-bg',
         side === 'prev' ? 'left-[clamp(10px,3vw,22px)]' : 'right-[clamp(10px,3vw,22px)]',
       )}
     >
@@ -99,14 +99,18 @@ function WorkCard({ item }: { item: WorkItem }) {
 
   return (
     <Reveal
+      // 現れるのは透明度だけ。transform はホバーの持ち上げに使うので譲る。
+      // transition は1つの宣言にまとめる（Reveal 側と2本立てると後勝ちで片方が消える）
+      motion="fade"
       onMouseEnter={() => setPlaying(true)}
       onMouseLeave={() => setPlaying(false)}
       style={{ aspectRatio: item.ratio, backgroundImage: `url(${item.thumb})` }}
       className={cn(
-        'group relative cursor-pointer overflow-hidden border border-white/8 bg-cover bg-center',
-        'transition-[transform,box-shadow,border-color] duration-450 ease-brand hover:z-2 hover:-translate-y-3.5 hover:scale-102 hover:border-white/22 hover:shadow-[0_26px_50px_-14px_rgb(0_0_0/0.85)]',
+        'group relative cursor-pointer overflow-hidden border border-white/8 bg-[#131418] bg-cover bg-center will-change-transform',
+        '[transition:opacity_.8s_ease,translate_.45s_var(--ease-brand),scale_.45s_var(--ease-brand),box-shadow_.45s_ease,border-color_.45s_ease]',
+        'hover:z-2 hover:-translate-y-3.5 hover:scale-102 hover:border-white/22 hover:shadow-[0_26px_50px_-14px_rgb(0_0_0/0.85)]',
         // シネスコは2カラムぶんを占めて、画角の差がそのまま並びに出る
-        wide && 'md:col-span-2',
+        wide && 'duo:col-span-2',
       )}
     >
       {playing ? (

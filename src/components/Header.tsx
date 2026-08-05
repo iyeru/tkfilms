@@ -18,8 +18,12 @@ export function Header({ brandName, nav, menuOpen, onToggleMenu, onNavigate, onH
     <header
       className={cn(
         'fixed inset-x-0 top-0 z-100 flex items-center px-pad',
-        'transition-[height,background-color] duration-300 ease-brand',
+        // 高さ・背景・横ずらしを1つの宣言にまとめる。
+        // transition ユーティリティを2つ重ねると後勝ちで片方が効かなくなる
+        '[transition:height_.3s_var(--ease-brand),background-color_.3s_ease,translate_.5s_var(--ease-brand)]',
         solid ? 'h-[55px] bg-[rgb(12_12_12/0.88)]' : 'h-[75px]',
+        // 本文と一緒にドロワーのぶんだけ左へ寄る
+        menuOpen && '-translate-x-panel',
       )}
     >
       {/* 背景が明るい素材でもロゴが沈まないよう、上部だけ暗く落とす */}
@@ -49,7 +53,7 @@ export function Header({ brandName, nav, menuOpen, onToggleMenu, onNavigate, onH
               e.preventDefault();
               onNavigate(item.id);
             }}
-            className="text-[14px] leading-[normal] font-bold tracking-[1px] text-white uppercase transition-colors duration-300 hover:text-warm"
+            className="text-[14px] leading-[normal] font-bold tracking-[1px] text-white uppercase hover:text-warm"
           >
             {item.label}
           </a>
@@ -64,24 +68,10 @@ export function Header({ brandName, nav, menuOpen, onToggleMenu, onNavigate, onH
         onClick={onToggleMenu}
         className="relative ml-auto flex h-3 w-[50px] flex-col justify-between border-0 bg-transparent p-0 wide:hidden"
       >
-        <span
-          className={cn(
-            'block h-0.5 bg-white transition-transform duration-300 ease-brand',
-            menuOpen && 'translate-y-[5px] rotate-45',
-          )}
-        />
-        <span
-          className={cn(
-            'block h-0.5 bg-white transition-opacity duration-200',
-            menuOpen && 'opacity-0',
-          )}
-        />
-        <span
-          className={cn(
-            'block h-0.5 bg-white transition-transform duration-300 ease-brand',
-            menuOpen && '-translate-y-[5px] -rotate-45',
-          )}
-        />
+        {/* 原本と同じく3本のまま。開いても × には組み変わらない */}
+        <span className="block h-0.5 w-full bg-white" />
+        <span className="block h-0.5 w-full bg-white" />
+        <span className="block h-0.5 w-full bg-white" />
       </button>
     </header>
   );

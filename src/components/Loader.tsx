@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { cn } from '@/lib/cn';
 
-/** ローダーを最低限見せておく時間。デザインを見せたいので長めに取っている */
-const HOLD_MS = 3000;
+/** ローダーを最低限見せておく時間。原本と同じ長さにしている */
+const HOLD_MS = 1100;
 /** 書体や回線が遅くても、ここまでには必ず畳む */
 const MAX_MS = 6000;
-/** 畳むときのフェード。下の duration-500 と揃えること */
-const FADE_MS = 600;
+/** 畳むまでの猶予。原本と同じ 520ms。下の duration-500 と揃えること */
+const FADE_MS = 520;
 /** 書体が hold より遅れて来たとき、見出しを見せてから畳むまでの余韻 */
 const TAIL_MS = 800;
 /** 動きを減らす設定の人を待たせない場合の時間 */
@@ -86,12 +86,12 @@ export function Loader() {
         <div className="absolute inset-[8.95%] animate-ring rounded-full border border-transparent border-t-white/45" />
         <span
           className={cn(
-            'relative font-display text-[clamp(40px,12vw,56px)] leading-none tracking-[6px] whitespace-nowrap',
+            'relative font-display text-[56px] leading-none tracking-[6px] whitespace-nowrap',
             'transition-opacity duration-500 ease-brand',
             fontReady ? 'opacity-100' : 'opacity-0',
           )}
         >
-          Loading
+          LOADING
         </span>
       </div>
     </div>
