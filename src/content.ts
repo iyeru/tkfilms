@@ -19,6 +19,7 @@ export const content: SiteContent = {
 
   /* ---- ナビゲーション（id はセクションと対応） ---------------------- */
   nav: [
+    { id: 'home', label: 'Home' },
     { id: 'works', label: 'Works' },
     { id: 'profile', label: 'Profile' },
     { id: 'about', label: 'About' },
