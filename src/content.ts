@@ -22,7 +22,6 @@ export const content: SiteContent = {
     { id: 'home', label: 'Home' },
     { id: 'works', label: 'Works' },
     { id: 'about', label: 'About' },
-    { id: 'price', label: 'Price' },
     { id: 'contact', label: 'Contact' },
   ],
 
@@ -30,7 +29,6 @@ export const content: SiteContent = {
     { id: 'home', label: 'Home' },
     { id: 'works', label: 'Works' },
     { id: 'about', label: 'About' },
-    { id: 'price', label: 'Price' },
     { id: 'contact', label: 'Contact' },
   ],
 
@@ -118,75 +116,7 @@ export const content: SiteContent = {
     portrait: frame('tSmyaP5QfeM', 1),
   },
 
-  /* ---- 4. Price（トップの導線） ------------------------------------- */
-  priceCta: {
-    heading: 'Price',
-    lead: '撮影内容・尺・納期に応じたプラン一覧と、機材・オプションの詳細はこちらから。',
-    label: 'View price',
-  },
-
-  /* ---- 4b. Price（別ページ） ---------------------------------------- */
-  pricePage: {
-    heading: 'Price',
-    lead: '料金と撮影プランのご案内 — Plans, gear and options.',
-    // このページに埋めているサンプル映像と同じ作品のカット
-    keyVisual: frame('4HW_ymYfC2I', 3),
-    plansHeading: 'Plans',
-    plans: [
-      {
-        tag: 'Plan A',
-        title: 'Short Film',
-        desc: '30–60秒 / 撮影半日 / 1カメ',
-        price: '¥180,000',
-        unit: '〜 / tax ex.',
-      },
-      {
-        tag: 'Plan B',
-        title: 'Brand Film',
-        desc: '2–3分 / 撮影1日 / 2カメ + 音声',
-        price: '¥420,000',
-        unit: '〜 / tax ex.',
-      },
-    ],
-    specHeading: 'Spec',
-    specYoutubeId: '4HW_ymYfC2I',
-    spec: [
-      { label: 'Camera', value: 'Full-frame cinema, 4K 10bit' },
-      { label: 'Format', value: '16:9 / 2.39:1 / 9:16 vertical' },
-      { label: 'Delivery', value: '撮影日より 2〜3週間' },
-      { label: 'Revision', value: '2回まで無償' },
-    ],
-    optionsHeading: 'Options',
-    options: [
-      {
-        label: 'Drone',
-        body: 'ドローン空撮（国交省許可取得済み・機体2種）。1フライトあたり ¥40,000〜。天候による予備日の設定を含みます。',
-      },
-      {
-        label: 'Audio',
-        body: '外部レコーダーとピンマイク2本による同時録音、ナレーション収録、選曲・整音まで。¥30,000〜。',
-      },
-      {
-        label: 'Grading',
-        body: 'ACES ワークフローによるカラーグレーディング。LUT の作成とブランド用プリセットの納品を含みます。¥50,000〜。',
-      },
-      { label: 'Vertical', body: '9:16 縦型リサイズと字幕焼き込み。1本目は無償、2本目以降 ¥15,000/本。' },
-    ],
-    flow: [
-      { no: '01', title: 'Hearing', text: '目的と視聴環境をうかがい、尺と構成の方向性を決めます。' },
-      { no: '02', title: 'Shooting', text: '少人数のチームで、現場の空気を壊さずに撮影します。' },
-      { no: '03', title: 'Delivery', text: '編集・グレーディングを経て、各媒体向けの書き出しで納品。' },
-    ],
-    notes: [
-      '企画構成・絵コンテの作成を含みます',
-      'ドローン撮影・追加カメラはオプション対応',
-      'SNS向け縦型リサイズは1本まで無償',
-      '交通費・宿泊費は都内近郊を除き実費',
-    ],
-    backLabel: 'Back to top page',
-  },
-
-  /* ---- 5. Contact ---------------------------------------------------- */
+  /* ---- 4. Contact ---------------------------------------------------- */
   contact: {
     heading: 'Contact',
     lead: '撮影のご相談・お見積りはこちらから。2営業日以内にご返信します。',

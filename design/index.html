@@ -71,7 +71,6 @@
         <a href="#home" onClick="{{ goHome }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff" style-hover="color:var(--warm)">Home</a>
         <a href="#works" onClick="{{ navWorks }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff" style-hover="color:var(--warm)">Works</a>
         <a href="#about" onClick="{{ navAbout }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff" style-hover="color:var(--warm)">About</a>
-        <a href="#price" onClick="{{ openPrice }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff" style-hover="color:var(--warm)">Price</a>
         <a href="#contact" onClick="{{ navContact }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff" style-hover="color:var(--warm)">Contact</a>
       </nav>
     </sc-if>
@@ -176,110 +175,6 @@
       <div style="flex:1 1 420px; min-width:min(100%,360px); min-height:60vh; background-color:#131418; background-image:url(https://i.ytimg.com/vi/tSmyaP5QfeM/maxres1.jpg); background-size:cover; background-position:center"></div>
     </section>
 
-    <section id="price" data-sec="price" data-screen-label="Price CTA" style="min-height:70vh; padding:110px 24px; display:flex; align-items:center; justify-content:center; text-align:center; background:#15161A">
-      <div style="max-width:720px">
-        <div data-anim="up" style="opacity:0; transform:translateY(30px); transition:opacity .8s cubic-bezier(.13,1.07,.64,.97), transform .8s cubic-bezier(.13,1.07,.64,.97)">
-          <h2 style="font-family:'Six Caps',sans-serif; font-size:clamp(64px,9vw,96px); line-height:1; letter-spacing:1px; text-transform:uppercase; color:#fff; margin:0">Price</h2>
-        </div>
-        <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; line-height:1.88; color:rgba(255,255,255,.7); margin:0 0 40px">撮影内容・尺・納期に応じたプラン一覧と、機材・オプションの詳細はこちらから。</p>
-        <a href="#price" onClick="{{ openPrice }}" style="display:inline-block; border:2px solid var(--warm); padding:18px 35px; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:16px; letter-spacing:.08em; text-transform:uppercase; color:#fff; background-image:linear-gradient(to top, var(--warm) 50%, rgba(0,0,0,0) 50%); background-size:100% 200%; background-position:0 0; transition:background-position .3s ease, color .3s ease" style-hover="background-position:0 100%; color:#0B0B0C">View price</a>
-      </div>
-    </section>
-  </div>
-  </sc-if>
-
-  <sc-if value="{{ isPrice }}" hint-placeholder-val="{{ false }}">
-  <div>
-    <section data-screen-label="Price header" style="padding:190px 24px 90px; text-align:center; background:#15161A">
-      <h1 style="font-family:'Six Caps',sans-serif; font-size:clamp(64px,10vw,110px); line-height:1; letter-spacing:2px; text-transform:uppercase; color:#fff; margin:0">Price</h1>
-      <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; line-height:1.88; color:rgba(255,255,255,.65); margin:18px 0 0">料金と撮影プランのご案内 — Plans, gear and options.</p>
-    </section>
-    <!-- このページに埋めているサンプル映像と同じ作品のカット。枠が 3:1 と横長なので
-         cover だけでシネスコの黒帯は枠外に落ちる（data-scope は不要） -->
-    <div style="position:relative; width:100%; height:min(60vh,480px); background-color:#131418; background-image:url(https://i.ytimg.com/vi/4HW_ymYfC2I/maxres3.jpg); background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center">
-      <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(12,12,12,.15), rgba(12,12,12,.6))"></div>
-      <span style="position:absolute; bottom:26px; left:50%; transform:translateX(-50%); font-size:22px; color:rgba(255,255,255,.6); animation:bob 2.4s ease-in-out infinite">⌄</span>
-    </div>
-
-    <section style="padding:110px 24px; background:#0B0B0C">
-      <div style="max-width:1140px; margin:0 auto">
-        <h2 style="font-family:'Six Caps',sans-serif; font-size:clamp(56px,8vw,88px); line-height:1; letter-spacing:1px; text-transform:uppercase; color:#fff; margin:0; text-align:center">Plans</h2>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:28px">
-          <div style="border:1px solid rgba(255,255,255,.12); padding:36px">
-            <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--cool); margin:0 0 10px">Plan A</p>
-            <h3 style="font-family:'Six Caps',sans-serif; font-size:40px; line-height:1; letter-spacing:1px; text-transform:uppercase; color:#fff; margin:0 0 6px">Short Film</h3>
-            <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:15px; line-height:1.8; color:rgba(255,255,255,.6); margin:0 0 22px">30–60秒 / 撮影半日 / 1カメ</p>
-            <p style="font-family:var(--mono); font-weight:400; font-size:38px; letter-spacing:-.01em; color:#fff; margin:0">¥180,000<span style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:13px; letter-spacing:0; color:var(--cool)">〜 / tax ex.</span></p>
-          </div>
-          <div style="border:1px solid rgba(255,255,255,.12); padding:36px">
-            <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--cool); margin:0 0 10px">Plan B</p>
-            <h3 style="font-family:'Six Caps',sans-serif; font-size:40px; line-height:1; letter-spacing:1px; text-transform:uppercase; color:#fff; margin:0 0 6px">Brand Film</h3>
-            <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:15px; line-height:1.8; color:rgba(255,255,255,.6); margin:0 0 22px">2–3分 / 撮影1日 / 2カメ + 音声</p>
-            <p style="font-family:var(--mono); font-weight:400; font-size:38px; letter-spacing:-.01em; color:#fff; margin:0">¥420,000<span style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:13px; letter-spacing:0; color:var(--cool)">〜 / tax ex.</span></p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section style="padding:0 24px 110px; background:#0B0B0C">
-      <div style="max-width:1140px; margin:0 auto; display:flex; flex-wrap:wrap; gap:56px; align-items:center">
-        <div style="flex:1 1 460px; min-width:300px; position:relative; aspect-ratio:16/9; background:#000000; border:1px solid rgba(255,255,255,.08); overflow:hidden">
-          <iframe src="https://www.youtube-nocookie.com/embed/4HW_ymYfC2I?rel=0&amp;modestbranding=1&amp;playsinline=1" title="Sample film" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style="position:absolute; inset:0; width:100%; height:100%; border:0"></iframe>
-        </div>
-        <div style="flex:1 1 340px; min-width:300px">
-          <h3 style="font-family:'Six Caps',sans-serif; font-size:40px; line-height:1; letter-spacing:1px; text-transform:uppercase; color:#fff; margin:0">Spec</h3>
-          <div style="display:grid; grid-template-columns:auto 1fr; gap:12px 22px; font-family:'Zen Kaku Gothic New',sans-serif; font-size:15px; line-height:1.7">
-            <span style="color:rgba(255,255,255,.4); letter-spacing:.08em">Camera</span><span style="color:rgba(255,255,255,.85)">Full-frame cinema, 4K 10bit</span>
-            <span style="color:rgba(255,255,255,.4); letter-spacing:.08em">Format</span><span style="color:rgba(255,255,255,.85)">16:9 / 2.39:1 / 9:16 vertical</span>
-            <span style="color:rgba(255,255,255,.4); letter-spacing:.08em">Delivery</span><span style="color:rgba(255,255,255,.85)">撮影日より 2〜3週間</span>
-            <span style="color:rgba(255,255,255,.4); letter-spacing:.08em">Revision</span><span style="color:rgba(255,255,255,.85)">2回まで無償</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section style="padding:110px 24px; background:var(--paper)">
-      <div style="max-width:1140px; margin:0 auto">
-        <h2 style="font-family:'Six Caps',sans-serif; font-size:clamp(56px,8vw,88px); line-height:1; letter-spacing:1px; text-transform:uppercase; color:#17181B; margin:0; text-align:center">Options</h2>
-        <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:36px; border-bottom:1px solid rgba(0,0,0,.1)">
-          <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
-            <button onClick="{{ t.click }}" style="background:transparent; border:0; padding:0 0 14px; cursor:pointer; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:14px; letter-spacing:.14em; text-transform:uppercase; color:{{ t.color }}; border-bottom:3px solid {{ t.line }}; transition:color .3s ease">{{ t.label }}</button>
-          </sc-for>
-        </div>
-        <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; line-height:1.88; color:#3D4047; max-width:720px; margin:40px auto 0; text-align:center">{{ tabBody }}</p>
-      </div>
-    </section>
-
-    <section style="padding:110px 24px; background:#0B0B0C">
-      <div style="max-width:1140px; margin:0 auto">
-        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:44px; text-align:center">
-          <div>
-            <div style="font-family:'Six Caps',sans-serif; font-size:56px; line-height:1; color:var(--cool)">01</div>
-            <h3 style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:15px; letter-spacing:.14em; text-transform:uppercase; color:#fff; margin:14px 0 12px">Hearing</h3>
-            <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:15px; line-height:1.85; color:rgba(255,255,255,.62); margin:0">目的と視聴環境をうかがい、尺と構成の方向性を決めます。</p>
-          </div>
-          <div>
-            <div style="font-family:'Six Caps',sans-serif; font-size:56px; line-height:1; color:var(--cool)">02</div>
-            <h3 style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:15px; letter-spacing:.14em; text-transform:uppercase; color:#fff; margin:14px 0 12px">Shooting</h3>
-            <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:15px; line-height:1.85; color:rgba(255,255,255,.62); margin:0">少人数のチームで、現場の空気を壊さずに撮影します。</p>
-          </div>
-          <div>
-            <div style="font-family:'Six Caps',sans-serif; font-size:56px; line-height:1; color:var(--cool)">03</div>
-            <h3 style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:15px; letter-spacing:.14em; text-transform:uppercase; color:#fff; margin:14px 0 12px">Delivery</h3>
-            <p style="font-family:'Zen Kaku Gothic New',sans-serif; font-size:15px; line-height:1.85; color:rgba(255,255,255,.62); margin:0">編集・グレーディングを経て、各媒体向けの書き出しで納品。</p>
-          </div>
-        </div>
-        <ul style="list-style:none; padding:0; margin:72px auto 0; max-width:720px; display:grid; gap:16px">
-          <li style="display:flex; gap:14px; align-items:flex-start; font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; line-height:1.8; color:rgba(255,255,255,.78)"><span style="color:var(--cool); font-weight:700">✓</span>企画構成・絵コンテの作成を含みます</li>
-          <li style="display:flex; gap:14px; align-items:flex-start; font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; line-height:1.8; color:rgba(255,255,255,.78)"><span style="color:var(--cool); font-weight:700">✓</span>ドローン撮影・追加カメラはオプション対応</li>
-          <li style="display:flex; gap:14px; align-items:flex-start; font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; line-height:1.8; color:rgba(255,255,255,.78)"><span style="color:var(--cool); font-weight:700">✓</span>SNS向け縦型リサイズは1本まで無償</li>
-          <li style="display:flex; gap:14px; align-items:flex-start; font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; line-height:1.8; color:rgba(255,255,255,.78)"><span style="color:var(--cool); font-weight:700">✓</span>交通費・宿泊費は都内近郊を除き実費</li>
-        </ul>
-        <div style="display:flex; justify-content:center; margin-top:56px">
-          <a href="#home" onClick="{{ goHome }}" style="display:inline-block; border:2px solid var(--warm); padding:18px 35px; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:16px; letter-spacing:.08em; text-transform:uppercase; color:#fff; background-image:linear-gradient(to top, var(--warm) 50%, rgba(0,0,0,0) 50%); background-size:100% 200%; background-position:0 0; transition:background-position .3s ease, color .3s ease" style-hover="background-position:0 100%; color:#0B0B0C">Back to top page</a>
-        </div>
-      </div>
-    </section>
   </div>
   </sc-if>
 
@@ -348,13 +243,12 @@
   <a href="#home" onClick="{{ goHome }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--warm)">Home</a>
   <a href="#works" onClick="{{ navWorks }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--warm)">Works</a>
   <a href="#about" onClick="{{ navAbout }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--warm)">About</a>
-  <a href="#price" onClick="{{ openPrice }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--warm)">Price</a>
   <a href="#contact" onClick="{{ navContact }}" style="font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:20px; line-height:53.2px; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; color:#fff" style-hover="color:var(--warm)">Contact</a>
 </aside>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#E9A94B&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#E9A94B&quot;,&quot;#F2C879&quot;,&quot;#C9793A&quot;,&quot;#FFFFFF&quot;],&quot;section&quot;:&quot;Theme&quot;},&quot;showLoader&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;pushMenu&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;sideDots&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
 class Component extends DCLogic {
-  state = { page: 'home', menu: false, loading: true, fading: false, y: 0, w: 1440, active: 'home', hoverDot: null, hoverWork: null, tab: 0, sent: false };
+  state = { page: 'home', menu: false, loading: true, fading: false, y: 0, w: 1440, active: 'home', hoverDot: null, hoverWork: null, sent: false };
 
   componentDidMount() {
     this.applyAccent();
@@ -447,7 +341,7 @@ class Component extends DCLogic {
     const panelW = Math.min(230, s.w * 0.72);
     const secs = [
       { id: 'home', label: 'Home' }, { id: 'works', label: 'Works' },
-      { id: 'about', label: 'About' }, { id: 'price', label: 'Price' },
+      { id: 'about', label: 'About' },
       { id: 'contact', label: 'Contact' }
     ];
     // 仮素材。本番は高本の実作品に差し替える。
@@ -477,16 +371,8 @@ class Component extends DCLogic {
       frame('V-qTEo9IHTA', 1), frame('DhVz3xsAis0', 3), frame('0hpkWLJzYQs', 1),
       frame('FfBE5_gqTSY', 3), frame('UyBsm2wU8ag', 3), frame('4hs_GGss_Nc', 2)
     ];
-    const tabLabels = ['Drone', 'Audio', 'Grading', 'Vertical'];
-    const tabBodies = [
-      'ドローン空撮（国交省許可取得済み・機体2種）。1フライトあたり ¥40,000〜。天候による予備日の設定を含みます。',
-      '外部レコーダーとピンマイク2本による同時録音、ナレーション収録、選曲・整音まで。¥30,000〜。',
-      'ACES ワークフローによるカラーグレーディング。LUT の作成とブランド用プリセットの納品を含みます。¥50,000〜。',
-      '9:16 縦型リサイズと字幕焼き込み。1本目は無償、2本目以降 ¥15,000/本。'
-    ];
     return {
       isHome: s.page === 'home',
-      isPrice: s.page === 'price',
       loading: s.loading,
       loaderOpacity: s.fading ? 0 : 1,
       isDesktop: desktop,
@@ -501,13 +387,6 @@ class Component extends DCLogic {
       topOpacity: s.y > 500 ? 1 : 0,
       topEvents: s.y > 500 ? 'auto' : 'none',
       sendLabel: s.sent ? 'Thank you' : 'Send',
-      tabBody: tabBodies[s.tab],
-      tabs: tabLabels.map((label, i) => ({
-        label: label,
-        color: s.tab === i ? '#17181B' : 'rgba(23,24,27,.45)',
-        line: s.tab === i ? (this.props.accent || '#E9A94B') : 'transparent',
-        click: () => this.setState({ tab: i })
-      })),
       // 21/9 は原寸に近いが、狭い画面では高さが足りず文字が溢れるので 4/3 に切り替える
       slideRatio: cols === 2 ? '21/9' : '4/3',
       workCols: cols,
@@ -548,12 +427,6 @@ class Component extends DCLogic {
       navWorks: this.go('works'),
       navAbout: this.go('about'),
       navContact: this.go('contact'),
-      openPrice: (e) => {
-        if (e) e.preventDefault();
-        this.setState({ menu: false, page: 'price' });
-        this.startLoader();
-        setTimeout(() => window.scrollTo({ top: 0 }), 60);
-      },
       toTop: () => window.scrollTo({ top: 0, behavior: 'smooth' }),
       submit: (e) => { e.preventDefault(); this.setState({ sent: true }); }
     };

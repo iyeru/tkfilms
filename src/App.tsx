@@ -9,8 +9,6 @@ import { About } from '@/sections/About';
 import { Contact } from '@/sections/Contact';
 import { Gram, Partners } from '@/sections/Gram';
 import { Hero } from '@/sections/Hero';
-import { PriceCta } from '@/sections/PriceCta';
-import { PricePage } from '@/sections/PricePage';
 import { Works } from '@/sections/Works';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import { useScrollPast } from '@/hooks/useScrollPast';
@@ -19,7 +17,6 @@ import { useScrollPast } from '@/hooks/useScrollPast';
 const SECTION_IDS = content.dots.map((item) => item.id);
 
 export function App() {
-  const [page, setPage] = useState<'home' | 'price'>('home');
   const [menuOpen, setMenuOpen] = useState(false);
   const active = useActiveSection(SECTION_IDS);
   const showBackToTop = useScrollPast(500);
@@ -31,30 +28,13 @@ export function App() {
     document.title = `${content.brand.name} — 映像制作`;
   }, []);
 
-  /** トップページの該当セクションへ送る。料金ページからでも戻ってから移動する */
-  const goTo = useCallback(
-    (id: string) => {
-      setMenuOpen(false);
-      if (id === 'price') {
-        setPage('price');
-        window.scrollTo({ top: 0 });
-        return;
-      }
-      const scroll = () => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-      if (page === 'price') {
-        setPage('home');
-        window.scrollTo({ top: 0 });
-        setTimeout(scroll, 60);
-      } else {
-        scroll();
-      }
-    },
-    [page],
-  );
+  const goTo = useCallback((id: string) => {
+    setMenuOpen(false);
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
 
   const goHome = useCallback(() => {
     setMenuOpen(false);
-    setPage('home');
     window.scrollTo({ top: 0 });
   }, []);
 
@@ -72,21 +52,12 @@ export function App() {
         onHome={goHome}
       />
       <Drawer nav={content.nav} open={menuOpen} onClose={closeMenu} onNavigate={goTo} />
-      {page === 'home' && <SideDots dots={content.dots} active={active} onNavigate={goTo} />}
+      <SideDots dots={content.dots} active={active} onNavigate={goTo} />
 
       <main>
-        {page === 'home' ? (
-          <>
-            <Hero hero={content.hero} />
-            <Works works={content.works} />
-            <About about={content.about} />
-            <PriceCta price={content.priceCta} onOpen={() => goTo('price')} />
-          </>
-        ) : (
-          <PricePage price={content.pricePage} onBack={goHome} />
-        )}
-
-        {/* Contact 以降はどちらのページでも共通で出る */}
+        <Hero hero={content.hero} />
+        <Works works={content.works} />
+        <About about={content.about} />
         <Contact contact={content.contact} />
         <Gram gram={content.gram} />
         <Partners partners={content.partners} note={content.partnersNote} />

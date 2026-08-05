@@ -5,7 +5,7 @@
  */
 
 /** セクションの識別子。ナビ・サイドドット・スクロール位置の対応付けに使う */
-export type SectionId = 'home' | 'works' | 'about' | 'price' | 'contact';
+export type SectionId = 'home' | 'works' | 'about' | 'contact';
 
 export type NavItem = {
   id: SectionId;
@@ -62,39 +62,6 @@ export type About = {
   portrait: string;
 };
 
-export type PriceCta = {
-  heading: string;
-  lead: string;
-  label: string;
-};
-
-export type Plan = {
-  tag: string;
-  title: string;
-  desc: string;
-  price: string;
-  /** 価格の後ろに小さく添える単位 */
-  unit: string;
-};
-
-export type PricePage = {
-  heading: string;
-  lead: string;
-  /** キービジュアル。3:1 と横長なのでシネスコ素材でも cover だけで黒帯が枠外に落ちる */
-  keyVisual: string;
-  plansHeading: string;
-  plans: Plan[];
-  specHeading: string;
-  /** スペック欄の横に置くサンプル映像 */
-  specYoutubeId: string;
-  spec: Credit[];
-  optionsHeading: string;
-  options: { label: string; body: string }[];
-  flow: { no: string; title: string; text: string }[];
-  notes: string[];
-  backLabel: string;
-};
-
 export type Contact = {
   heading: string;
   lead: string;
@@ -117,8 +84,6 @@ export type SiteContent = {
   hero: Hero;
   works: Works;
   about: About;
-  priceCta: PriceCta;
-  pricePage: PricePage;
   contact: Contact;
   /** Instagram 風の正方形グリッド */
   gram: { src: string; scope: boolean }[];
