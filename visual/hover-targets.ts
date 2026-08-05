@@ -20,13 +20,6 @@ export const hoverTargets: HoverTarget[] = [
     reactSelector: 'header nav a[href="#works"]',
   },
   {
-    key: 'nav-profile',
-    label: 'ヘッダー: Profile リンク',
-    scrollId: 'home',
-    designSelector: 'header nav a[href="#profile"]',
-    reactSelector: 'header nav a[href="#profile"]',
-  },
-  {
     key: 'nav-contact',
     label: 'ヘッダー: Contact リンク',
     scrollId: 'home',

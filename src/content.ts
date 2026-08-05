@@ -21,7 +21,6 @@ export const content: SiteContent = {
   nav: [
     { id: 'home', label: 'Home' },
     { id: 'works', label: 'Works' },
-    { id: 'profile', label: 'Profile' },
     { id: 'about', label: 'About' },
     { id: 'price', label: 'Price' },
     { id: 'contact', label: 'Contact' },
@@ -30,7 +29,6 @@ export const content: SiteContent = {
   dots: [
     { id: 'home', label: 'Home' },
     { id: 'works', label: 'Works' },
-    { id: 'profile', label: 'Profile' },
     { id: 'about', label: 'About' },
     { id: 'price', label: 'Price' },
     { id: 'contact', label: 'Contact' },
@@ -105,15 +103,7 @@ export const content: SiteContent = {
     moreLabel: 'View more',
   },
 
-  /* ---- 3. Profile --------------------------------------------------- */
-  profile: {
-    heading: 'Profile',
-    // 枠が全幅で横長のため、黒帯の入るシネスコ素材は使わない。
-    // 大きく映るので、他社ロゴや船名が写り込むカットも避けている
-    slides: [frame('FfBE5_gqTSY', 1), frame('V-qTEo9IHTA', 1)],
-  },
-
-  /* ---- 4. About ----------------------------------------------------- */
+  /* ---- 3. About ----------------------------------------------------- */
   about: {
     heading: 'About',
     body: [
@@ -128,14 +118,14 @@ export const content: SiteContent = {
     portrait: frame('tSmyaP5QfeM', 1),
   },
 
-  /* ---- 5. Price（トップの導線） ------------------------------------- */
+  /* ---- 4. Price（トップの導線） ------------------------------------- */
   priceCta: {
     heading: 'Price',
     lead: '撮影内容・尺・納期に応じたプラン一覧と、機材・オプションの詳細はこちらから。',
     label: 'View price',
   },
 
-  /* ---- 5b. Price（別ページ） ---------------------------------------- */
+  /* ---- 4b. Price（別ページ） ---------------------------------------- */
   pricePage: {
     heading: 'Price',
     lead: '料金と撮影プランのご案内 — Plans, gear and options.',
@@ -196,7 +186,7 @@ export const content: SiteContent = {
     backLabel: 'Back to top page',
   },
 
-  /* ---- 6. Contact ---------------------------------------------------- */
+  /* ---- 5. Contact ---------------------------------------------------- */
   contact: {
     heading: 'Contact',
     lead: '撮影のご相談・お見積りはこちらから。2営業日以内にご返信します。',
