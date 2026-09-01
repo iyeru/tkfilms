@@ -10,7 +10,7 @@ export function externalLinkProps(href: string) {
 
 /**
  * public/ に置いたファイルへのURLを作る。
- * GitHub Pages では /tkfilms/ 配下で配信されるため、base を必ず前に付ける。
+ * 配信先の base を必ず前に付ける（ルート配信なら実質そのまま）。
  */
 export function asset(path: string): string {
   return `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;

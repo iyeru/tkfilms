@@ -2,14 +2,14 @@
 
 映像制作の自己紹介サイト。GitHub Pages で公開している。
 
-- 公開URL: https://iyeru.github.io/tkfilms/
+- 公開URL: https://tkfilms.jp/
 - 構成: React + TypeScript + Tailwind CSS v4 + Vite
 
 ## 開発
 
 ```bash
 npm install
-npm run dev        # http://localhost:5173/tkfilms/
+npm run dev        # http://localhost:5173/
 ```
 
 | コマンド | 内容 |
@@ -61,7 +61,7 @@ src/
 
 ### 画像・動画ファイルの置き場所
 
-**`public/` に置く。** `content.ts` にはファイル名だけ書けばよい（`/tkfilms/` の付与は自動）。
+**`public/` に置く。** `content.ts` にはファイル名だけ書けばよい（base の付与は自動）。
 
 ### 作品を載せる
 
@@ -117,11 +117,15 @@ media: { type: 'video', src: 'showreel.mp4', poster: 'poster.jpg' }
 
 素材が揃うまで検索エンジンにインデックスさせないよう、`index.html` の `<head>` に `<meta name="robots" content="noindex">` を入れてある。公開して問題ない状態になったら、**この1行を削除する**。
 
-## 独自ドメインを当てるとき
+## 独自ドメイン（tkfilms.jp）
 
-1. `public/CNAME` を作り、ドメイン名だけを1行書く
-2. ドメイン側の DNS に GitHub Pages の A レコード（または `iyeru.github.io` への CNAME）を設定する
-3. リポジトリの Settings → Pages で Custom domain を設定し、Enforce HTTPS を有効にする
-4. **`vite.config.ts` の `base` を `'/tkfilms/'` から `'/'` に変える**（これを忘れると CSS と JS が 404 になる）
+設定済み。内訳は次のとおり。
 
-ドメインを当てると URL から `/tkfilms/` が消える。すでに配ったリンクは新URLへリダイレクトされない点に注意。
+- `public/CNAME` … `tkfilms.jp` の1行。ビルド時に `dist/` へコピーされる
+- `vite.config.ts` の `base` … `'/'`（ルート配信）
+- リポジトリの Settings → Pages → Custom domain に `tkfilms.jp`、Enforce HTTPS を有効
+- お名前.com の DNS
+  - `tkfilms.jp` の A レコード → `185.199.108.153` / `185.199.109.153` / `185.199.110.153` / `185.199.111.153`
+  - `www.tkfilms.jp` の CNAME → `iyeru.github.io`
+
+旧URL `https://iyeru.github.io/tkfilms/` からのリダイレクトは行われない。
