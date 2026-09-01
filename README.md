@@ -4,6 +4,7 @@
 
 - 公開URL: https://iyeru.github.io/tkfilms/
 - 構成: React + TypeScript + Tailwind CSS v4 + Vite
+- 開発の進め方（ブランチ・PR・リリース）: [docs/branch-strategy.md](docs/branch-strategy.md)
 
 ## 開発
 
