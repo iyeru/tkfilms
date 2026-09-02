@@ -196,12 +196,12 @@ export const content: SiteContent = {
 
   /* ---- Instagram 風グリッド ------------------------------------------ */
   gram: [
-    { src: frame('V-qTEo9IHTA', 1), scope: false },
-    { src: frame('DhVz3xsAis0', 3), scope: false },
-    { src: frame('0hpkWLJzYQs', 1), scope: false },
-    { src: frame('FfBE5_gqTSY', 3), scope: false },
-    { src: frame('UyBsm2wU8ag', 3), scope: true },
-    { src: frame('4hs_GGss_Nc', 2), scope: true },
+    { src: 'images/gram-hk-temple.jpg', scope: false },
+    { src: 'images/gram-hilltop-sunset.jpg', scope: false },
+    { src: 'images/gram-hk-lions-head.jpg', scope: false },
+    { src: 'images/gram-lions-head-girl.jpg', scope: false },
+    { src: 'images/gram-nordic-town.jpg', scope: false },
+    { src: 'images/gram-hk-night-view.jpg', scope: false },
   ],
 
   /* ---- フッター ------------------------------------------------------ */
