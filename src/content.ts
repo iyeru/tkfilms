@@ -132,13 +132,24 @@ export const content: SiteContent = {
       },
       {
         body: [
-          '[ 仮素材 ] 遠藤 蒼 / Ao Endo。プロデューサー / 編集。企画立案から予算管理、撮影のロジスティクスまでを担当。高本とともに制作全体を組み立てる。',
-          'Producer / Editor. Handles planning, budgeting and on-set logistics, building the production alongside Takamoto from the ground up.',
+          '阪井 慎太郎 / Sakai Shintaro。ソフトウェアエンジニアとして5年、要件定義から設計・実装・リリースまでを一貫して担当。フロントエンド・バックエンド・クラウドに加え、開発チームのマネジメントに従事。',
+          '副業では、中小・地方事業の課題を映像とWebの両面から解決することを目指し、高本と組んで活動。',
         ],
+        credits: {
+          heading: 'Web・技術実績',
+          items: [
+            '本業にて、要件定義から設計・実装・リリースまでを5年間一貫して担当。フロントエンド / バックエンド / クラウドおよびマネジメントを経験',
+            '当サイト（tkfilms.jp）の設計・実装・公開・運用を担当',
+            '日光の温泉宿PV撮影に、撮影アシスタントとして参加',
+            'Adobe Premiere Pro での動画編集・写真加工（1分程度の制作経験）',
+          ],
+        },
         meta: [
-          { label: 'Role', value: 'Producer / Editor' },
-          { label: 'Since', value: '2018' },
-          { label: 'Field', value: 'Production / Post' },
+          { label: 'Base', value: '東京' },
+          { label: 'Main', value: 'ソフトウェアエンジニア' },
+          { label: 'Sub', value: 'Web実装 / 撮影アシスタント' },
+          { label: 'Stack', value: 'フロントエンド / バックエンド / クラウド' },
+          { label: 'Edit', value: 'Adobe Premiere Pro' },
         ],
         portrait: frame('DhVz3xsAis0', 1),
       },
