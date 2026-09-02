@@ -12,6 +12,12 @@ export type HoverTarget = {
 // かつてフッターのSNSアイコン（Instagram）を対象にしていたが、フッターから
 // リンクが無くなっておりテスト定義だけが残っていたため削除した。
 // フッターにリンクを戻したらここにも足すこと。
+//
+// Works の代表作スライダー矢印・カード・View more ボタンも同じ理由で削除した。
+// 代表作を花と華に差し替えた際、飾りの矢印・ドット・カード一覧・View more を
+// 丸ごと外し、1本の映像とクレジット行だけの構成にしたため（src/sections/Works.tsx
+// の Feature コンポーネントのコメント参照）。作品を複数並べる形に戻したら、
+// 実際に動くボタン・カードとしてここに足し直すこと。
 export const hoverTargets: HoverTarget[] = [
   {
     key: 'nav-works',
@@ -24,31 +30,6 @@ export const hoverTargets: HoverTarget[] = [
     label: 'ヘッダー: Contact リンク',
     scrollId: 'home',
     selector: 'header nav a[href="#contact"]',
-  },
-  {
-    key: 'works-slider-prev',
-    label: 'works: スライダー前へボタン',
-    scrollId: 'works',
-    selector: '#works button[aria-label="前の作品"]',
-  },
-  {
-    key: 'works-slider-next',
-    label: 'works: スライダー次へボタン',
-    scrollId: 'works',
-    selector: '#works button[aria-label="次の作品"]',
-  },
-  {
-    key: 'works-card',
-    label: 'works: 作品カード',
-    scrollId: 'works',
-    // 代表作スライダーには付かない .group でカードだけに絞り込む
-    selector: '#works .group',
-  },
-  {
-    key: 'works-view-more',
-    label: 'works: View more ボタン',
-    scrollId: 'works',
-    selector: '#works a:has-text("View more")',
   },
   {
     key: 'back-to-top',
