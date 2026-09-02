@@ -39,12 +39,119 @@ async function injectFreezeStyles(page: Page) {
          プレビュー機能が実写真を自動で差し込んでおり、キャプチャの度に写真が変わる。
          背景だけプレースホルダーの斜線に固定する（矢印ボタンのホバーには要素自体が
          見えている必要があるため、visibility:hidden で丸ごと隠すことはしない）。
-         design は比率をインラインの aspect-ratio で、react は Tailwind のクラスで
-         表しているため、同じ枠を指すのに2つのセレクタが要る */
-      [style*="21 / 9"],
-      [class*="aspect-21/9"] { background-image: repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px) !important; }
+         比率（21/9 か 4/3 か）は画面幅で入れ替わるので目印にできない。
+         「前へ／次へボタンを直下に持つ枠」という位置で引く。
+         aria-label は design が英語・react が日本語なのでセレクタが2つ要る */
+      div:has(> button[aria-label="Previous"]),
+      div:has(> button[aria-label="前の作品"]) { background-image: repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px) !important; }
     `,
   });
+}
+
+/** ページを開いて、撮影できる状態まで落ち着かせる */
+async function openAndSettle(page: Page) {
+  // reactのuseInViewはreduced-motionだと初期表示から即座にinView=trueを返すため、
+  // スクロール到達アニメーションのタイミング待ちが不要になる。emulateMediaはpage単位の
+  // 設定でドキュメントに紐付かないため、goto()より前でも後でも構わない。
+  await blockEmbeds(page);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  await injectFreezeStyles(page);
+  await page.waitForTimeout(LOADER_SETTLE_MS);
+}
+
+/**
+ * ページ全体を一度スクロールしてから先頭へ戻す。
+ * 画面外の要素まで確実に描画・読み込みさせるのが目的。戻すのは、ヘッダーが
+ * スクロール量で高さと背景を変える（75px透明 ⇔ 55px塗り）ためで、
+ * 撮影時のスクロール位置を必ず0に揃えておかないと同じ画にならない。
+ */
+async function sweepAndReturnToTop(page: Page) {
+  await page.evaluate(async () => {
+    const step = window.innerHeight;
+    for (let y = 0; y < document.documentElement.scrollHeight; y += step) {
+      window.scrollTo(0, y);
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    }
+    window.scrollTo(0, 0);
+  });
+  await page.waitForTimeout(300);
+}
+
+/**
+ * 背景写真が全部出そろうまで待つ。
+ *
+ * React版のサムネイルは i.ytimg.com から都度取ってくる（src/content.ts の frame()）。
+ * 一方 design原本は同じ写真を書き出し時に取り込んで blob: で持っているので、待たずに出る。
+ * この差のせいで、React側だけ読み込みが間に合わず枠が真っ黒のまま撮れてしまい、
+ * 「写真が全部食い違っている」ように見える巨大な差分が出ることがある（実際には同じ写真）。
+ *
+ * 読めなかった URL は握りつぶさずエラーにする。黙って真っ黒を撮って
+ * デザイン崩れと区別が付かなくなるより、通信の問題だと分かった方がいい。
+ */
+async function waitForPhotos(page: Page) {
+  const failed = await page.evaluate(async () => {
+    const urls = new Set<string>();
+    for (const el of document.querySelectorAll('*')) {
+      for (const m of getComputedStyle(el).backgroundImage.matchAll(
+        /url\("((?:https?|blob):[^"]+)"\)/g,
+      )) {
+        urls.add(m[1]);
+      }
+    }
+    for (const img of document.querySelectorAll('img')) {
+      if (img.src) urls.add(img.src);
+    }
+
+    const load = (url: string) =>
+      new Promise<boolean>((resolve) => {
+        const image = new Image();
+        image.onload = () => resolve(true);
+        image.onerror = () => resolve(false);
+        image.src = url;
+      });
+
+    const bad: string[] = [];
+    for (const url of urls) {
+      // 一度に取りに行くと弾かれることがあるので、失敗したものだけ少し置いて1回だけ引き直す
+      if (await load(url)) continue;
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      if (!(await load(url))) bad.push(url);
+    }
+    return bad;
+  });
+
+  if (failed.length > 0) {
+    throw new Error(`画像を読み込めなかった（通信の問題）:\n${failed.join('\n')}`);
+  }
+  // 読み込み完了から実際に描き変わるまでの間
+  await page.waitForTimeout(300);
+}
+
+/** 要素の位置と大きさを「ドキュメント左上を原点」として返す（fullPage撮影のclip用） */
+async function documentBox(page: Page, selector: string) {
+  const box = await page.locator(selector).evaluate((el) => {
+    const r = el.getBoundingClientRect();
+    return {
+      x: r.left + window.scrollX,
+      y: r.top + window.scrollY,
+      width: r.width,
+      height: r.height,
+    };
+  });
+  if (box.width === 0 || box.height === 0) {
+    throw new Error(`${selector} の大きさが 0 （表示されていない）`);
+  }
+  // 小数のまま clip に渡さない。ページの別の場所（About の本文量など）が変わって
+  // 要素の小数座標がずれただけで、切り出される画像の高さが 1px 動くことがある。
+  // ベースラインと1pxでも大きさが違えば比較は問答無用で失敗するので、ここで整数に固定する。
+  // 幅と高さは要素自身の値なので、位置がずれても変わらない。
+  return {
+    x: Math.round(box.x),
+    y: Math.round(box.y),
+    width: Math.round(box.width),
+    height: Math.round(box.height),
+  };
 }
 
 for (const viewport of viewports) {
@@ -54,31 +161,32 @@ for (const viewport of viewports) {
     for (const section of sections) {
       test(section.key, async ({ page }, testInfo) => {
         const isDesign = testInfo.project.name === 'design';
-        const id = isDesign ? section.designId : section.reactId;
+        const selector = isDesign ? section.designSelector : section.reactSelector;
 
-        test.skip(id === null, `${section.label}: src/ 側に未実装（visual/sections.ts の reactId が null）`);
+        test.skip(
+          selector === null,
+          `${section.label}: src/ 側に未実装（visual/sections.ts の reactSelector が null）`,
+        );
+        test.skip(
+          section.diverged !== undefined,
+          `${section.label}: 原本から意図的に離している — ${section.diverged}`,
+        );
 
-        // reactのuseInViewはreduced-motionだと初期表示から即座にinView=trueを返すため、
-        // スクロール到達アニメーションのタイミング待ちが不要になる。emulateMediaはpage単位の
-        // 設定でドキュメントに紐付かないため、goto()より前でも後でも構わない。
-        await blockEmbeds(page);
-        await page.emulateMedia({ reducedMotion: 'reduce' });
-        await page.goto('/');
-        await injectFreezeStyles(page);
-        await page.waitForTimeout(LOADER_SETTLE_MS);
+        await openAndSettle(page);
+        await sweepAndReturnToTop(page);
+        await waitForPhotos(page);
 
-        const target = page.locator(`#${id}`);
-        await target.scrollIntoViewIfNeeded();
-        await page.waitForTimeout(200);
+        // ビューポート撮影 + clip だと、画面より高いセクション（works は desktop で 2603px）が
+        // 画面に入る1画面ぶんしか比較されず、残りが素通しになる。fullPage で撮ってから
+        // ドキュメント座標で切り出すことで、セクションを頭から終わりまで丸ごと比較する。
+        // fullPage 撮影はスクロールを伴わないので、locator 撮影で問題になった
+        // 「安定確認のたびに再スクロールしてヘッダーが動く」も起きない。
+        const box = await documentBox(page, selector!);
 
-        // locator を直接 toHaveScreenshot() すると、安定確認の度に内部でスクロールをやり直す。
-        // このサイトはスクロール量でヘッダーの高さ・背景が変わるため、そのやり直しスクロール自体が
-        // 見た目を揺らし続けて「安定しない」まま5秒でタイムアウトすることがあった。
-        // 一度だけ自前でスクロールし、以降は座標を固定した page 単位のクリップ撮影にすることで回避する。
-        const box = await target.boundingBox();
-        if (!box) throw new Error(`#${id} の boundingBox が取得できない`);
-
-        await expect(page).toHaveScreenshot(`${section.key}-${viewport.name}.png`, { clip: box });
+        await expect(page).toHaveScreenshot(`${section.key}-${viewport.name}.png`, {
+          fullPage: true,
+          clip: box,
+        });
       });
     }
   });
@@ -96,15 +204,15 @@ test.describe('hover', () => {
       const isDesign = testInfo.project.name === 'design';
       const selector = isDesign ? target.designSelector : target.reactSelector;
 
-      test.skip(selector === null, `${target.label}: src/ 側に未実装（visual/hover-targets.ts の reactSelector が null）`);
+      test.skip(
+        selector === null,
+        `${target.label}: src/ 側に未実装（visual/hover-targets.ts の reactSelector が null）`,
+      );
 
-      await blockEmbeds(page);
-      await page.emulateMedia({ reducedMotion: 'reduce' });
-      await page.goto('/');
-      await injectFreezeStyles(page);
-      await page.waitForTimeout(LOADER_SETTLE_MS);
+      await openAndSettle(page);
 
       await page.locator(`#${target.scrollId}`).scrollIntoViewIfNeeded();
+      await waitForPhotos(page);
       await page.waitForTimeout(200);
 
       const el = page.locator(selector!).first();
@@ -116,15 +224,44 @@ test.describe('hover', () => {
       const box = await el.boundingBox();
       if (!box) throw new Error(`${target.key} の boundingBox が取得できない`);
 
-      // hoverでscale(1.12)する要素があり、拡大後の見切れを防ぐため余白を持たせてクリップする
+      // hoverでscale(1.12)する要素があり、拡大後の見切れを防ぐため余白を持たせてクリップする。
+      // documentBox() と同じ理由で整数に丸めてから渡す
       const pad = 20;
       await expect(page).toHaveScreenshot(`hover-${target.key}.png`, {
         clip: {
-          x: Math.max(0, box.x - pad),
-          y: Math.max(0, box.y - pad),
-          width: box.width + pad * 2,
-          height: box.height + pad * 2,
+          x: Math.max(0, Math.round(box.x) - pad),
+          y: Math.max(0, Math.round(box.y) - pad),
+          width: Math.round(box.width) + pad * 2,
+          height: Math.round(box.height) + pad * 2,
         },
+      });
+    });
+  }
+});
+
+// ドロワーを開いた状態は、本文が左へ寄る・暗幕が乗る・パネルが出るの3つが同時に起き、
+// セクション単位の撮影では一切通らない。開閉ボタンは wide(1200px) 未満でしか出ないため
+// desktop は対象外。
+test.describe('state', () => {
+  for (const viewport of viewports.filter((v) => v.width < 1200)) {
+    test.describe(`${viewport.name} (${viewport.width}x${viewport.height})`, () => {
+      test.use({ viewport: { width: viewport.width, height: viewport.height } });
+
+      test('drawer-open', async ({ page }, testInfo) => {
+        const isDesign = testInfo.project.name === 'design';
+        // 原本は aria-label が英語、React版は日本語
+        const selector = isDesign
+          ? 'button[aria-label="Menu"]'
+          : 'button[aria-label="メニュー"]';
+
+        await openAndSettle(page);
+        await waitForPhotos(page);
+        await page.locator(selector).click();
+        // 開閉のトランジションは無効化済みなので即座に最終状態になる
+        await page.waitForTimeout(200);
+
+        // 画面に固定された暗幕とパネルが主役なので、ページ全体ではなく画面ぶんを撮る
+        await expect(page).toHaveScreenshot(`drawer-open-${viewport.name}.png`);
       });
     });
   }

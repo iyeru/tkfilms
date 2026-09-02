@@ -6,7 +6,11 @@ const REACT_PORT = 5175;
 export default defineConfig({
   testDir: './visual',
   fullyParallel: false,
-  retries: 0,
+  // 落ちたテストだけ1回やり直す。差分の原因を「通信の揺れ」と「本当のズレ」に
+  // 自動で仕分けさせるのが目的で、やり直しで通れば flaky（サムネイルの取得に失敗した等）、
+  // 2回とも落ちれば failed（実際に見た目が違う）と report に出る。
+  // 全体を回し直して見比べるより、落ちた1件だけを2回見る方が早く、切り分けも確か。
+  retries: 1,
   reporter: [['html', { open: 'never' }]],
 
   // {projectName} を含めない。design プロジェクトで作ったベースラインを

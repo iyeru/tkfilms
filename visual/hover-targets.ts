@@ -11,6 +11,10 @@ export type HoverTarget = {
 // design/ の style-hover 属性に対応するホバー状態を比較する。
 // react 側は aria-label を日本語にしている（メニュー・ページ先頭へ戻る等と同じ方針）ため、
 // ラベルで引く箇所は design/react でセレクタが異なる。
+//
+// かつてフッターのSNSアイコン（Instagram）を対象にしていたが、原本・React版とも
+// フッターからリンクが無くなっており、テスト定義だけが残っていたため削除した。
+// フッターにリンクを戻したらここにも足すこと。
 export const hoverTargets: HoverTarget[] = [
   {
     key: 'nav-works',
@@ -56,13 +60,6 @@ export const hoverTargets: HoverTarget[] = [
     scrollId: 'works',
     designSelector: '#works a:has-text("View more")',
     reactSelector: '#works a:has-text("View more")',
-  },
-  {
-    key: 'footer-sns',
-    label: 'フッター: SNSアイコン（Instagram）',
-    scrollId: 'contact',
-    designSelector: 'a[aria-label="Instagram"]',
-    reactSelector: 'a[aria-label="Instagram"]',
   },
   {
     key: 'back-to-top',
