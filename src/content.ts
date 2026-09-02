@@ -104,7 +104,7 @@ export const content: SiteContent = {
   /* ---- 3. About ----------------------------------------------------- */
   about: {
     heading: 'About',
-    // 顔写真はまだ仮素材。ブロックを増やすと写真の左右が自動で交互になる
+    // 1人目は写真が右、2人目は左。Section 側が並び順から自動で振り分ける
     blocks: [
       {
         body: [
@@ -119,6 +119,18 @@ export const content: SiteContent = {
           { label: 'Drone', value: '操縦歴 約6年' },
         ],
         portrait: frame('tSmyaP5QfeM', 1),
+      },
+      {
+        body: [
+          '[ 仮素材 ] 遠藤 蒼 / Ao Endo。プロデューサー / 編集。企画立案から予算管理、撮影のロジスティクスまでを担当し、高本とともに制作全体を組み立てています。',
+          'Producer / Editor. Handles planning, budgeting and on-set logistics, building the production alongside Takamoto from the ground up.',
+        ],
+        meta: [
+          { label: 'Role', value: 'Producer / Editor' },
+          { label: 'Since', value: '2018' },
+          { label: 'Field', value: 'Production / Post' },
+        ],
+        portrait: frame('DhVz3xsAis0', 1),
       },
     ],
   },
