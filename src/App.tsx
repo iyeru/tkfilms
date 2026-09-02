@@ -10,6 +10,7 @@ import { Contact } from '@/sections/Contact';
 import { Equipment } from '@/sections/Equipment';
 import { Gram } from '@/sections/Gram';
 import { Hero } from '@/sections/Hero';
+import { Portfolio } from '@/sections/Portfolio';
 import { Works } from '@/sections/Works';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import { useScrollPast } from '@/hooks/useScrollPast';
@@ -76,6 +77,7 @@ export function App() {
         <main>
           <Hero hero={content.hero} />
           <Works works={content.works} />
+          <Portfolio portfolio={content.portfolio} />
           <About about={content.about} />
           <Equipment equipment={content.equipment} />
           <Contact contact={content.contact} />

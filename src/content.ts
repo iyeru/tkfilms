@@ -21,6 +21,7 @@ export const content: SiteContent = {
   nav: [
     { id: 'home', label: 'Home' },
     { id: 'works', label: 'Works' },
+    { id: 'portfolio', label: 'Portfolio' },
     { id: 'about', label: 'About' },
     { id: 'contact', label: 'Contact' },
   ],
@@ -28,6 +29,7 @@ export const content: SiteContent = {
   dots: [
     { id: 'home', label: 'Home' },
     { id: 'works', label: 'Works' },
+    { id: 'portfolio', label: 'Portfolio' },
     { id: 'about', label: 'About' },
     { id: 'contact', label: 'Contact' },
   ],
@@ -108,6 +110,24 @@ export const content: SiteContent = {
       },
     ],
     moreLabel: 'View more',
+  },
+
+  /* ---- 2-b. Portfolio -------------------------------------------------
+     work/宣材動画 にある6本（hana_to_hana・top を除く）。
+     すべて YouTube 限定公開にアップロードしてから youtubeId を入れる。
+     アップロードが済むまでは null のままにして「準備中」の枠だけ出す。
+     並びは wide（全幅1本）が連続しないように挟んである。
+  ------------------------------------------------------------------- */
+  portfolio: {
+    heading: 'Portfolio',
+    items: [
+      { title: 'Our College Life', youtubeId: null, wide: true },
+      { title: 'City to Local', youtubeId: null, wide: false },
+      { title: 'FIX1', youtubeId: null, wide: false },
+      { title: 'Biwako & Tateiwa GR Yaris', youtubeId: null, wide: true },
+      { title: 'Hokkaido', youtubeId: null, wide: false },
+      { title: 'Gifu Trip', youtubeId: null, wide: false },
+    ],
   },
 
   /* ---- 3. About ----------------------------------------------------- */

@@ -93,3 +93,28 @@ Clients を main に入れる PR でこれが出る。そのときに追う手�
 <https://tkfilms.jp/#contact> から 1 回送って**実際に届くこと**を確かめる
 （design-review 3-c の完了条件）。テスト用のままだと、問い合わせがテスト側の
 受信箱に流れ込む。
+
+## 8. Portfolio の6本を YouTube 限定公開にしてIDを入れる
+
+Works の下に Portfolio セクションを追加した（`work/宣材動画/` の hana_to_hana・top を除く6本）。
+**すべて `youtubeId: null` のプレースホルダのまま**で、再生ボタンの位置に「COMING SOON」が出ている状態。
+
+`work/宣材動画/` の6本を YouTube に限定公開でアップロードし、`src/content.ts` の
+`portfolio.items` に動画IDを入れる。ファイルと項目の対応は次のとおり（並び順は content.ts のまま）。
+
+| content.ts の title | ファイル |
+|---|---|
+| Our College Life | `Our college life.mp4` |
+| City to Local | `CityToLocal.mp4` |
+| FIX1 | `FIX1.mp4` |
+| Biwako & Tateiwa GR Yaris | `琵琶湖＆立岩GRヤリス.mp4` |
+| Hokkaido | `hokkaido.mp4` |
+| Gifu Trip | `岐阜トリップ.mp4` |
+
+CityToLocal(168M)・FIX1(421M)・Our college life(272M) はリポジトリに直接置くには大きすぎるため
+YouTube 埋め込みにした経緯がある（hokkaido・岐阜トリップ・琵琶湖＆立岩GRヤリスは20M前後で
+自前で置ける範囲だが、6本の扱いを揃えるためすべて YouTube にした）。
+
+IDを入れたら、項目6と同じ理由で `visual/` のベースラインがずれる可能性がある
+（Works と About の間にセクションを足しているため）。差し替え後に一度
+`npm run visual:baseline` を回す（実行前に shinta に断りを入れること）。
