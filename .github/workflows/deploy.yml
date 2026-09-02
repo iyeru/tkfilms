@@ -1,12 +1,14 @@
 name: Deploy to GitHub Pages
 
-# いま公開しているのは design/（Claude Design のデザイン原本）。
-# React + TypeScript 版のソースは src/ に残してあるが、まだ配信していない。
+# いま公開しているのは src/（React + TypeScript 版）をビルドしたもの。
+# design/（Claude Design のデザイン原本）は配信していないが、見た目の正解として
+# リポジトリに残してあり、visual/ の比較で基準に使っている（visual/README.md）。
 #
-# React 版の配信に切り替えるとき:
-#   1. build ジョブの「デザイン原本を配信」ステップを消す
-#   2. 下にコメントアウトしてある「React 版をビルドして配信」の4ステップを有効にする
-#   （逆に戻すときはその逆）
+# design/ の直接配信に戻すとき:
+#   1. build ジョブの「React 版をビルドして配信」の5ステップを消す
+#   2. 下にコメントアウトしてある「デザイン原本を配信」の2ステップを有効にする
+#   ただし design/ には CNAME が無いため、戻すと独自ドメインの設定が外れる。
+#   戻す場合は design/CNAME を置くか、リポジトリ設定で指定し直すこと。
 
 on:
   push:
@@ -30,24 +32,26 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      # --- デザイン原本を配信（現在有効） ---------------------------------
-      # ビルド不要。design/ をそのまま配る
+      # --- React 版をビルドして配信（現在有効） ---------------------------
+      # npm run build は型チェック込み。落ちればここで止まり、公開はされない。
+      # 独自ドメイン用の public/CNAME も dist/ に入って一緒に配信される。
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:
-          path: design
+          path: dist
 
-      # --- React 版をビルドして配信（切り替えるときはこちらを有効にする） ---
-      # - uses: actions/setup-node@v7
-      #   with:
-      #     node-version: 22
-      #     cache: npm
-      # - run: npm ci
-      # - run: npm run build
+      # --- デザイン原本を配信（戻すときはこちらを有効にする） -------------
+      # ビルド不要。design/ をそのまま配る
       # - uses: actions/configure-pages@v6
       # - uses: actions/upload-pages-artifact@v5
       #   with:
-      #     path: dist
+      #     path: design
 
   deploy:
     needs: build

@@ -6,25 +6,24 @@
 - 構成: React + TypeScript + Tailwind CSS v4 + Vite
 - 開発の進め方（ブランチ・PR・リリース）: [docs/branch-strategy.md](docs/branch-strategy.md)
 
-## ⚠️ いま公開しているのは design 原本
-
-**公開URLが返しているのは `design/`（Claude Design のデザイン原本）で、React 版ではない。**
+## design 原本と React 版
 
 | | 中身 | 状態 |
 |---|---|---|
-| `design/` | Claude Design の書き出し（自己解凍形式の単一HTML） | **配信中** |
-| `src/` ほか | React + TypeScript + Tailwind v4 + Vite | ソースのみ。配信していない |
+| `src/` ほか | React + TypeScript + Tailwind v4 + Vite | **配信中** |
+| `design/` | Claude Design の書き出し（自己解凍形式の単一HTML） | 見た目の正解として保管。配信していない |
 
-切り替えは `.github/workflows/deploy.yml` の中でコメントを入れ替えるだけ。手順はファイル冒頭に書いてある。
+`design/` は捨てずに残してある。React 版がそこからズレていないかを機械的に確かめるためで、`visual/` の比較がこれを基準に撮ったスクリーンショットと突き合わせる（[visual/README.md](visual/README.md)）。原本を書き出し直したらベースラインを撮り直す。
 
-`src/` は `design/` の描画と一致するところまで揃えてある。1440 / 900 / 390px の全画面を突き合わせて、差分は 0.003% 未満（文字のアンチエイリアスのみ）。
+配信の切り替えは `.github/workflows/deploy.yml` のコメントを入れ替えるだけ。手順はファイル冒頭に書いてある。
 
-意図的に原本と変えている点は2つだけ。
+意図的に原本と変えている点は次のとおり。
 
 - **ドロワーを開いてもヘッダーが消えない。** 原本は本文・ヘッダーをまとめて `transform` した親の中に入れているため、変形した親が固定位置の基準になってしまい、スクロール中にメニューを開くとヘッダーが画面外へ飛ぶ。こちらはヘッダーを親の外に出し、同じぶんだけ個別に寄せている。
 - **現れる動きに打ち切りがない。** 原本は表示から 2.6 秒でスクロール位置に関係なく全要素を出してしまうため、実質フェードインが働かない。こちらは画面に入ったときだけ動かす。
+- **About の中身が原本より先に進んでいる。** 本文を提案資料の自己紹介に差し替え、実績の箇条書きも足してある。原本は仮テキストのままなので、ここは比較の対象から外している。
 
-> `design/` は自己解凍形式で初回表示に展開待ちが入り、ダミーの実績・料金を含むため `robots noindex` を入れてある。**このまま恒久的に公開する想定ではない。**
+> 素材がまだ仮のため `robots noindex` を入れてある。詳しくは下の「現状」を読む。
 
 ## 開発
 
@@ -44,7 +43,7 @@ npm run dev        # http://localhost:5173/
 
 `main` に push すると GitHub Actions が Pages に配信する（1分ほど）。手順は `.github/workflows/deploy.yml`。
 
-**現在は `design/` をビルドせずそのまま配信する設定。** React 版に切り替えるときは `deploy.yml` のコメントを入れ替える。
+**現在は `src/` をビルドして `dist/` を配信する設定。** ビルドは型チェック込みで、落ちればそこで止まり公開はされない。`design/` の直接配信に戻すときは `deploy.yml` のコメントを入れ替える（ただし `design/` には CNAME が無いので、戻すと独自ドメインが外れる）。
 
 > **初回だけ設定が必要**
 > リポジトリの Settings → Pages → Build and deployment → Source を **GitHub Actions** に変更する。
