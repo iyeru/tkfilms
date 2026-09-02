@@ -92,8 +92,8 @@ export type AboutBlock = {
   /** 見出し付きの箇条書き。実績のように行を詰めて並べたいときに使う。無ければ省略 */
   credits?: { heading: string; items: string[] };
   meta: { label: string; value: string }[];
-  /** 顔写真。`public/` に置いたファイル名か外部URL */
-  portrait: string;
+  /** 顔写真。`public/` に置いたファイル名か外部URL。未撮影の間は null で「準備中」の枠を出す */
+  portrait: string | null;
 };
 
 export type About = {

@@ -7,9 +7,6 @@ import type { SiteContent } from './content.types';
    ※ 現在の値はすべて仮素材。詳細は README.md を参照。
    ========================================================================= */
 
-/** YouTube が書き出すサムネイル。n は動画中盤のキャプチャ番号（1〜3） */
-const frame = (id: string, n: 1 | 2 | 3) => `https://i.ytimg.com/vi/${id}/maxres${n}.jpg`;
-
 export const content: SiteContent = {
   /* ---- サイト全体 -------------------------------------------------- */
   brand: {
@@ -133,7 +130,8 @@ export const content: SiteContent = {
           { label: 'Stack', value: 'フロントエンド / バックエンド / クラウド' },
           { label: 'Edit', value: 'Adobe Premiere Pro' },
         ],
-        portrait: frame('DhVz3xsAis0', 1),
+        // 顔写真は未撮影。撮り次第 images/ に差し替える
+        portrait: null,
       },
     ],
   },
