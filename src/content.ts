@@ -13,7 +13,7 @@ const frame = (id: string, n: 1 | 2 | 3) => `https://i.ytimg.com/vi/${id}/maxres
 export const content: SiteContent = {
   /* ---- サイト全体 -------------------------------------------------- */
   brand: {
-    name: 'Studio Kairo',
+    name: 'TKFILMS',
     role: 'Filmmaker',
   },
 
@@ -35,8 +35,8 @@ export const content: SiteContent = {
   /* ---- 1. Hero ------------------------------------------------------ */
   hero: {
     eyebrow: 'Marketer & Filmmaker',
-    title: 'Studio Kairo',
-    meta: 'TOKYO — SINCE 2016',
+    title: 'TKFILMS',
+    meta: 'TOKYO — SINCE 2026',
     // 宣材動画（work/宣材動画/top.mp4）。上下の黒帯は Hero 側で画面外へ送っている
     videoSrc: 'media/hero.mp4',
     youtubeId: null,
@@ -206,6 +206,6 @@ export const content: SiteContent = {
 
   /* ---- フッター ------------------------------------------------------ */
   footer: {
-    copyright: '© 2026 Studio Kairo — All rights reserved.',
+    copyright: '© 2026 TKFILMS — All rights reserved.',
   },
 };
