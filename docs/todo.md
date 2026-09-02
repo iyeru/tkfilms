@@ -7,21 +7,12 @@
 
 ---
 
-## 1. 素材を自分のものに差し替える（最優先）
+## 1. About 阪井の顔写真を差し替える
 
-**まだ他人の YouTube 動画とそのサムネイルが残っている。**
-`src/content.ts` の `frame()` が `i.ytimg.com` から拾っており、実体はデザイン原本が
-プレビュー用に埋めたままの ID。tkfilms.jp はすでに公開されているので、
-**他人の作品が自分の実績として並んでいる状態**になっている。
-`noindex` を入れてあるので検索には出ないが、URL を知っていれば誰でも見られる。
+`src/content.ts` の `about.blocks[1].portrait` が `null` のまま。撮り次第 `images/` に入れて差し替える。
+それまでは `af9d27d` の対応で「Coming Soon」表示にしてあるので、他人の素材が出ている状態ではない。
 
-差し替える場所は `src/content.ts` の1ファイルだけ。手順は [README の「素材の差し替え方」](../README.md#素材の差し替え方)。
-
-- Works の作品6本（`works.items`）
-- About の顔写真のうち阪井のぶん（`portrait`）
-- Gram の6枚（`gram`）
-
-Hero の背景（`hero.videoSrc` / `poster`）、高本の顔写真、Works の代表作（花と華）は差し替え済み。
+Works の作品6本・Gram の6枚・Hero の背景・高本の顔写真・Works の代表作（花と華）は差し替え済み。
 
 ## 2. About の2人目を残すか決める
 
