@@ -47,12 +47,19 @@ export const content: SiteContent = {
   /* ---- 2. Works ----------------------------------------------------- */
   works: {
     heading: 'Works',
+    // 掲載許可を得た実案件。ロゴと動画は work/logo・work/宣材動画 の支給素材から起こしている
     feature: {
-      category: 'Brand Film',
-      title: 'The Long Light',
-      youtubeId: 'AwGjc8Yz8fc',
-      poster: frame('AwGjc8Yz8fc', 2),
-      slides: 5,
+      title: 'Hana to Hana',
+      videoSrc: 'media/hana-to-hana.mp4',
+      youtubeId: null,
+      // 上の動画の20秒地点（岩の露天風呂の空撮）。暗幕をかけても潰れない画を選んでいる
+      poster: 'images/hana-to-hana-poster.jpg',
+      client: {
+        label: 'Client',
+        name: '日光国立公園 湯西川温泉 彩り湯かしき 花と華',
+        // 支給ロゴは白地・黒文字。暗い地に置くため白を透過に抜き、紫の花マークだけ元の色で残している
+        logo: 'images/hana-to-hana-logo.png',
+      },
     },
     // 並びはシネスコ（全幅）が2本続かないよう挟んである
     items: [
