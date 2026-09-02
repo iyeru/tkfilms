@@ -104,31 +104,21 @@ export const content: SiteContent = {
   /* ---- 3. About ----------------------------------------------------- */
   about: {
     heading: 'About',
-    // 1人目は写真が右、2人目は左。Section 側が並び順から自動で振り分ける
+    // 顔写真はまだ仮素材。ブロックを増やすと写真の左右が自動で交互になる
     blocks: [
       {
         body: [
-          '神谷 玲 / Rei Kanzaki。東京を拠点に、ブランドフィルム・ドキュメンタリー・ミュージックビデオを手がける映像作家です。企画から撮影、編集、カラーグレーディングまでを少人数のチームで一貫して担当し、被写体との距離が近い現場づくりを大切にしています。',
-          'Tokyo-based filmmaker working across brand films, documentary and music video. Ten years of shooting, cutting and grading — a small crew, a quiet set, and one long take more than anyone asked for.',
+          '高本 壮基 / Takamoto Soki。金融機関でマーケター / データビジネスプランナーとして働きながら、映像制作を行う個人事業主です。本業では大手企業から中小企業、地方自治体までを対象に、キャッシュレスデータを使った観光分析・集客支援とマーケティング企画開発に従事しています。',
+          '副業では、その知見をそのまま映像に持ち込みます。旅館・ホテルのPR映像、チャンネル登録者数約3,000人の工務店 YouTube 編集、挙式ムービーなどを企画から撮影・編集まで一貫して担当。「誰に、何を、どう届けるか」を先に設計してから、カメラを構えます。',
+          'Marketer and data business planner by day, filmmaker by night. Brand films for ryokan, hotels and local businesses — planned, shot and cut by one pair of hands, starting from who the film is for rather than from the camera.',
         ],
         meta: [
-          { label: 'Base', value: 'Tokyo, Japan' },
-          { label: 'Since', value: '2016' },
-          { label: 'Field', value: 'Brand / Doc / MV' },
+          { label: 'Base', value: '[ 拠点 ]' },
+          { label: 'Main', value: '金融機関マーケター' },
+          { label: 'Sub', value: '映像企画 / 撮影 / 編集' },
+          { label: 'Drone', value: '操縦歴 約6年' },
         ],
         portrait: frame('tSmyaP5QfeM', 1),
-      },
-      {
-        body: [
-          '[ 仮素材 ] 遠藤 蒼 / Ao Endo。プロデューサー / 編集。企画立案から予算管理、撮影のロジスティクスまでを担当し、神谷とともに制作全体を組み立てています。',
-          'Producer / Editor. Handles planning, budgeting and on-set logistics, building the production alongside Kanzaki from the ground up.',
-        ],
-        meta: [
-          { label: 'Role', value: 'Producer / Editor' },
-          { label: 'Since', value: '2018' },
-          { label: 'Field', value: 'Production / Post' },
-        ],
-        portrait: frame('DhVz3xsAis0', 1),
       },
     ],
   },
