@@ -34,7 +34,7 @@ export const content: SiteContent = {
 
   /* ---- 1. Hero ------------------------------------------------------ */
   hero: {
-    eyebrow: 'Filmmaker & Cinematographer',
+    eyebrow: 'Marketer & Filmmaker',
     title: 'Studio Kairo',
     meta: 'TOKYO — SINCE 2016',
     youtubeId: 'V-qTEo9IHTA',
@@ -108,9 +108,9 @@ export const content: SiteContent = {
     blocks: [
       {
         body: [
-          '高本 壮基 / Takamoto Soki。金融機関でマーケター / データビジネスプランナーとして働きながら、映像を撮る個人事業主です。映像を「きれいに撮る」ことは、目的ではなく手段だと考えています。誰に届けるのか、なぜその人に響くのか。そこを設計し終えてから、はじめてカメラを構えます。',
-          '本業では、大手企業から中小企業、地方自治体までを対象に、キャッシュレスデータを使った観光分析・集客支援とマーケティング企画開発に従事。同じ視点をそのまま持ち込み、旅館・ホテルのPR映像、チャンネル登録者数約3,000人の工務店 YouTube 編集、挙式ムービーまでを、企画から撮影・編集まで一貫して手がけています。',
-          '美しさは前提です。そのうえで、観た人が予約する・問い合わせるところまでを設計できることが、マーケターが映像を撮る意味だと思っています。',
+          '高本 壮基 / Takamoto Soki。金融機関でマーケター / データビジネスプランナーとして働きながら、映像を撮る個人事業主。映像を「きれいに撮る」ことは、目的ではなく手段。誰に届けるのか、なぜその人に響くのか。そこを設計し終えてから、はじめてカメラを構える。',
+          '本業は、大手企業から中小企業、地方自治体までを対象にした、キャッシュレスデータによる観光分析・集客支援とマーケティング企画開発。同じ視点をそのまま持ち込み、旅館・ホテルのPR映像、チャンネル登録者数約3,000人の工務店 YouTube 編集、挙式ムービーまでを、企画から撮影・編集まで一貫して手がける。',
+          '美しさは前提。そのうえで、観た人が予約する・問い合わせるところまで設計できること。それが、マーケターが映像を撮る意味。',
           'A working marketer who makes films. By day, tourism analytics and customer acquisition for enterprises, small businesses and local government; by night, brand films for ryokan, hotels and local companies — planned, shot and cut by one pair of hands. Beauty is the baseline; the work is designing what happens after someone watches.',
         ],
         meta: [
@@ -123,7 +123,7 @@ export const content: SiteContent = {
       },
       {
         body: [
-          '[ 仮素材 ] 遠藤 蒼 / Ao Endo。プロデューサー / 編集。企画立案から予算管理、撮影のロジスティクスまでを担当し、高本とともに制作全体を組み立てています。',
+          '[ 仮素材 ] 遠藤 蒼 / Ao Endo。プロデューサー / 編集。企画立案から予算管理、撮影のロジスティクスまでを担当。高本とともに制作全体を組み立てる。',
           'Producer / Editor. Handles planning, budgeting and on-set logistics, building the production alongside Takamoto from the ground up.',
         ],
         meta: [
