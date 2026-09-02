@@ -66,6 +66,7 @@ npm run visual:baseline
 | 隠すもの | 理由 |
 | --- | --- |
 | `iframe`（YouTube 埋め込み） | 再生位置が撮る度に変わる。`visibility: hidden` なので枠の位置と大きさは比較される |
+| `video`（home の背景動画） | 同じく再生位置が毎回変わる。加えて Playwright の Chromium は H.264 を再生できず真っ黒に描くので、隠して背景の `poster` を比較している |
 | `.film-grain` | 全画面に敷く粒。残すとどのピクセルも少し違う状態になり、本当の差分がノイズに埋もれる |
 
 ## セクションを増減・並べ替えるとセレクタが壊れる
@@ -150,6 +151,11 @@ Equipment・Gram・Footer には無い（`design/` 原本から引き継いだ�
 
 - **`page.addStyleTag()` は `page.goto()` より後に呼ぶ。** 先に呼ぶと直後のナビゲーションで
   注入したスタイルごと消え、何も効かなくなる（`regression.spec.ts` の `injectFreezeStyles` 参照）。
+- **home の背景動画（`public/media/hero.mp4`）は、テスト用のブラウザでは絵が出ない。**
+  Playwright が持つ Chromium は H.264 を含まないビルドで、`readyState` は 4 まで進むのに
+  描かれるのは真っ黒になる（canvas に写しても同じ）。実物のブラウザでは再生される。
+  `video { visibility: hidden }` で隠し、Hero セクションの背景に敷いてある `poster`
+  （`public/images/hero-poster.jpg`）の方を比較している。
 - **home・works には実際に YouTube 埋め込みが自動再生されている。**
   `iframe { visibility: hidden }` で隠しているが、通信自体は続いていて再描画が止まらず、
   `toHaveScreenshot` の安定待ちがタイムアウトすることがある。`blockEmbeds()` で通信ごと遮断している。
