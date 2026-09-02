@@ -5,7 +5,7 @@
  */
 
 /** セクションの識別子。ナビ・サイドドット・スクロール位置の対応付けに使う */
-export type SectionId = 'home' | 'works' | 'about' | 'contact';
+export type SectionId = 'home' | 'works' | 'portfolio' | 'about' | 'contact';
 
 export type NavItem = {
   id: SectionId;
@@ -84,6 +84,23 @@ export type Works = {
   moreLabel: string;
 };
 
+/**
+ * Works の下に並べる制作実績のカード1本ぶん。
+ * すべて YouTube 限定公開の埋め込みで、クリックまで再生しない（自動再生・音声なし）。
+ */
+export type PortfolioItem = {
+  title: string;
+  /** YouTube の動画ID。アップロード前は null で「準備中」の枠だけ出す */
+  youtubeId: string | null;
+  /** true なら1カラム全幅、false なら2カラムの半分 */
+  wide: boolean;
+};
+
+export type Portfolio = {
+  heading: string;
+  items: PortfolioItem[];
+};
+
 /** About に並ぶ人物1人ぶん。本文・実績・肩書きの表・顔写真を持つ */
 export type AboutBlock = {
   body: string[];
@@ -140,6 +157,7 @@ export type SiteContent = {
   dots: NavItem[];
   hero: Hero;
   works: Works;
+  portfolio: Portfolio;
   about: About;
   equipment: Equipment;
   contact: Contact;
