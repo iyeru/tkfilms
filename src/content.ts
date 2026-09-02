@@ -161,7 +161,17 @@ export const content: SiteContent = {
     lead: '撮影のご相談・お見積りはこちらから。2営業日以内にご返信します。',
     fields: { name: 'Your Name', email: 'Your Email', subject: 'Subject', message: 'Message' },
     sendLabel: 'Send',
+    sendingLabel: 'Sending',
     sentLabel: 'Thank you',
+    // [ 仮 — テスト用フォーム。本番のエンドポイントに差し替える（docs/todo.md 項目8）]
+    // 手順は docs/formspree-setup.md。null にすると送信されず必ず失敗が出る。
+    endpoint: 'https://formspree.io/f/meaqglje',
+    // 送信に失敗したときの逃げ道。実アドレスが決まったら入れる（docs/todo.md）
+    fallbackEmail: null,
+    messages: {
+      sent: 'お問い合わせを受け付けました。2営業日以内にご返信します。',
+      error: '送信できませんでした。お手数ですが、時間をおいてもう一度お試しください。',
+    },
   },
 
   /* ---- Instagram 風グリッド ------------------------------------------ */

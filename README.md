@@ -6,6 +6,7 @@
 - 構成: React + TypeScript + Tailwind CSS v4 + Vite
 - 開発の進め方（ブランチ・PR・リリース）: [docs/branch-strategy.md](docs/branch-strategy.md)
 - 残っている作業: [docs/todo.md](docs/todo.md)（Issues は無効にしてあるのでここに集める）
+- 問い合わせフォームの送信先の用意: [docs/formspree-setup.md](docs/formspree-setup.md)
 
 ## design 原本と React 版
 
@@ -84,6 +85,7 @@ src/
 | 自己紹介・顔写真 | `content.about.blocks`（1人1ブロック。増やすと写真の左右が自動で交互になる） |
 | 使用機材 | `content.equipment.items` |
 | 連絡先 | `content.contact` |
+| 問い合わせの送信先 | `content.contact.endpoint`（[手順](docs/formspree-setup.md)） |
 | コピーライト | `content.footer.copyright` |
 
 ### 画像・動画ファイルの置き場所
