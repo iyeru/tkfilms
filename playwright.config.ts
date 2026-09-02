@@ -1,7 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const DESIGN_PORT = 4174;
-const REACT_PORT = 5175;
+const PORT = 5175;
 
 export default defineConfig({
   testDir: './visual',
@@ -13,37 +12,19 @@ export default defineConfig({
   retries: 1,
   reporter: [['html', { open: 'never' }]],
 
-  // {projectName} を含めない。design プロジェクトで作ったベースラインを
-  // react プロジェクトがそのまま比較対象にできるようにするため。
   snapshotPathTemplate: '{testDir}/__screenshots__/{arg}{ext}',
 
   expect: {
     toHaveScreenshot: { maxDiffPixelRatio: 0.02 },
   },
 
-  webServer: [
-    {
-      command: 'node visual/static-server.mjs',
-      port: DESIGN_PORT,
-      reuseExistingServer: !process.env.CI,
-      env: { PORT: String(DESIGN_PORT) },
-    },
-    {
-      command: `npm run dev -- --port ${REACT_PORT} --strictPort`,
-      port: REACT_PORT,
-      reuseExistingServer: !process.env.CI,
-    },
-  ],
+  webServer: {
+    command: `npm run dev -- --port ${PORT} --strictPort`,
+    port: PORT,
+    reuseExistingServer: !process.env.CI,
+  },
 
-  projects: [
-    {
-      name: 'design',
-      use: { ...devices['Desktop Chrome'], baseURL: `http://localhost:${DESIGN_PORT}` },
-    },
-    {
-      name: 'react',
-      // vite.config.ts の base: '/tkfilms/' に合わせる
-      use: { ...devices['Desktop Chrome'], baseURL: `http://localhost:${REACT_PORT}/tkfilms/` },
-    },
-  ],
+  // 比較対象は src/ の今の姿ひとつだけなので project は分けない。
+  // vite.config.ts の base: '/' に合わせる（独自ドメインのルート配信）。
+  use: { ...devices['Desktop Chrome'], baseURL: `http://localhost:${PORT}/` },
 });

@@ -3,10 +3,8 @@ import { sections, viewports } from './sections';
 import { hoverTargets } from './hover-targets';
 
 // 初回ロードのローディング演出を確実に畳ませるための待機。
-// design側は固定1100ms+520ms(fade)で最大1.62秒。react側はreduced-motion指定時は
-// フォント読み込み待ちを挟んでも数百ms〜2秒程度。どちらも3秒待てば収まる。
-// (design側の reveal アニメーションにも 2.6秒で強制的に全表示にするフォールバックがあり、
-//  これも3秒待機でカバーされる)
+// reduced-motion 指定時はフォント読み込み待ちを挟んでも数百ms〜2秒程度で、
+// 3秒待てば収まる。
 const LOADER_SETTLE_MS = 3000;
 
 /**
@@ -29,21 +27,13 @@ async function injectFreezeStyles(page: Page) {
   await page.addStyleTag({
     content: `
       *, *::before, *::after { transition: none !important; animation: none !important; }
-      /* フィルムグレインはランダムノイズで比較しても意味がなく、
-         わずかな再描画差でスクリーンショットの安定待ちが終わらない原因にもなるため隠す */
-      [style*="opacity: 0.055"], .film-grain { display: none !important; }
-      /* home/works の動画プレースホルダは実際に YouTube 埋め込みが自動再生されており、
+      /* フィルムグレインは全画面に敷く粒なので、残すと「どのピクセルも少し違う」状態に
+         なり、本当の差分がノイズに埋もれる。粒自体は固定パターンで回帰の検出に
+         寄与しないため、撮影中だけ落とす */
+      .film-grain { display: none !important; }
+      /* home/works の動画枠は実際に YouTube 埋め込みが自動再生されており、
          フレームが毎回変わって絶対に安定しない。レイアウトは崩さず中身だけ見えなくする */
       iframe { visibility: hidden !important; }
-      /* works の「THE LONG LIGHT」バナー（5点ドットのカルーセル）も、design原本の
-         プレビュー機能が実写真を自動で差し込んでおり、キャプチャの度に写真が変わる。
-         背景だけプレースホルダーの斜線に固定する（矢印ボタンのホバーには要素自体が
-         見えている必要があるため、visibility:hidden で丸ごと隠すことはしない）。
-         比率（21/9 か 4/3 か）は画面幅で入れ替わるので目印にできない。
-         「前へ／次へボタンを直下に持つ枠」という位置で引く。
-         aria-label は design が英語・react が日本語なのでセレクタが2つ要る */
-      div:has(> button[aria-label="Previous"]),
-      div:has(> button[aria-label="前の作品"]) { background-image: repeating-linear-gradient(45deg,#181818 0 10px,#121212 10px 20px) !important; }
     `,
   });
 }
@@ -81,10 +71,9 @@ async function sweepAndReturnToTop(page: Page) {
 /**
  * 背景写真が全部出そろうまで待つ。
  *
- * React版のサムネイルは i.ytimg.com から都度取ってくる（src/content.ts の frame()）。
- * 一方 design原本は同じ写真を書き出し時に取り込んで blob: で持っているので、待たずに出る。
- * この差のせいで、React側だけ読み込みが間に合わず枠が真っ黒のまま撮れてしまい、
- * 「写真が全部食い違っている」ように見える巨大な差分が出ることがある（実際には同じ写真）。
+ * サムネイルは i.ytimg.com から都度取ってくる（src/content.ts の frame()）ため、
+ * 待たないと枠が真っ黒のまま撮れて「写真が全部食い違っている」ように見える
+ * 巨大な差分になる（実際には同じ写真の読み込み待ちが間に合っていないだけ）。
  *
  * 読めなかった URL は握りつぶさずエラーにする。黙って真っ黒を撮って
  * デザイン崩れと区別が付かなくなるより、通信の問題だと分かった方がいい。
@@ -159,19 +148,7 @@ for (const viewport of viewports) {
     test.use({ viewport: { width: viewport.width, height: viewport.height } });
 
     for (const section of sections) {
-      test(section.key, async ({ page }, testInfo) => {
-        const isDesign = testInfo.project.name === 'design';
-        const selector = isDesign ? section.designSelector : section.reactSelector;
-
-        test.skip(
-          selector === null,
-          `${section.label}: src/ 側に未実装（visual/sections.ts の reactSelector が null）`,
-        );
-        test.skip(
-          section.diverged !== undefined,
-          `${section.label}: 原本から意図的に離している — ${section.diverged}`,
-        );
-
+      test(section.key, async ({ page }) => {
         await openAndSettle(page);
         await sweepAndReturnToTop(page);
         await waitForPhotos(page);
@@ -181,7 +158,7 @@ for (const viewport of viewports) {
         // ドキュメント座標で切り出すことで、セクションを頭から終わりまで丸ごと比較する。
         // fullPage 撮影はスクロールを伴わないので、locator 撮影で問題になった
         // 「安定確認のたびに再スクロールしてヘッダーが動く」も起きない。
-        const box = await documentBox(page, selector!);
+        const box = await documentBox(page, section.selector);
 
         await expect(page).toHaveScreenshot(`${section.key}-${viewport.name}.png`, {
           fullPage: true,
@@ -200,22 +177,14 @@ test.describe('hover', () => {
   test.use({ viewport: { width: desktop.width, height: desktop.height } });
 
   for (const target of hoverTargets) {
-    test(target.key, async ({ page }, testInfo) => {
-      const isDesign = testInfo.project.name === 'design';
-      const selector = isDesign ? target.designSelector : target.reactSelector;
-
-      test.skip(
-        selector === null,
-        `${target.label}: src/ 側に未実装（visual/hover-targets.ts の reactSelector が null）`,
-      );
-
+    test(target.key, async ({ page }) => {
       await openAndSettle(page);
 
       await page.locator(`#${target.scrollId}`).scrollIntoViewIfNeeded();
       await waitForPhotos(page);
       await page.waitForTimeout(200);
 
-      const el = page.locator(selector!).first();
+      const el = page.locator(target.selector).first();
       await el.hover();
       // トランジションは無効化済みなのでアニメーション待ちは不要。ただしReactの
       // useScrollPast等、状態更新が次の描画を待つものがあるため一呼吸だけ置く
@@ -247,16 +216,10 @@ test.describe('state', () => {
     test.describe(`${viewport.name} (${viewport.width}x${viewport.height})`, () => {
       test.use({ viewport: { width: viewport.width, height: viewport.height } });
 
-      test('drawer-open', async ({ page }, testInfo) => {
-        const isDesign = testInfo.project.name === 'design';
-        // 原本は aria-label が英語、React版は日本語
-        const selector = isDesign
-          ? 'button[aria-label="Menu"]'
-          : 'button[aria-label="メニュー"]';
-
+      test('drawer-open', async ({ page }) => {
         await openAndSettle(page);
         await waitForPhotos(page);
-        await page.locator(selector).click();
+        await page.locator('button[aria-label="メニュー"]').click();
         // 開閉のトランジションは無効化済みなので即座に最終状態になる
         await page.waitForTimeout(200);
 
