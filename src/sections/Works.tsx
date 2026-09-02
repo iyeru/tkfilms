@@ -8,7 +8,9 @@ export function Works({ works }: { works: WorksContent }) {
   return (
     <Section id="works" className="flex min-h-screen items-center">
       <SectionHeading title={works.heading} tracking="2px" />
-      <Feature feature={works.feature} />
+      <div className="mt-[42px]">
+        <Feature feature={works.feature} />
+      </div>
       {works.feature.client && <ClientCredit client={works.feature.client} />}
     </Section>
   );
