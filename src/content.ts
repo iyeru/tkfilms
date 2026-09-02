@@ -34,7 +34,7 @@ export const content: SiteContent = {
 
   /* ---- 1. Hero ------------------------------------------------------ */
   hero: {
-    eyebrow: 'Filmmaker & Cinematographer',
+    eyebrow: 'Marketer & Filmmaker',
     title: 'Studio Kairo',
     meta: 'TOKYO — SINCE 2016',
     youtubeId: 'V-qTEo9IHTA',
@@ -107,21 +107,33 @@ export const content: SiteContent = {
     // 1人目は写真が右、2人目は左。Section 側が並び順から自動で振り分ける
     blocks: [
       {
+        // 本文・実績は work/過去_提案資料 の自己紹介欄の文言をそのまま使っている
         body: [
-          '神谷 玲 / Rei Kanzaki。東京を拠点に、ブランドフィルム・ドキュメンタリー・ミュージックビデオを手がける映像作家です。企画から撮影、編集、カラーグレーディングまでを少人数のチームで一貫して担当し、被写体との距離が近い現場づくりを大切にしています。',
-          'Tokyo-based filmmaker working across brand films, documentary and music video. Ten years of shooting, cutting and grading — a small crew, a quiet set, and one long take more than anyone asked for.',
+          '高本 壮基 / Takamoto Soki。同志社大学卒業後、金融機関に入社(現職)。同社での本業では、大手から中小企業、地方自治体の営業や、キャッシュレスデータを活用した観光分析・集客支援、マーケティング企画開発に従事。',
+          '副業では、本業の知見を活かしたマーケティング支援、映像企画・撮影・編集を行う個人事業主として活動。',
         ],
+        credits: {
+          heading: '観光集客・動画実績',
+          items: [
+            '本業にて、地方都道府県及び民間企業の観光分析・施策立案、大手人材会社連携の淡路島誘客施策など、自治体 / 企業様向けのデータ送客設計を多数担当',
+            '副業にてチャンネル登録者数約3,000人の工務店YouTube編集、挙式ムービー制作等',
+            '撮影機材、編集ソフト共に業務基準の仕様',
+            'ドローン操縦歴約6年、挙式ムービーでの撮影実績もあり',
+          ],
+        },
         meta: [
-          { label: 'Base', value: 'Tokyo, Japan' },
-          { label: 'Since', value: '2016' },
-          { label: 'Field', value: 'Brand / Doc / MV' },
+          { label: 'Base', value: '東京' },
+          { label: 'Main', value: '金融機関マーケター' },
+          { label: 'Sub', value: 'マーケティング映像クリエイター' },
+          { label: 'Camera', value: 'Sony α7C / DJIドローン / ジンバル' },
+          { label: 'Edit', value: 'Adobe Premiere Pro' },
         ],
         portrait: frame('tSmyaP5QfeM', 1),
       },
       {
         body: [
-          '[ 仮素材 ] 遠藤 蒼 / Ao Endo。プロデューサー / 編集。企画立案から予算管理、撮影のロジスティクスまでを担当し、神谷とともに制作全体を組み立てています。',
-          'Producer / Editor. Handles planning, budgeting and on-set logistics, building the production alongside Kanzaki from the ground up.',
+          '[ 仮素材 ] 遠藤 蒼 / Ao Endo。プロデューサー / 編集。企画立案から予算管理、撮影のロジスティクスまでを担当。高本とともに制作全体を組み立てる。',
+          'Producer / Editor. Handles planning, budgeting and on-set logistics, building the production alongside Takamoto from the ground up.',
         ],
         meta: [
           { label: 'Role', value: 'Producer / Editor' },

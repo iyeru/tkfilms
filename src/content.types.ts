@@ -53,9 +53,11 @@ export type Works = {
   moreLabel: string;
 };
 
-/** About に並ぶ人物1人ぶん。本文・肩書きの表・顔写真を持つ */
+/** About に並ぶ人物1人ぶん。本文・実績・肩書きの表・顔写真を持つ */
 export type AboutBlock = {
   body: string[];
+  /** 見出し付きの箇条書き。実績のように行を詰めて並べたいときに使う。無ければ省略 */
+  credits?: { heading: string; items: string[] };
   meta: { label: string; value: string }[];
   portrait: string;
 };
