@@ -71,3 +71,15 @@ Clients を main に入れる PR でこれが出る。そのときに追う手�
 - 8px という値の出どころが不明。`Reveal` の `translate-y-[30px]` とも一致しない
 - 回避するなら、`fullPage` をやめて `locator.screenshot()` で撮る手がある
   （ただしスクロールが走るのでヘッダーの高さが変わる。#25 でそれを避けて今の形にした経緯がある）
+
+## 8. Formspree に登録して、フォームの送信先を入れる
+
+**いま Contact フォームは押しても必ず「送信できませんでした」が出る。**
+送信先が未設定（`src/content.ts` の `contact.endpoint` が `null`）のため。
+
+黙って「Thank you」と出して問い合わせを捨てていた以前の状態よりはましだが、
+**受け口が無いことに変わりはない。素材の差し替え（1）と並んで優先度が高い。**
+
+手順は [docs/formspree-setup.md](formspree-setup.md)。登録が済んだら
+`src/content.ts` の `endpoint` と `fallbackEmail` の 2 行を書き換えるだけ。
+そのあと本番の <https://tkfilms.jp/#contact> から 1 回送って、実際に届くことを確かめる。

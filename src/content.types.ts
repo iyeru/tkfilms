@@ -79,7 +79,21 @@ export type Contact = {
   lead: string;
   fields: { name: string; email: string; subject: string; message: string };
   sendLabel: string;
+  /** 送信中のボタン表記 */
+  sendingLabel: string;
   sentLabel: string;
+  /**
+   * 送信先。Formspree のエンドポイント（`https://formspree.io/f/xxxxxxxx`）。
+   * 登録の手順は docs/formspree-setup.md。
+   *
+   * `null` のあいだは送信せず、必ず失敗として表示する。ここを空にしたまま
+   * 「成功したふり」をさせない（それが直前まで起きていた不具合そのもの）。
+   */
+  endpoint: string | null;
+  /** 送信に失敗したときに案内するメールアドレス。null なら案内を出さない */
+  fallbackEmail: string | null;
+  /** 送信後に出す文言 */
+  messages: { sent: string; error: string };
 };
 
 export type Footer = {
