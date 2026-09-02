@@ -52,6 +52,26 @@ function Person({
         ))}
       </div>
 
+      {block.credits && (
+        <div className="mb-8">
+          <p className="mb-3 text-[12px] leading-[1.7] font-bold tracking-[0.1em] text-white uppercase">
+            {block.credits.heading}
+          </p>
+          {/* 実績は行を詰めて並べる。本文の段落間隔をそのまま使うと間が空きすぎる */}
+          <ul className="space-y-2 text-sm leading-[1.7] text-white/70">
+            {block.credits.items.map((item) => (
+              // 中黒を別の箱に出して、折り返した行の頭を本文にきっちり揃える
+              <li key={item} className="flex">
+                <span aria-hidden="true" className="shrink-0">
+                  ・
+                </span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       {/* 行間は原本と同じく親に持たせる。ラベルは倍率を継いだうえで字だけ小さくする */}
       <dl className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-x-7 gap-y-5 text-sm leading-[1.7] text-white/70">
         {block.meta.map((entry) => (

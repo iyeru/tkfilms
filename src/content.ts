@@ -107,17 +107,26 @@ export const content: SiteContent = {
     // 1人目は写真が右、2人目は左。Section 側が並び順から自動で振り分ける
     blocks: [
       {
+        // 本文・実績は work/過去_提案資料 の自己紹介欄の文言をそのまま使っている
         body: [
-          '高本 壮基 / Takamoto Soki。金融機関でマーケター / データビジネスプランナーとして働きながら、映像を撮る個人事業主。映像を「きれいに撮る」ことは、目的ではなく手段。誰に届けるのか、なぜその人に響くのか。そこを設計し終えてから、はじめてカメラを構える。',
-          '本業は、大手企業から中小企業、地方自治体までを対象にした、キャッシュレスデータによる観光分析・集客支援とマーケティング企画開発。同じ視点をそのまま持ち込み、旅館・ホテルのPR映像、チャンネル登録者数約3,000人の工務店 YouTube 編集、挙式ムービーまでを、企画から撮影・編集まで一貫して手がける。',
-          '美しさは前提。そのうえで、観た人が予約する・問い合わせるところまで設計できること。それが、マーケターが映像を撮る意味。',
-          'A working marketer who makes films. By day, tourism analytics and customer acquisition for enterprises, small businesses and local government; by night, brand films for ryokan, hotels and local companies — planned, shot and cut by one pair of hands. Beauty is the baseline; the work is designing what happens after someone watches.',
+          '高本 壮基 / Takamoto Soki。同志社大学卒業後、三井住友カード株式会社に入社(現職)。同社での本業では、大手から中小企業、地方自治体の営業や、キャッシュレスデータを活用した観光分析・集客支援、マーケティング企画開発に従事。',
+          '副業では、本業の知見を活かしたマーケティング支援、映像企画・撮影・編集を行う個人事業主として活動。',
         ],
+        credits: {
+          heading: '観光集客・動画実績',
+          items: [
+            '本業にて、地方都道府県及び民間企業の観光分析・施策立案、大手人材会社連携の淡路島誘客施策など、自治体 / 企業様向けのデータ送客設計を多数担当',
+            '副業にてチャンネル登録者数約3,000人の工務店YouTube編集、挙式ムービー制作等',
+            '撮影機材、編集ソフト共に業務基準の仕様',
+            'ドローン操縦歴約6年、挙式ムービーでの撮影実績もあり',
+          ],
+        },
         meta: [
           { label: 'Base', value: '東京' },
           { label: 'Main', value: '金融機関マーケター' },
-          { label: 'Sub', value: '映像企画 / 撮影 / 編集' },
-          { label: 'Drone', value: '操縦歴 約6年' },
+          { label: 'Sub', value: 'マーケティング映像クリエイター' },
+          { label: 'Camera', value: 'Sony α7C / DJIドローン / ジンバル' },
+          { label: 'Edit', value: 'Adobe Premiere Pro' },
         ],
         portrait: frame('tSmyaP5QfeM', 1),
       },
