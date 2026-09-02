@@ -92,6 +92,10 @@ src/
 ### 画像・動画ファイルの置き場所
 
 **`public/` に置く。** `content.ts` にはファイル名だけ書けばよい（base の付与は自動）。
+写真は `public/images/`、動画は `public/media/` に置いている。
+
+`content.ts` の `portrait` / `poster` / `videoSrc` は、`http(s)://` で始まれば外部のURL、
+それ以外は `public/` の中のパスとして扱われる（`src/lib/cn.ts` の `mediaUrl()`）。
 
 ### 作品を載せる
 
@@ -105,13 +109,31 @@ src/
 
 ### トップの背景に動画を入れる
 
+`content.hero` の `videoSrc` に `public/` のファイルを指す。
+
 ```ts
-media: { type: 'video', src: 'showreel.mp4', poster: 'poster.jpg' }
+hero: {
+  videoSrc: 'media/hero.mp4',   // 自前の動画。入っていれば youtubeId より優先
+  youtubeId: null,              // 動画を使わないときだけ ID を入れる
+  poster: 'images/hero-poster.jpg', // 再生が始まるまで敷く1枚
+}
 ```
 
-画像なら `{ type: 'image', src: 'hero.jpg' }`。
+`videoSrc` を `null` にすると `youtubeId` の埋め込みに戻り、どちらも `null` なら `poster` の
+静止画だけになる。
 
-> ⚠️ 動画を自前で置くとリポジトリが重くなる。長尺は YouTube 埋め込みを使う。
+**上下に黒帯のある素材（シネスコ）は、Hero 側で 1.25 倍に伸ばして帯を画面外へ出している**
+（`src/sections/Hero.tsx`）。素材の帯幅が違うときはこの倍率を直す。いまの `hero.mp4` は
+1280x720 の中に 1280x576 が入っており、720 / 576 = 1.25。
+
+ポスターは動画から1コマ書き出して作る。黒帯は落としておく。
+
+```bash
+ffmpeg -ss 2.5 -i public/media/hero.mp4 -frames:v 1 -vf "crop=1280:576:0:72" -q:v 4 \
+  public/images/hero-poster.jpg
+```
+
+> ⚠️ 動画を自前で置くとリポジトリが重くなる（`hero.mp4` で 13MB）。長尺は YouTube 埋め込みを使う。
 
 ### 写真を入れる
 
@@ -149,7 +171,9 @@ media: { type: 'video', src: 'showreel.mp4', poster: 'poster.jpg' }
 
 ## 現状
 
-**中身はすべて仮素材。** `[ ... ]` で囲まれたテキストは差し替え待ちの目印。
+**大半がまだ仮素材。** `[ ... ]` で囲まれたテキストは差し替え待ちの目印。
+実素材に入れ替わっているのは、About の本文2人ぶんと高本の顔写真、Hero の背景動画
+（`public/media/hero.mp4`）まで。Works・Gram・阪井の顔写真は他人の YouTube 素材のまま。
 
 素材が揃うまで検索エンジンにインデックスさせないよう、`index.html` の `<head>` に `<meta name="robots" content="noindex">` を入れてある。公開して問題ない状態になったら、**この1行を削除する**。
 

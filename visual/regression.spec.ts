@@ -34,6 +34,11 @@ async function injectFreezeStyles(page: Page) {
       /* home/works の動画枠は実際に YouTube 埋め込みが自動再生されており、
          フレームが毎回変わって絶対に安定しない。レイアウトは崩さず中身だけ見えなくする */
       iframe { visibility: hidden !important; }
+      /* home の背景動画（public/media/hero.mp4）も同じ理由で落とす。加えて Playwright の
+         Chromium は H.264 を再生できず真っ黒に描くため、残すと「動画が壊れている」のか
+         「テスト用ブラウザが再生できないだけ」なのか画から区別が付かない。
+         隠せば section の背景（poster の1枚）が出るので、そちらを比較する */
+      video { visibility: hidden !important; }
     `,
   });
 }

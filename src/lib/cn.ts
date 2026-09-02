@@ -12,6 +12,14 @@ export function asset(path: string): string {
 }
 
 /**
+ * content.ts に書かれた画像・動画の指定を、そのまま src に入れられるURLにする。
+ * `http(s)://` で始まるものは外部のURL、それ以外は `public/` に置いたファイル名として扱う。
+ */
+export function mediaUrl(src: string): string {
+  return /^https?:\/\//.test(src) ? src : asset(src);
+}
+
+/**
  * 背景で無音ループさせる用の YouTube 埋め込みURL。
  * 操作要素をすべて外し、単体の動画を playlist に指定してループさせる。
  */

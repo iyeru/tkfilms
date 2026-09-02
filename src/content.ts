@@ -37,9 +37,11 @@ export const content: SiteContent = {
     eyebrow: 'Marketer & Filmmaker',
     title: 'Studio Kairo',
     meta: 'TOKYO — SINCE 2016',
-    youtubeId: 'V-qTEo9IHTA',
-    poster: frame('V-qTEo9IHTA', 2),
-    mediaNote: '[ 仮素材 — 本番は showreel.mp4 に差し替え ]',
+    // 宣材動画（work/宣材動画/top.mp4）。上下の黒帯は Hero 側で画面外へ送っている
+    videoSrc: 'media/hero.mp4',
+    youtubeId: null,
+    // 動画が出るまで敷く1枚。上の動画の 2.5 秒地点を黒帯だけ落として書き出したもの
+    poster: 'images/hero-poster.jpg',
   },
 
   /* ---- 2. Works ----------------------------------------------------- */
@@ -128,7 +130,7 @@ export const content: SiteContent = {
           { label: 'Camera', value: 'Sony α7C / DJIドローン / ジンバル' },
           { label: 'Edit', value: 'Adobe Premiere Pro' },
         ],
-        portrait: frame('tSmyaP5QfeM', 1),
+        portrait: 'images/takamoto.jpg',
       },
       {
         body: [

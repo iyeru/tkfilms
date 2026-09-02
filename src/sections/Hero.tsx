@@ -1,5 +1,5 @@
 import type { Hero as HeroContent } from '@/content.types';
-import { bgVideoSrc } from '@/lib/cn';
+import { bgVideoSrc, mediaUrl } from '@/lib/cn';
 
 export function Hero({ hero }: { hero: HeroContent }) {
   return (
@@ -7,10 +7,29 @@ export function Hero({ hero }: { hero: HeroContent }) {
     <section
       id="home"
       className="relative flex h-[100svh] min-h-[620px] items-center justify-center overflow-hidden bg-bg bg-cover bg-center"
-      style={{ backgroundImage: `url(${hero.poster})` }}
+      style={{ backgroundImage: `url(${mediaUrl(hero.poster)})` }}
     >
+      {/* 自前の動画。読み込みが済むまでは poster の1枚が出る */}
+      {hero.videoSrc && (
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+          <video
+            src={mediaUrl(hero.videoSrc)}
+            poster={mediaUrl(hero.poster)}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            tabIndex={-1}
+            // 素材は 16:9 の中にシネスコで収められている（上下に 72px ずつ黒帯）。
+            // 1.25 倍（720 / 576）に伸ばすと、その帯がちょうど画面の外へ出る。
+            className="absolute inset-0 h-full w-full scale-125 object-cover opacity-0 [animation:videoIn_1.2s_ease_0.6s_forwards]"
+          />
+        </div>
+      )}
+
       {/* 再生が始まるまではサムネイルを見せ、遅れてフェードで差し替える */}
-      {hero.youtubeId && (
+      {!hero.videoSrc && hero.youtubeId && (
         <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
           <iframe
             src={bgVideoSrc(hero.youtubeId, 12)}

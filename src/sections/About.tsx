@@ -1,5 +1,5 @@
 import type { AboutBlock, About as AboutContent } from '@/content.types';
-import { cn } from '@/lib/cn';
+import { cn, mediaUrl } from '@/lib/cn';
 
 /**
  * 人物を上から順に並べる全幅のセクション。
@@ -31,7 +31,7 @@ function Person({
   const portrait = (
     <div
       className="min-h-[60vh] min-w-[min(100%,360px)] flex-1 basis-[420px] bg-bg bg-cover bg-center"
-      style={{ backgroundImage: `url(${block.portrait})` }}
+      style={{ backgroundImage: `url(${mediaUrl(block.portrait)})` }}
     />
   );
 

@@ -24,9 +24,14 @@ export type Hero = {
   title: string;
   /** 見出し下に等幅で添える所在と稼働年 */
   meta: string;
+  /**
+   * 背景で流す動画ファイル（`public/` に置いたファイル名）。
+   * 入っていれば youtubeId より優先する。null なら YouTube か静止画になる。
+   */
+  videoSrc: string | null;
   /** 背景で流す YouTube の動画ID。null なら静止画のみ */
   youtubeId: string | null;
-  /** 動画が始まるまで下に敷くサムネイル */
+  /** 動画が始まるまで下に敷くサムネイル。`public/` のファイル名か外部URL */
   poster: string;
   /** 仮素材であることを示す左下の注記 */
   mediaNote?: string;
@@ -59,6 +64,7 @@ export type AboutBlock = {
   /** 見出し付きの箇条書き。実績のように行を詰めて並べたいときに使う。無ければ省略 */
   credits?: { heading: string; items: string[] };
   meta: { label: string; value: string }[];
+  /** 顔写真。`public/` に置いたファイル名か外部URL */
   portrait: string;
 };
 
