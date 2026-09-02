@@ -5,6 +5,7 @@
 - 公開URL: https://tkfilms.jp/
 - 構成: React + TypeScript + Tailwind CSS v4 + Vite
 - 開発の進め方（ブランチ・PR・リリース）: [docs/branch-strategy.md](docs/branch-strategy.md)
+- 残っている作業: [docs/todo.md](docs/todo.md)（Issues は無効にしてあるのでここに集める）
 
 ## design 原本と React 版
 
@@ -146,6 +147,8 @@ media: { type: 'video', src: 'showreel.mp4', poster: 'poster.jpg' }
 **中身はすべて仮素材。** `[ ... ]` で囲まれたテキストは差し替え待ちの目印。
 
 素材が揃うまで検索エンジンにインデックスさせないよう、`index.html` の `<head>` に `<meta name="robots" content="noindex">` を入れてある。公開して問題ない状態になったら、**この1行を削除する**。
+
+差し替えが必要なものと、その他の残作業は [docs/todo.md](docs/todo.md) にまとめてある。
 
 ## 独自ドメイン（tkfilms.jp）
 
