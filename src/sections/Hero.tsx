@@ -38,7 +38,7 @@ export function Hero({ hero }: { hero: HeroContent }) {
           {hero.eyebrow}
         </p>
         {/* 行間は原本と同じく既定のまま。leading-none にすると箱が縮んで上下の余白が変わる */}
-        <h1 className="text-[clamp(34px,6vw,48px)] font-medium tracking-[0.26em] uppercase">
+        <h1 className="font-display text-[clamp(104px,28vw,176px)] tracking-[2px] uppercase">
           {hero.title}
         </h1>
         <p className="mt-[30px] font-mono text-[11px] tracking-[0.28em] text-cool">{hero.meta}</p>
