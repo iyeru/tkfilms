@@ -13,7 +13,7 @@ export function About({ about }: { about: AboutContent }) {
       </h2>
 
       {about.blocks.map((block, i) => (
-        <Person key={block.portrait} block={block} first={i === 0} portraitLeft={i % 2 === 1} />
+        <Person key={i} block={block} first={i === 0} portraitLeft={i % 2 === 1} />
       ))}
     </section>
   );
@@ -28,11 +28,22 @@ function Person({
   first: boolean;
   portraitLeft: boolean;
 }) {
-  const portrait = (
+  const portrait = block.portrait ? (
     <div
       className="min-h-[60vh] min-w-[min(100%,360px)] flex-1 basis-[420px] bg-bg bg-cover bg-center"
       style={{ backgroundImage: `url(${mediaUrl(block.portrait)})` }}
     />
+  ) : (
+    <div
+      aria-label="準備中"
+      className="flex min-h-[60vh] min-w-[min(100%,360px)] flex-1 basis-[420px] flex-col items-center justify-center gap-3 bg-[#131418]"
+    >
+      <span
+        aria-hidden
+        className="h-16 w-16 rounded-full border-2 border-white/70 opacity-40"
+      />
+      <span className="font-mono text-[11px] tracking-[0.2em] text-cool uppercase">Coming soon</span>
+    </div>
   );
 
   const text = (
