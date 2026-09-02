@@ -154,9 +154,7 @@ export const content: SiteContent = {
     sendLabel: 'Send',
     sendingLabel: 'Sending',
     sentLabel: 'Thank you',
-    // [ 仮 — テスト用フォーム。本番のエンドポイントに差し替える（docs/todo.md 項目8）]
-    // 手順は docs/formspree-setup.md。null にすると送信されず必ず失敗が出る。
-    endpoint: 'https://formspree.io/f/meaqglje',
+    endpoint: 'https://formspree.io/f/xwlkonkr',
     // 送信に失敗したときの逃げ道。実アドレスが決まったら入れる（docs/todo.md）
     fallbackEmail: null,
     messages: {
