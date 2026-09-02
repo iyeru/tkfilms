@@ -37,19 +37,6 @@ export type Hero = {
   mediaNote?: string;
 };
 
-/** 撮られた画角。Works はこれをそのまま枠の比率に使う */
-export type Ratio = '16/9' | '2.39/1';
-
-export type WorkItem = {
-  title: string;
-  youtubeId: string;
-  /** カードに敷くサムネイル */
-  thumb: string;
-  ratio: Ratio;
-  /** 比率タグの表示 */
-  ratioLabel: string;
-};
-
 /** 制作を請けた相手。ロゴは代表作の真下にクレジットとして出る */
 export type WorkClient = {
   /** ロゴ画像。`public/` に置いたファイル名か外部URL。暗い地に置くので白抜き版を使う */
@@ -80,8 +67,6 @@ export type WorksFeature = {
 export type Works = {
   heading: string;
   feature: WorksFeature;
-  items: WorkItem[];
-  moreLabel: string;
 };
 
 /**

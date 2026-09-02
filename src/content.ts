@@ -63,53 +63,6 @@ export const content: SiteContent = {
         logo: 'images/hana-to-hana-logo.png',
       },
     },
-    // 並びはシネスコ（全幅）が2本続かないよう挟んである
-    items: [
-      {
-        title: 'Aoyama Coffee Works',
-        youtubeId: 'DhVz3xsAis0',
-        thumb: frame('DhVz3xsAis0', 2),
-        ratio: '16/9',
-        ratioLabel: '16:9',
-      },
-      {
-        // maxres2/3 は実在企業の船体ロゴが読めてしまう。遠景の 1 を使う
-        title: 'Setouchi Ferry',
-        youtubeId: '0hpkWLJzYQs',
-        thumb: frame('0hpkWLJzYQs', 1),
-        ratio: '16/9',
-        ratioLabel: '16:9',
-      },
-      {
-        title: 'Wedding / M & S',
-        youtubeId: 'UyBsm2wU8ag',
-        thumb: frame('UyBsm2wU8ag', 2),
-        ratio: '2.39/1',
-        ratioLabel: '2.39:1',
-      },
-      {
-        title: 'Kiso Woodwork',
-        youtubeId: 'tSmyaP5QfeM',
-        thumb: frame('tSmyaP5QfeM', 2),
-        ratio: '16/9',
-        ratioLabel: '16:9',
-      },
-      {
-        title: 'Nightwalk / MV',
-        youtubeId: 'FfBE5_gqTSY',
-        thumb: frame('FfBE5_gqTSY', 2),
-        ratio: '16/9',
-        ratioLabel: '16:9',
-      },
-      {
-        title: 'Sanriku Divers',
-        youtubeId: '4hs_GGss_Nc',
-        thumb: frame('4hs_GGss_Nc', 2),
-        ratio: '2.39/1',
-        ratioLabel: '2.39:1',
-      },
-    ],
-    moreLabel: 'View more',
   },
 
   /* ---- 2-b. Portfolio -------------------------------------------------
