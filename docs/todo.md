@@ -111,6 +111,28 @@ Works の下に Portfolio セクションを追加した（`work/宣材動画/` 
 | Hokkaido | `hokkaido.mp4` |
 | Gifu Trip | `岐阜トリップ.mp4` |
 
+## 9. ブランド名 (TKfilms) の書体差し替え、途中で中断
+
+`style/brand-name-no-uppercase` ブランチに**未コミットのまま**残してある。作業内容は次のとおり。
+
+- きっかけ: Header・Hero・Footer のブランド名表示が `uppercase` で強制大文字化され、
+  さらに書体 Six Caps が小文字グリフを持たないため `TKfilms` が常に `TKFILMS` に見えていた。
+- 対応: `uppercase` を3箇所（`Header.tsx` ロゴ、`Hero.tsx` の h1、`Footer.tsx` のブランド名）から外し、
+  ブランド名専用の書体トークン `--font-brand` を新設。Six Caps は見出し全般用として維持。
+- 書体は League Gothic → **Big Shoulders（Light, weight 300）** に差し替え済み（自己ホスト、
+  `src/fonts/bigshoulders-300-latin.woff2` / `-latin-ext.woff2`。League Gothic の woff2 は削除済み）。
+  Six Caps 本体との太さ比較は `font-compare.png` で確認し、Big Shoulders 300 が一番近かった。
+- **`npm run build` は通過済み。** ブラウザでの最終見た目確認（`npm run preview` での実機確認）が
+  終わる前にユーザーの指示で中断した。
+
+再開するときは:
+
+1. `git switch style/brand-name-no-uppercase` で変更を呼び戻す（`git status` で
+   README.md / Header.tsx / Footer.tsx / Hero.tsx / index.css の変更と
+   `src/fonts/bigshoulders-300-latin*.woff2` の未追跡ファイルが出るはず）。
+2. `npm run preview` で Header・Hero・Footer の `TKfilms` 表示を確認（太さ・小文字の見え方）。
+3. 問題なければコミット→ `gh pr create`。ブランチ名は変えなくてよい。
+
 CityToLocal(168M)・FIX1(421M)・Our college life(272M) はリポジトリに直接置くには大きすぎるため
 YouTube 埋め込みにした経緯がある（hokkaido・岐阜トリップ・琵琶湖＆立岩GRヤリスは20M前後で
 自前で置ける範囲だが、6本の扱いを揃えるためすべて YouTube にした）。
