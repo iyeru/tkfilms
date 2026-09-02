@@ -39,9 +39,9 @@
 
 ## 5. 日本語フォントを入れて、比較の精度を上げる
 
-作業環境に日本語フォントが無く、視覚比較のスクリーンショットは日本語が豆腐になる。
-原本と React 版の一致は確認できているが、実物での行の折り返しまでは見えていない。
-詳しくは [visual/README.md の「この比較で見えていないもの」](../visual/README.md)。
+作業環境に日本語フォントが無く、視覚テストのスクリーンショットは日本語が豆腐になる。
+ベースラインも比較も同じ豆腐なので回帰の検出は成立しているが、実物での行の折り返しまでは
+見えていない。詳しくは [visual/README.md の「この比較で見えていないもの」](../visual/README.md)。
 
 ```bash
 sudo apt install fonts-noto-cjk
@@ -54,3 +54,20 @@ npm run visual:test
 `tsconfig.json` の `include` が `["src", "vite.config.ts"]` のままで、
 `visual/*.ts` と `playwright.config.ts` が `npm run build` の型チェックを通っていない。
 テスト側の型崩れは実行するまで気付けない。
+
+## 7. セクションを足すと下のセクションの撮影がずれる
+
+`visual/` は `fullPage` で撮ってからドキュメント座標で切り出しているため、**上に何かを挟むと
+下のセクションの切り出し位置がずれる**ことがある。中身は同じなのに縦に数pxずれた画が撮れ、
+差分としては「全部違う」ように見える。
+
+Works と About の間に Clients セクションを足したところ、`about-desktop` だけが縦 8px ずれて
+必ず落ちる状態になった（ずらして重ねると差分ピクセルは0）。`#about` の座標自体はページ側で
+測ると完全に安定していて、撮影側の問題。**Clients を入れない状態では30件すべて通る。**
+
+Clients を main に入れる PR でこれが出る。そのときに追う手がかり：
+
+- `visual/regression.spec.ts` の `documentBox()` + `toHaveScreenshot({ fullPage: true, clip })`
+- 8px という値の出どころが不明。`Reveal` の `translate-y-[30px]` とも一致しない
+- 回避するなら、`fullPage` をやめて `locator.screenshot()` で撮る手がある
+  （ただしスクロールが走るのでヘッダーの高さが変わる。#25 でそれを避けて今の形にした経緯がある）

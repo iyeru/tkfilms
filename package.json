@@ -8,8 +8,8 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "visual:baseline": "playwright test --project=design --update-snapshots",
-    "visual:test": "playwright test --project=react",
+    "visual:baseline": "playwright test --update-snapshots",
+    "visual:test": "playwright test",
     "visual:report": "playwright show-report"
   },
   "dependencies": {
