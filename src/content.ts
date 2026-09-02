@@ -36,7 +36,7 @@ export const content: SiteContent = {
   hero: {
     eyebrow: 'Marketer & Filmmaker',
     title: 'TKFILMS',
-    meta: 'TOKYO — SINCE 2016',
+    meta: 'TOKYO — SINCE 2026',
     // 宣材動画（work/宣材動画/top.mp4）。上下の黒帯は Hero 側で画面外へ送っている
     videoSrc: 'media/hero.mp4',
     youtubeId: null,
