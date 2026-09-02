@@ -97,6 +97,30 @@ src/
 `content.ts` の `portrait` / `poster` / `videoSrc` は、`http(s)://` で始まれば外部のURL、
 それ以外は `public/` の中のパスとして扱われる（`src/lib/cn.ts` の `mediaUrl()`）。
 
+### 代表作（Works の先頭の大きい枠）を差し替える
+
+`content.works.feature`。Hero と同じく `videoSrc` → `youtubeId` → `poster` の順で効く。
+
+```ts
+feature: {
+  title: 'Hana to Hana',                       // 画面には出ない。読み上げ用の名前
+  videoSrc: 'media/hana-to-hana.mp4',          // 自前の動画。youtubeId より優先
+  youtubeId: null,
+  poster: 'images/hana-to-hana-poster.jpg',    // 再生が始まるまで敷く1枚
+  client: {                                    // 発注元。null なら行ごと出ない
+    label: 'Client',
+    name: '日光国立公園 湯西川温泉 彩り湯かしき 花と華',  // ロゴの代替テキスト
+    logo: 'images/hana-to-hana-logo.png',
+  },
+}
+```
+
+**`client.logo` は白抜き版を置く。** 暗い地に載るので、白地・黒文字のままだと白い板になる。
+支給ロゴが白地なら、白を透過に抜いて文字を生成り白へ、色のマークは元の色で残す。
+先方に白抜き版があるならそれを貰うのが確実。
+
+枠の中には文字を乗せない。作品が何であるかは映像と真下のクレジットが言う。
+
 ### 作品を載せる
 
 `youtubeId` に YouTube の動画IDを入れると、プレースホルダが埋め込みプレイヤーに変わる。

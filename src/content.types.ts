@@ -50,10 +50,36 @@ export type WorkItem = {
   ratioLabel: string;
 };
 
+/** 制作を請けた相手。ロゴは代表作の真下にクレジットとして出る */
+export type WorkClient = {
+  /** ロゴ画像。`public/` に置いたファイル名か外部URL。暗い地に置くので白抜き版を使う */
+  logo: string;
+  /** ロゴの代替テキスト。読み上げと、画像が出ないときの表示に使う */
+  name: string;
+  /** ロゴの左に添える小さなラベル */
+  label: string;
+};
+
+/**
+ * Works の先頭で1本を大きく見せる枠。
+ * 背景の指定は Hero と同じ順番で効く（videoSrc → youtubeId → poster の1枚）。
+ */
+export type WorksFeature = {
+  /** 作品名。枠の中には出ない。読み上げ用の名前としてだけ使う */
+  title: string;
+  /** 流す動画ファイル（`public/` に置いたファイル名）。入っていれば youtubeId より優先する */
+  videoSrc: string | null;
+  /** 流す YouTube の動画ID。null なら poster の1枚だけになる */
+  youtubeId: string | null;
+  /** 再生が始まるまで下に敷く1枚。`public/` のファイル名か外部URL */
+  poster: string;
+  /** 発注元。null ならクレジット行ごと出ない */
+  client: WorkClient | null;
+};
+
 export type Works = {
   heading: string;
-  /** 上部のスライダー。1本を大きく見せる */
-  feature: { category: string; title: string; youtubeId: string; poster: string; slides: number };
+  feature: WorksFeature;
   items: WorkItem[];
   moreLabel: string;
 };

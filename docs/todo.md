@@ -17,11 +17,24 @@
 
 差し替える場所は `src/content.ts` の1ファイルだけ。手順は [README の「素材の差し替え方」](../README.md#素材の差し替え方)。
 
-- Works の代表作1本＋作品6本（`works.feature` / `works.items`）
+- Works の作品6本（`works.items`）
 - About の顔写真のうち阪井のぶん（`portrait`）
 - Gram の6枚（`gram`）
 
-Hero の背景（`hero.videoSrc` / `poster`）と高本の顔写真は差し替え済み。
+Hero の背景（`hero.videoSrc` / `poster`）、高本の顔写真、Works の代表作（花と華）は差し替え済み。
+
+## 1-b. 視覚回帰のベースラインを撮り直す
+
+Works の代表作を花と華に差し替えたときに、枠の中の見出し・黒幕・枠線・スライダーの飾りを外し、
+真下にクライアントのクレジット行を足した。**Works の見た目と高さが変わっているので、
+`visual/__screenshots__/` のベースラインは古い。**
+
+```bash
+npm run visual:baseline   # 約3分。上書きなので、変わってよい差分か確かめてから回す
+```
+
+項目6のとおり、Works の高さが変わると下のセクションの切り出しが数pxずれることがある。
+`works-*` 以外が落ちたらそれを疑う。
 
 ## 2. About の2人目を残すか決める
 
