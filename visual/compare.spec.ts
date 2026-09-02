@@ -142,7 +142,16 @@ async function documentBox(page: Page, selector: string) {
   if (box.width === 0 || box.height === 0) {
     throw new Error(`${selector} の大きさが 0 （表示されていない）`);
   }
-  return box;
+  // 小数のまま clip に渡さない。ページの別の場所（About の本文量など）が変わって
+  // 要素の小数座標がずれただけで、切り出される画像の高さが 1px 動くことがある。
+  // ベースラインと1pxでも大きさが違えば比較は問答無用で失敗するので、ここで整数に固定する。
+  // 幅と高さは要素自身の値なので、位置がずれても変わらない。
+  return {
+    x: Math.round(box.x),
+    y: Math.round(box.y),
+    width: Math.round(box.width),
+    height: Math.round(box.height),
+  };
 }
 
 for (const viewport of viewports) {
@@ -157,6 +166,10 @@ for (const viewport of viewports) {
         test.skip(
           selector === null,
           `${section.label}: src/ 側に未実装（visual/sections.ts の reactSelector が null）`,
+        );
+        test.skip(
+          section.diverged !== undefined,
+          `${section.label}: 原本から意図的に離している — ${section.diverged}`,
         );
 
         await openAndSettle(page);
@@ -211,14 +224,15 @@ test.describe('hover', () => {
       const box = await el.boundingBox();
       if (!box) throw new Error(`${target.key} の boundingBox が取得できない`);
 
-      // hoverでscale(1.12)する要素があり、拡大後の見切れを防ぐため余白を持たせてクリップする
+      // hoverでscale(1.12)する要素があり、拡大後の見切れを防ぐため余白を持たせてクリップする。
+      // documentBox() と同じ理由で整数に丸めてから渡す
       const pad = 20;
       await expect(page).toHaveScreenshot(`hover-${target.key}.png`, {
         clip: {
-          x: Math.max(0, box.x - pad),
-          y: Math.max(0, box.y - pad),
-          width: box.width + pad * 2,
-          height: box.height + pad * 2,
+          x: Math.max(0, Math.round(box.x) - pad),
+          y: Math.max(0, Math.round(box.y) - pad),
+          width: Math.round(box.width) + pad * 2,
+          height: Math.round(box.height) + pad * 2,
         },
       });
     });

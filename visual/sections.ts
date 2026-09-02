@@ -17,6 +17,13 @@ export type SectionDef = {
   designSelector: string;
   /** src/ 側のセレクタ。まだ実装がなければ null（テストは自動でskipされる） */
   reactSelector: string | null;
+  /**
+   * 原本から意図的に離した箇所。理由を書くと比較対象から外れる。
+   * 「まだ実装していない」（reactSelector: null）とは意味が違い、
+   * こちらは原本に合わせ直すつもりが無い、という宣言。
+   * 増やしたら visual/README.md の「意図した乖離」にも書くこと。
+   */
+  diverged?: string;
 };
 
 // design/ が id を振っているのは home/works/about/contact の4つだけで、
@@ -42,6 +49,8 @@ export const sections: SectionDef[] = [
     label: 'About',
     designSelector: '#about',
     reactSelector: '#about',
+    diverged:
+      '本文を提案資料の自己紹介に差し替え、実績の箇条書きも足した（#24）。原本は仮テキストのままで、高さも中身も別物になっている',
   },
   {
     key: 'equipment',
