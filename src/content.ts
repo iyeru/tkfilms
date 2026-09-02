@@ -113,7 +113,7 @@ export const content: SiteContent = {
           'Marketer and data business planner by day, filmmaker by night. Brand films for ryokan, hotels and local businesses — planned, shot and cut by one pair of hands, starting from who the film is for rather than from the camera.',
         ],
         meta: [
-          { label: 'Base', value: '[ 拠点 ]' },
+          { label: 'Base', value: '東京' },
           { label: 'Main', value: '金融機関マーケター' },
           { label: 'Sub', value: '映像企画 / 撮影 / 編集' },
           { label: 'Drone', value: '操縦歴 約6年' },
