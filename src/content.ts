@@ -108,9 +108,10 @@ export const content: SiteContent = {
     blocks: [
       {
         body: [
-          '高本 壮基 / Takamoto Soki。金融機関でマーケター / データビジネスプランナーとして働きながら、映像制作を行う個人事業主です。本業では大手企業から中小企業、地方自治体までを対象に、キャッシュレスデータを使った観光分析・集客支援とマーケティング企画開発に従事しています。',
-          '副業では、その知見をそのまま映像に持ち込みます。旅館・ホテルのPR映像、チャンネル登録者数約3,000人の工務店 YouTube 編集、挙式ムービーなどを企画から撮影・編集まで一貫して担当。「誰に、何を、どう届けるか」を先に設計してから、カメラを構えます。',
-          'Marketer and data business planner by day, filmmaker by night. Brand films for ryokan, hotels and local businesses — planned, shot and cut by one pair of hands, starting from who the film is for rather than from the camera.',
+          '高本 壮基 / Takamoto Soki。金融機関でマーケター / データビジネスプランナーとして働きながら、映像を撮る個人事業主です。映像を「きれいに撮る」ことは、目的ではなく手段だと考えています。誰に届けるのか、なぜその人に響くのか。そこを設計し終えてから、はじめてカメラを構えます。',
+          '本業では、大手企業から中小企業、地方自治体までを対象に、キャッシュレスデータを使った観光分析・集客支援とマーケティング企画開発に従事。同じ視点をそのまま持ち込み、旅館・ホテルのPR映像、チャンネル登録者数約3,000人の工務店 YouTube 編集、挙式ムービーまでを、企画から撮影・編集まで一貫して手がけています。',
+          '美しさは前提です。そのうえで、観た人が予約する・問い合わせるところまでを設計できることが、マーケターが映像を撮る意味だと思っています。',
+          'A working marketer who makes films. By day, tourism analytics and customer acquisition for enterprises, small businesses and local government; by night, brand films for ryokan, hotels and local companies — planned, shot and cut by one pair of hands. Beauty is the baseline; the work is designing what happens after someone watches.',
         ],
         meta: [
           { label: 'Base', value: '東京' },
