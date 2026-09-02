@@ -72,14 +72,15 @@ Clients を main に入れる PR でこれが出る。そのときに追う手�
 - 回避するなら、`fullPage` をやめて `locator.screenshot()` で撮る手がある
   （ただしスクロールが走るのでヘッダーの高さが変わる。#25 でそれを避けて今の形にした経緯がある）
 
-## 8. Formspree に登録して、フォームの送信先を入れる
+## 8. Contact フォームの送信先を本番用に差し替える
 
-**いま Contact フォームは押しても必ず「送信できませんでした」が出る。**
-送信先が未設定（`src/content.ts` の `contact.endpoint` が `null`）のため。
+`src/content.ts` の `contact.endpoint` は **テスト用フォーム**（`meaqglje`）を指している。
+本番用の Formspree フォームを作ったら、この 1 行を差し替える。
 
-黙って「Thank you」と出して問い合わせを捨てていた以前の状態よりはましだが、
-**受け口が無いことに変わりはない。素材の差し替え（1）と並んで優先度が高い。**
+`contact.fallbackEmail` も `null` のまま。送信に失敗した人へメールアドレスを案内するなら
+ここに入れる（入れなければ案内は出ない）。
 
-手順は [docs/formspree-setup.md](formspree-setup.md)。登録が済んだら
-`src/content.ts` の `endpoint` と `fallbackEmail` の 2 行を書き換えるだけ。
-そのあと本番の <https://tkfilms.jp/#contact> から 1 回送って、実際に届くことを確かめる。
+手順は [docs/formspree-setup.md](formspree-setup.md)。差し替えたあと、公開されている
+<https://tkfilms.jp/#contact> から 1 回送って**実際に届くこと**を確かめる
+（design-review 3-c の完了条件）。テスト用のままだと、問い合わせがテスト側の
+受信箱に流れ込む。
