@@ -74,12 +74,12 @@ export const content: SiteContent = {
   portfolio: {
     heading: 'Portfolio',
     items: [
-      { title: 'Our College Life', youtubeId: null, wide: true },
-      { title: 'City to Local', youtubeId: null, wide: false },
-      { title: 'FIX1', youtubeId: null, wide: false },
-      { title: 'Biwako & Tateiwa GR Yaris', youtubeId: null, wide: true },
-      { title: 'Hokkaido', youtubeId: null, wide: false },
-      { title: 'Gifu Trip', youtubeId: null, wide: false },
+      { title: 'Our College Life', youtubeId: 'JcBG3r89qvg', wide: true },
+      { title: 'City to Local', youtubeId: 'aEfg2ORTbng', wide: false },
+      { title: 'Wedding Movie', youtubeId: 'LLJc4rKrKeM', wide: false },
+      { title: 'Biwako & Tateiwa GR Yaris', youtubeId: 'qEOLHjdW97I', wide: true },
+      { title: 'Hokkaido', youtubeId: 'EFEttjws1S0', wide: false },
+      { title: 'Gifu Trip', youtubeId: 'g_trL3ic36E', wide: false },
     ],
   },
 
