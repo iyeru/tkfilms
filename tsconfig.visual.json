@@ -1,0 +1,10 @@
+{
+  // 視覚回帰テスト（visual/）と playwright.config.ts の型チェック用。
+  // Node 上で動くので types を node に差し替える。src/ 側の tsconfig.json に
+  // node を足すとブラウザのコードからも process などが見えてしまうため、分けてある。
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "include": ["visual", "playwright.config.ts"]
+}
