@@ -130,8 +130,7 @@ export const content: SiteContent = {
           { label: 'Stack', value: 'フロントエンド / バックエンド / クラウド' },
           { label: 'Edit', value: 'Adobe Premiere Pro' },
         ],
-        // 顔写真は未撮影。撮り次第 images/ に差し替える
-        portrait: null,
+        portrait: 'images/sakai.jpg',
       },
     ],
   },
