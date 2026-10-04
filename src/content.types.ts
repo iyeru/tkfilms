@@ -104,7 +104,7 @@ export type About = {
 
 export type Equipment = {
   heading: string;
-  /** brand は Six Caps で大きく、model は等幅・寒色で添える */
+  /** brand は見出しと同じ Big Shoulders で大きく、model は等幅・寒色で添える */
   items: { brand: string; model: string }[];
 };
 

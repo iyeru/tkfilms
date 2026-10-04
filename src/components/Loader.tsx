@@ -47,9 +47,9 @@ export function Loader() {
     at(hold, settle);
     at(MAX_MS, hide);
 
-    // Six Caps は極端に細長い書体で、フォールバックだと文字幅が倍近くになりリングからはみ出す。
+    // 見出しの Big Shoulders は幅の狭い書体で、フォールバックだと文字幅が広がりリングからはみ出す。
     // 読み込めたことを確認できるまで見出しは出さない（読み込めなければ出さないまま畳む）
-    const loading = document.fonts?.load('56px "Six Caps"') ?? Promise.resolve([]);
+    const loading = document.fonts?.load('300 56px "Big Shoulders"') ?? Promise.resolve([]);
     void loading
       .then((faces) => setFontReady(faces.length > 0))
       .catch(() => undefined)

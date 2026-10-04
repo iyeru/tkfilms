@@ -1,7 +1,7 @@
 import type { Equipment as EquipmentContent } from '@/content.types';
 import { Section, SectionHeading } from '@/components/Section';
 
-/** 使用機材。ロゴは持たず、社名を Six Caps で組んで型番を等幅で添える */
+/** 使用機材。ロゴは持たず、社名を見出しと同じ書体で組んで型番を等幅で添える */
 export function Equipment({ equipment }: { equipment: EquipmentContent }) {
   return (
     <Section>

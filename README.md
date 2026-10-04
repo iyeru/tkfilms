@@ -25,7 +25,8 @@
 
 - **ドロワーを開いてもヘッダーが消えない。** 原本は本文・ヘッダーをまとめて `transform` した親の中に入れているため、変形した親が固定位置の基準になってしまい、スクロール中にメニューを開くとヘッダーが画面外へ飛ぶ。こちらはヘッダーを親の外に出し、同じぶんだけ個別に寄せている。
 - **現れる動きに打ち切りがない。** 原本は表示から 2.6 秒でスクロール位置に関係なく全要素を出してしまうため、実質フェードインが働かない。こちらは画面に入ったときだけ動かす。
-- **Hero の名前を Six Caps で組んでいる。** 原本は `<h1>` だけ和文 sans で、同じ「STUDIO KAIRO」がヘッダー（Six Caps）と 2 種類の書体で出ていた。一番強くあるべきファーストビューの字がサイト内で一番弱い状態だったので、ヘッダー・セクション見出し・フッターと同じ体系に揃えた。
+- **Hero の名前を見出しと同じ書体で組んでいる。** 原本は `<h1>` だけ和文 sans で、同じ「STUDIO KAIRO」がヘッダー（Six Caps）と 2 種類の書体で出ていた。一番強くあるべきファーストビューの字がサイト内で一番弱い状態だったので、ヘッダー・セクション見出し・フッターと同じ体系に揃えた。
+- **見出しの書体が Six Caps ではなく Big Shoulders Light。** Six Caps は小文字のグリフを持たず、ブランド名の「TKfilms」が「TKFILMS」に見えてしまうため差し替えた。ブランド名（ヘッダー・Hero・フッター）は大文字化せずそのまま出し、セクション見出しと Equipment の社名は `uppercase` で大文字のまま組んでいる。
 - **About の中身が原本より先に進んでいる。** 本文を提案資料の自己紹介に差し替え、実績の箇条書きも足してある（#24）。
 
 > 素材がまだ仮のため `robots noindex` を入れてある。詳しくは下の「現状」を読む。
@@ -62,16 +63,16 @@ npm run dev        # http://localhost:5173/
 src/
 ├── content.ts        # ★ 文言・作品・連絡先。素材差し替えはここだけ
 ├── content.types.ts  # content.ts の型
-├── index.css         # デザイントークン（色・書体・動き）と Six Caps の @font-face
+├── index.css         # デザイントークン（色・書体・動き）と Big Shoulders の @font-face
 ├── App.tsx           # 全体の組み立て
-├── fonts/            # Six Caps の woff2。原本と同じものを同梱している
+├── fonts/            # Big Shoulders Light（300）の woff2。Google Fonts から取って同梱している
 ├── sections/         # Hero / Works / About / Equipment / Contact / Gram
 ├── components/       # ヘッダー・ドロワー・ローダーなど共通部品
 ├── hooks/            # スクロール・出現アニメーション
 └── lib/cn.ts         # クラス名連結・埋め込みURL組み立て・public のパス解決
 ```
 
-**書体は同梱している。** 欧文は `src/fonts/` の Six Caps（2ファイル 22KB）、和文は OS 標準の角ゴシックに任せていて、Google Fonts は読んでいない。外部へ出ていくのは YouTube の埋め込みとサムネイル（`i.ytimg.com`）だけ。
+**書体は同梱している。** 欧文は `src/fonts/` の Big Shoulders Light（2ファイル 28KB）、和文は OS 標準の角ゴシックに任せていて、Google Fonts は読んでいない。外部へ出ていくのは YouTube の埋め込みとサムネイル（`i.ytimg.com`）だけ。
 
 ## 素材の差し替え方
 
@@ -171,7 +172,7 @@ ffmpeg -ss 2.5 -i public/media/hero.mp4 -frames:v 1 -vf "crop=1280:576:0:72" -q:
 ```css
 --color-warm: #93b4c9;     /* → text-warm / bg-warm / border-warm（CTA・リンク） */
 --color-cool: #93b4c9;     /* → text-cool（比率タグ・スペック） */
---font-display: 'Six Caps';/* → font-display */
+--font-display: 'Big Shoulders'; /* → font-display（見出し・ブランド名） */
 --spacing-pad: clamp(...); /* → px-pad / py-pad */
 --spacing-panel: min(...); /* → w-panel / -translate-x-panel（ドロワーの幅） */
 --breakpoint-wide: 1200px; /* → wide:flex （PCナビとサイドドットの出現点） */
