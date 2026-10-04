@@ -11,20 +11,3 @@
 
 `index.html` の `<meta name="robots" content="noindex">` の1行を削除する。
 素材の差し替えは #42（阪井の顔写真）ですべて終わった。外すかどうか・いつ外すかは shinta が決める。
-
-## 6. セクションを足すと下のセクションの撮影がずれる
-
-`visual/` は `fullPage` で撮ってからドキュメント座標で切り出しているため、**上に何かを挟むと
-下のセクションの切り出し位置がずれる**ことがある。中身は同じなのに縦に数pxずれた画が撮れ、
-差分としては「全部違う」ように見える。
-
-Works と About の間に Clients セクションを足したところ、`about-desktop` だけが縦 8px ずれて
-必ず落ちる状態になった（ずらして重ねると差分ピクセルは0）。`#about` の座標自体はページ側で
-測ると完全に安定していて、撮影側の問題。**Clients を入れない状態では全件通る。**
-
-Clients を main に入れる PR でこれが出る。そのときに追う手がかり：
-
-- `visual/regression.spec.ts` の `documentBox()` + `toHaveScreenshot({ fullPage: true, clip })`
-- 8px という値の出どころが不明。`Reveal` の `translate-y-[30px]` とも一致しない
-- 回避するなら、`fullPage` をやめて `locator.screenshot()` で撮る手がある
-  （ただしスクロールが走るのでヘッダーの高さが変わる。#25 でそれを避けて今の形にした経緯がある）
