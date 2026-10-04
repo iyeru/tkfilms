@@ -12,17 +12,18 @@
 `index.html` の `<meta name="robots" content="noindex">` の1行を削除する。
 素材の差し替えは #42（阪井の顔写真）ですべて終わった。外すかどうか・いつ外すかは shinta が決める。
 
-## 4. 日本語フォント導入後、閾値内で残った旧ベースラインを揃える
+## 4. 日本語フォント導入前に撮ったベースラインが4件残っている
 
 2026-09-11 から `~/.config/fontconfig/fonts.conf` で Windows 側のフォントを読むようになり
 （`sans-serif` → Yu Gothic UI）、視覚テストの日本語は豆腐ではなくなった。
-#43 でベースラインを撮り直したが、`--update-snapshots` は**閾値（2%）を超えた9件しか書き換えない。**
+それ以降に #43・#44・#45 で撮り直し、26件中22件は今の環境の姿になっている。
+残っているのは 2026-09-02（#40 以前）に撮ったままの次の4件。どれも閾値（2%）内で通っている。
 
-- 和文の少ない画像（contact の desktop / tablet など）は、豆腐のまま 2% 未満で通っている
-- tablet の works は #43 のときタイムアウトで落ち、撮り直せていない
-- About の3件は #44 で撮り直し済み
+- `gram-desktop` / `gram-tablet` / `gram-mobile`
+- `hover-back-to-top`
 
-全件を今の環境で揃えるなら `npx playwright test --update-snapshots=all`。いつでも着手できる。
+揃えるなら `npx playwright test -g "gram|back-to-top" --update-snapshots=all`（4件・上書き）。
+いつでも着手できる。
 [visual/README.md の「この比較で見えていないもの」](../visual/README.md) の豆腐の記述も合わせて直す。
 
 **回すときは、他の重い処理（動画の書き出しなど）を止めておく。** #43 のころのタイムアウトは、
@@ -52,26 +53,3 @@ Clients を main に入れる PR でこれが出る。そのときに追う手�
 - 8px という値の出どころが不明。`Reveal` の `translate-y-[30px]` とも一致しない
 - 回避するなら、`fullPage` をやめて `locator.screenshot()` で撮る手がある
   （ただしスクロールが走るのでヘッダーの高さが変わる。#25 でそれを避けて今の形にした経緯がある）
-
-## 9. ブランド名 (TKfilms) の書体差し替え（やり直し）
-
-Header・Hero・Footer のブランド名が `uppercase` で強制大文字化され、さらに書体 Six Caps が
-小文字グリフを持たないため、`TKfilms` が常に `TKFILMS` に見えている。
-
-一度途中まで進めたが、**未コミットの変更が失われ、何も残っていない**（2026-10-04 確認）。
-`style/brand-name-no-uppercase` ブランチは古い main（b8e9399）を指しているだけで独自のコミットはなく、
-stash も無く、`src/fonts/bigshoulders-*.woff2` と比較画像 `font-compare.png` も見つからない。
-未コミットの変更はブランチではなく作業ツリーに乗るため、どこかの切り替えで消えたとみられる。
-
-前回決めた方針（これに沿ってやり直す）:
-
-- `uppercase` を3箇所から外す: `src/components/Header.tsx` のロゴ、`src/sections/Hero.tsx` の h1、
-  `src/components/Footer.tsx` のブランド名
-- ブランド名専用の書体トークン `--font-brand` を `src/index.css` に新設する。
-  Six Caps（`--font-display`）は見出し全般用として残す
-- 書体は **Big Shoulders（Light, weight 300）** を自己ホストする（`src/fonts/` に latin / latin-ext の woff2）。
-  Six Caps と太さを並べて比べ、300 が一番近かった。League Gothic も試したが採らなかった
-- `npm run preview` で Header・Hero・Footer の `TKfilms` の太さと小文字の見え方を確認してから PR を出す
-
-最新の main から切り直す。古い `style/brand-name-no-uppercase` は中身が無いので、
-同じ名前を使うなら先に消す。
