@@ -47,27 +47,28 @@ Clients を main に入れる PR でこれが出る。そのときに追う手�
 - 回避するなら、`fullPage` をやめて `locator.screenshot()` で撮る手がある
   （ただしスクロールが走るのでヘッダーの高さが変わる。#25 でそれを避けて今の形にした経緯がある）
 
-## 9. ブランド名 (TKfilms) の書体差し替え、途中で中断
+## 9. ブランド名 (TKfilms) の書体差し替え（やり直し）
 
-`style/brand-name-no-uppercase` ブランチに**未コミットのまま**残してある。作業内容は次のとおり。
+Header・Hero・Footer のブランド名が `uppercase` で強制大文字化され、さらに書体 Six Caps が
+小文字グリフを持たないため、`TKfilms` が常に `TKFILMS` に見えている。
 
-- きっかけ: Header・Hero・Footer のブランド名表示が `uppercase` で強制大文字化され、
-  さらに書体 Six Caps が小文字グリフを持たないため `TKfilms` が常に `TKFILMS` に見えていた。
-- 対応: `uppercase` を3箇所（`Header.tsx` ロゴ、`Hero.tsx` の h1、`Footer.tsx` のブランド名）から外し、
-  ブランド名専用の書体トークン `--font-brand` を新設。Six Caps は見出し全般用として維持。
-- 書体は League Gothic → **Big Shoulders（Light, weight 300）** に差し替え済み（自己ホスト、
-  `src/fonts/bigshoulders-300-latin.woff2` / `-latin-ext.woff2`。League Gothic の woff2 は削除済み）。
-  Six Caps 本体との太さ比較は `font-compare.png` で確認し、Big Shoulders 300 が一番近かった。
-- **`npm run build` は通過済み。** ブラウザでの最終見た目確認（`npm run preview` での実機確認）が
-  終わる前にユーザーの指示で中断した。
+一度途中まで進めたが、**未コミットの変更が失われ、何も残っていない**（2026-10-04 確認）。
+`style/brand-name-no-uppercase` ブランチは古い main（b8e9399）を指しているだけで独自のコミットはなく、
+stash も無く、`src/fonts/bigshoulders-*.woff2` と比較画像 `font-compare.png` も見つからない。
+未コミットの変更はブランチではなく作業ツリーに乗るため、どこかの切り替えで消えたとみられる。
 
-再開するときは:
+前回決めた方針（これに沿ってやり直す）:
 
-1. `git switch style/brand-name-no-uppercase` で変更を呼び戻す（`git status` で
-   README.md / Header.tsx / Footer.tsx / Hero.tsx / index.css の変更と
-   `src/fonts/bigshoulders-300-latin*.woff2` の未追跡ファイルが出るはず）。
-2. `npm run preview` で Header・Hero・Footer の `TKfilms` 表示を確認（太さ・小文字の見え方）。
-3. 問題なければコミット→ `gh pr create`。ブランチ名は変えなくてよい。
+- `uppercase` を3箇所から外す: `src/components/Header.tsx` のロゴ、`src/sections/Hero.tsx` の h1、
+  `src/components/Footer.tsx` のブランド名
+- ブランド名専用の書体トークン `--font-brand` を `src/index.css` に新設する。
+  Six Caps（`--font-display`）は見出し全般用として残す
+- 書体は **Big Shoulders（Light, weight 300）** を自己ホストする（`src/fonts/` に latin / latin-ext の woff2）。
+  Six Caps と太さを並べて比べ、300 が一番近かった。League Gothic も試したが採らなかった
+- `npm run preview` で Header・Hero・Footer の `TKfilms` の太さと小文字の見え方を確認してから PR を出す
+
+最新の main から切り直す。古い `style/brand-name-no-uppercase` は中身が無いので、
+同じ名前を使うなら先に消す。
 
 ## 10. 視覚テストが遅く、30秒のタイムアウトで落ちる
 
