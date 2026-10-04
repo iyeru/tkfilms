@@ -19,10 +19,18 @@
 #43 でベースラインを撮り直したが、`--update-snapshots` は**閾値（2%）を超えた9件しか書き換えない。**
 
 - 和文の少ない画像（contact の desktop / tablet など）は、豆腐のまま 2% 未満で通っている
-- tablet の works はタイムアウトで落ち、撮り直せていない（項目10）
+- tablet の works は #43 のときタイムアウトで落ち、撮り直せていない
+- About の3件は #44 で撮り直し済み
 
-全件を今の環境で揃えるなら `npx playwright test --update-snapshots=all`。ただし項目10が先。
+全件を今の環境で揃えるなら `npx playwright test --update-snapshots=all`。いつでも着手できる。
 [visual/README.md の「この比較で見えていないもの」](../visual/README.md) の豆腐の記述も合わせて直す。
+
+**回すときは、他の重い処理（動画の書き出しなど）を止めておく。** #43 のころのタイムアウトは、
+フォントではなく CPU の取り合いが原因だった。混んでいるとき（負荷平均 12.6 / 8コア）は
+スクロールだけで 52 秒かかり、1件 30 秒のタイムアウトに収まらない。空いていれば 4〜5 秒で、
+About 3件の撮り直しは 39 秒で終わった（#44）。回す前に `uptime` で負荷を見るとよい。
+
+ついでに確認: テストの件数が 26 件と出たことがある。CLAUDE.md・visual/README.md・項目6 の「30件」と合わない。
 
 ## 5. visual/ を型チェックの対象に入れる
 
@@ -69,23 +77,3 @@ stash も無く、`src/fonts/bigshoulders-*.woff2` と比較画像 `font-compare
 
 最新の main から切り直す。古い `style/brand-name-no-uppercase` は中身が無いので、
 同じ名前を使うなら先に消す。
-
-## 10. 視覚テストが遅く、30秒のタイムアウトで落ちる
-
-日本語フォント導入（項目4）のあとから、視覚テストが撮影より前の段階で時間切れになる。
-**見た目の差分ではなく、1件30秒のテストタイムアウト。**
-
-- `npm run visual:baseline` が 10 分 15 秒かかった（以前の見込みは約3分）。tablet の works がタイムアウト、5件が flaky（#43）
-- `npx playwright test -g "about" --update-snapshots` が 5 分 12 秒かけて3件ともタイムアウトし、何も書き換わらなかった（2026-10-04）
-- 止まっている場所は `page.addStyleTag`（goto 直後）や `page.evaluate`（スクロール・画像待ち）で、特定の処理ではない
-
-疑っているのは、Chromium が `/mnt/c/Windows/Fonts`（405ファイル、536MB）を WSL の境界越しに読んでいること。
-未検証。`fc-list` 自体は 0.27 秒で速い。試すなら、fontconfig で Windows のフォント全体を読むのをやめ、
-Yu Gothic だけ `~/.local/share/fonts` に置いて時間を比べる。
-
-**これが直ったらやること:**
-
-- About の3件を撮り直す。#42（阪井の顔写真）で撮り直せなかったため、main の About は写真のぶん落ちる状態
-- 項目4の全件撮り直し
-
-ついでに確認: テストの件数が 26 件と出た。CLAUDE.md・visual/README.md・項目6 の「30件」と合わない。
