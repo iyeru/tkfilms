@@ -38,7 +38,7 @@ export function Header({ brandName, nav, menuOpen, onToggleMenu, onNavigate, onH
           e.preventDefault();
           onHome();
         }}
-        className="relative font-display text-[36px] leading-none tracking-[2px] text-white uppercase"
+        className="relative font-display text-[36px] leading-none tracking-[2px] text-white"
       >
         {brandName}
       </a>
