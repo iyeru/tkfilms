@@ -6,6 +6,7 @@ import { Grain, Loader } from '@/components/Loader';
 import { Header } from '@/components/Header';
 import { BackToTop, SideDots } from '@/components/SideDots';
 import { About } from '@/sections/About';
+import { Clients } from '@/sections/Clients';
 import { Contact } from '@/sections/Contact';
 import { Equipment } from '@/sections/Equipment';
 import { Gram } from '@/sections/Gram';
@@ -78,6 +79,7 @@ export function App() {
           <Hero hero={content.hero} />
           <Works works={content.works} />
           <Portfolio portfolio={content.portfolio} />
+          <Clients clients={content.clients} />
           <About about={content.about} />
           <Equipment equipment={content.equipment} />
           <Contact contact={content.contact} />

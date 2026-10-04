@@ -66,7 +66,7 @@ src/
 ├── index.css         # デザイントークン（色・書体・動き）と Big Shoulders の @font-face
 ├── App.tsx           # 全体の組み立て
 ├── fonts/            # Big Shoulders Light（300）の woff2。Google Fonts から取って同梱している
-├── sections/         # Hero / Works / About / Equipment / Contact / Gram
+├── sections/         # Hero / Works / Portfolio / Clients / About / Equipment / Contact / Gram
 ├── components/       # ヘッダー・ドロワー・ローダーなど共通部品
 ├── hooks/            # スクロール・出現アニメーション
 └── lib/cn.ts         # クラス名連結・埋め込みURL組み立て・public のパス解決
@@ -84,6 +84,7 @@ src/
 | 名前・肩書き | `content.brand` |
 | トップの背景・キャッチコピー | `content.hero` |
 | 作品一覧 | `content.works.items` |
+| 取引先のロゴ | `content.clients.items` |
 | 自己紹介・顔写真 | `content.about.blocks`（1人1ブロック。増やすと写真の左右が自動で交互になる） |
 | 使用機材 | `content.equipment.items` |
 | 連絡先 | `content.contact` |
@@ -159,6 +160,34 @@ ffmpeg -ss 2.5 -i public/media/hero.mp4 -frames:v 1 -vf "crop=1280:576:0:72" -q:
 ```
 
 > ⚠️ 動画を自前で置くとリポジトリが重くなる（`hero.mp4` で 13MB）。長尺は YouTube 埋め込みを使う。
+
+### 取引先のロゴを載せる
+
+`content.clients.items` に1社1件で足す。`logo` は `public/` からの相対パス。
+
+```ts
+{ name: '〇〇ホテル', logo: 'clients/marumaru.png', note: '施設紹介映像 / 2025' }
+```
+
+`note` は省略できる（省略するとロゴだけが出る）。
+
+**ロゴは色を変えずに載せる。** 単色化・白抜きはロゴ使用規定で禁じられていることが多いので、
+暗い地の上に明るい板（`--color-paper`）を敷いて、その上に原色のまま置いている。
+
+もらうロゴはたいてい印刷用データで、そのままでは使えない。次で変換する。
+
+```bash
+node scripts/logo-to-web.mjs work/logo/もらったデータ.jpg public/clients/marumaru.png 640
+```
+
+やっていること。**CMYK の JPEG を sRGB に直す**（Photoshop 書き出しはこれ。対応していない
+デコーダだと色が反転する）／**白い背景を透過に起こす**（板の色を CSS 側で決められるように）／
+**余白を切り詰めて指定の横幅に縮める**。
+
+すでに透過 PNG や SVG をもらっているなら変換は要らない。`public/clients/` に置くだけでよい。
+
+> ⚠️ 掲載には先方の許諾がいる。`work/`（git 管理外）にもらった原本を残しておくと、
+> 差し替えのときに元データから作り直せる。
 
 ### 写真を入れる
 
