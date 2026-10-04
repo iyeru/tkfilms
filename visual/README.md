@@ -1,6 +1,6 @@
 # ビジュアル回帰チェック
 
-`src/`（このサイト）を7セクション×3幅でスクリーンショットして、**前回撮った自分自身と比べる**仕組み。
+`src/`（このサイト）を8セクション×3幅でスクリーンショットして、**前回撮った自分自身と比べる**仕組み。
 見た目を意図せず壊していないかを、目視ではなく機械的に確認するためのもの。
 
 ## 経緯
@@ -18,7 +18,7 @@
 ## 使い方
 
 > ⚠️ **実行前に必ず shinta に断りを入れる。1回およそ3分かかる。**
-> 26件それぞれでページを読み込み直し、3秒待ち、全画面をスクロールし、画像の読み込みを
+> 29件それぞれでページを読み込み直し、3秒待ち、全画面をスクロールし、画像の読み込みを
 > 待ってから撮っているため。詳しくは [CLAUDE.md](../CLAUDE.md)。
 > テスト名で絞るなら `npx playwright test -g "about"`。
 
@@ -56,11 +56,11 @@ npm run visual:baseline
 
 ## 見ているもの
 
-- **セクション7つ × 幅3本 = 21件。** Hero / Works / About / Equipment / Contact / Gram / Footer
+- **セクション8つ × 幅3本 = 24件。** Hero / Works / Clients / About / Equipment / Contact / Gram / Footer
 - **ホバー状態3件**（デスクトップ幅のみ）。ヘッダーの Works / Contact リンクと Back to top ボタン
 - **ドロワーを開いた状態2件**（mobile / tablet）
 
-合計26件。合否の基準は `playwright.config.ts` の `maxDiffPixelRatio: 0.02`、つまり画素の2%まで違ってよい。
+合計29件。合否の基準は `playwright.config.ts` の `maxDiffPixelRatio: 0.02`、つまり画素の2%まで違ってよい。
 
 **閾値は緩めない。** 通らない差分が出たら、まず原因を突き止める。
 意図した変更なら閾値をいじるのではなくベースラインを撮り直す。
@@ -83,10 +83,11 @@ npm run visual:baseline
 
 `visual/sections.ts` は id ではなく構造や見出し文字列でセレクタを引いている箇所がある。
 id を持っているのは `home` / `works` / `about` / `contact` の4つだけで、
-Equipment・Gram・Footer には無い（`design/` 原本から引き継いだ構成）。
+Equipment・Gram・Footer には無い（`design/` 原本から引き継いだ構成）。あとから足した Clients にも無い。
 
 | セクション | セレクタ | 壊れる操作 |
 | --- | --- | --- |
+| Clients | `section:has(h2:text-is("Clients"))` | 見出し文字列の変更・セクション削除 |
 | Equipment | `section:has(h2:text-is("Equipment"))` | 見出し文字列の変更・セクション削除 |
 | Gram | `#contact + section` | Contact との前後入れ替え・セクション削除 |
 
