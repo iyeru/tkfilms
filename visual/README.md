@@ -18,7 +18,7 @@
 ## 使い方
 
 > ⚠️ **実行前に必ず shinta に断りを入れる。1回およそ3分かかる。**
-> 30件それぞれでページを読み込み直し、3秒待ち、全画面をスクロールし、画像の読み込みを
+> 26件それぞれでページを読み込み直し、3秒待ち、全画面をスクロールし、画像の読み込みを
 > 待ってから撮っているため。詳しくは [CLAUDE.md](../CLAUDE.md)。
 > テスト名で絞るなら `npx playwright test -g "about"`。
 
@@ -47,10 +47,10 @@ npm run visual:baseline
 ## 見ているもの
 
 - **セクション7つ × 幅3本 = 21件。** Hero / Works / About / Equipment / Contact / Gram / Footer
-- **ホバー状態7件**（デスクトップ幅のみ）
+- **ホバー状態3件**（デスクトップ幅のみ）。ヘッダーの Works / Contact リンクと Back to top ボタン
 - **ドロワーを開いた状態2件**（mobile / tablet）
 
-合計30件。合否の基準は `playwright.config.ts` の `maxDiffPixelRatio: 0.02`、つまり画素の2%まで違ってよい。
+合計26件。合否の基準は `playwright.config.ts` の `maxDiffPixelRatio: 0.02`、つまり画素の2%まで違ってよい。
 
 **閾値は緩めない。** 通らない差分が出たら、まず原因を突き止める。
 意図した変更なら閾値をいじるのではなくベースラインを撮り直す。
