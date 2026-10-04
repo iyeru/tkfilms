@@ -19,17 +19,17 @@ Works の作品6本・Gram の6枚・Hero の背景・高本の顔写真・Works
 `index.html` の `<meta name="robots" content="noindex">` の1行を削除する。
 **1 が終わるまでは絶対に外さない**（他人の素材が検索に載る）。
 
-## 4. 日本語フォントを入れて、比較の精度を上げる
+## 4. 日本語フォント導入後、閾値内で残った旧ベースラインを揃える
 
-作業環境に日本語フォントが無く、視覚テストのスクリーンショットは日本語が豆腐になる。
-ベースラインも比較も同じ豆腐なので回帰の検出は成立しているが、実物での行の折り返しまでは
-見えていない。詳しくは [visual/README.md の「この比較で見えていないもの」](../visual/README.md)。
+2026-09-11 から `~/.config/fontconfig/fonts.conf` で Windows 側のフォントを読むようになり
+（`sans-serif` → Yu Gothic UI）、視覚テストの日本語は豆腐ではなくなった。
+#43 でベースラインを撮り直したが、`--update-snapshots` は**閾値（2%）を超えた9件しか書き換えない。**
 
-```bash
-sudo apt install fonts-noto-cjk
-npm run visual:baseline   # 文字の描かれ方が変わるので撮り直しが要る
-npm run visual:test
-```
+- 和文の少ない画像（contact の desktop / tablet など）は、豆腐のまま 2% 未満で通っている
+- tablet の works はタイムアウトで落ち、撮り直せていない（項目10）
+
+全件を今の環境で揃えるなら `npx playwright test --update-snapshots=all`。ただし項目10が先。
+[visual/README.md の「この比較で見えていないもの」](../visual/README.md) の豆腐の記述も合わせて直す。
 
 ## 5. visual/ を型チェックの対象に入れる
 
@@ -75,3 +75,23 @@ Clients を main に入れる PR でこれが出る。そのときに追う手�
    `src/fonts/bigshoulders-300-latin*.woff2` の未追跡ファイルが出るはず）。
 2. `npm run preview` で Header・Hero・Footer の `TKfilms` 表示を確認（太さ・小文字の見え方）。
 3. 問題なければコミット→ `gh pr create`。ブランチ名は変えなくてよい。
+
+## 10. 視覚テストが遅く、30秒のタイムアウトで落ちる
+
+日本語フォント導入（項目4）のあとから、視覚テストが撮影より前の段階で時間切れになる。
+**見た目の差分ではなく、1件30秒のテストタイムアウト。**
+
+- `npm run visual:baseline` が 10 分 15 秒かかった（以前の見込みは約3分）。tablet の works がタイムアウト、5件が flaky（#43）
+- `npx playwright test -g "about" --update-snapshots` が 5 分 12 秒かけて3件ともタイムアウトし、何も書き換わらなかった（2026-10-04）
+- 止まっている場所は `page.addStyleTag`（goto 直後）や `page.evaluate`（スクロール・画像待ち）で、特定の処理ではない
+
+疑っているのは、Chromium が `/mnt/c/Windows/Fonts`（405ファイル、536MB）を WSL の境界越しに読んでいること。
+未検証。`fc-list` 自体は 0.27 秒で速い。試すなら、fontconfig で Windows のフォント全体を読むのをやめ、
+Yu Gothic だけ `~/.local/share/fonts` に置いて時間を比べる。
+
+**これが直ったらやること:**
+
+- About の3件を撮り直す。#42（阪井の顔写真）は撮り直せないままなので、マージ後の main では About が写真のぶん落ちる
+- 項目4の全件撮り直し
+
+ついでに確認: テストの件数が 26 件と出た。CLAUDE.md・visual/README.md・項目6 の「30件」と合わない。
