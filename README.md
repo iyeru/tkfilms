@@ -195,13 +195,12 @@ ffmpeg -ss 2.5 -i public/media/hero.mp4 -frames:v 1 -vf "crop=1280:576:0:72" -q:
 
 ## 現状
 
-**大半がまだ仮素材。** `[ ... ]` で囲まれたテキストは差し替え待ちの目印。
-実素材に入れ替わっているのは、About の本文2人ぶんと高本の顔写真、Hero の背景動画
-（`public/media/hero.mp4`）まで。Works・Gram・阪井の顔写真は他人の YouTube 素材のまま。
+**差し替え待ちの素材は残っていない。** 最後まで残っていた阪井の顔写真を #42 で入れた。
+`[ ... ]` で囲まれたテキストは差し替え待ちの目印として使っていたが、今は1つも無い。
 
-素材が揃うまで検索エンジンにインデックスさせないよう、`index.html` の `<head>` に `<meta name="robots" content="noindex">` を入れてある。公開して問題ない状態になったら、**この1行を削除する**。
+検索エンジンにインデックスさせないよう、`index.html` の `<head>` に `<meta name="robots" content="noindex">` を入れてある。公開して問題ないと判断したら、**この1行を削除する**（[docs/todo.md](docs/todo.md) の項目3）。
 
-差し替えが必要なものと、その他の残作業は [docs/todo.md](docs/todo.md) にまとめてある。
+その他の残作業は [docs/todo.md](docs/todo.md) にまとめてある。
 
 ## 独自ドメイン（tkfilms.jp）
 
