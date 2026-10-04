@@ -102,6 +102,21 @@ export type About = {
   blocks: AboutBlock[];
 };
 
+/** 取引先1社ぶん */
+export type ClientItem = {
+  /** 社名・施設名。画像の代替テキストになる */
+  name: string;
+  /** public/ からの相対パス。白地を透過に起こした PNG を置く */
+  logo: string;
+  /** ロゴの下に添える一行（担当した仕事など）。無ければ省略 */
+  note?: string;
+};
+
+export type Clients = {
+  heading: string;
+  items: ClientItem[];
+};
+
 export type Equipment = {
   heading: string;
   /** brand は見出しと同じ Big Shoulders で大きく、model は等幅・寒色で添える */
@@ -143,6 +158,8 @@ export type SiteContent = {
   hero: Hero;
   works: Works;
   portfolio: Portfolio;
+  /** 取引先のロゴ。Works の裏付けとして About の手前に置く */
+  clients: Clients;
   about: About;
   equipment: Equipment;
   contact: Contact;

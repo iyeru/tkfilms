@@ -34,6 +34,12 @@ export const sections: SectionDef[] = [
     selector: '#works',
   },
   {
+    key: 'clients',
+    label: 'Clients',
+    // id を持たないので Equipment と同じく見出しで引く
+    selector: 'section:has(h2:text-is("Clients"))',
+  },
+  {
     key: 'about',
     label: 'About',
     selector: '#about',
